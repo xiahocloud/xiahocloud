@@ -1,0 +1,8 @@
+<!--模型列表-->
+<!ELEMENT models (model)>
+
+<!--单个模型-->
+<!ELEMENT model (id,name)>
+
+<!ELEMENT id (#PCDATA)>
+<!ELEMENT name (#PCDATA)>

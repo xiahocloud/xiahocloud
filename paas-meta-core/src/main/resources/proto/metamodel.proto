@@ -1,0 +1,31 @@
+// 元模型定义
+syntax = "proto3";
+option java_package = "com.xiahou.yu.paasmetacore.protobuf";
+option java_outer_classname = "MetaModelProto";
+
+import "meta_domain_model.proto";
+
+enum DomainModelCategoryEnum {
+  DOMAIN = 0;
+  UI = 1;
+  ENTITY = 2;
+  DATA = 3;
+}
+
+message MetaModel {
+  string version = 1;
+  repeated AbstractModel models = 2;
+}
+
+message AbstractModel {
+  string id = 1;
+  string key = 2;
+  string name = 3;
+  DomainModelCategoryEnum category = 4;
+  oneof model {
+    DomainModel domainModel = 5;
+    UIModel uiModel = 6;
+    EntityModel entityModel = 7;
+    DataModel dataModel = 8;
+  }
+}

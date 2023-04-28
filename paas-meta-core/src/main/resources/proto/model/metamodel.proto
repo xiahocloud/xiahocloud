@@ -1,0 +1,15 @@
+// 元模型定义
+syntax = "proto3";
+option java_package = "com.xiahou.yu.paasmetacore.protobuf";
+option java_outer_classname = "MetaModelProto";
+
+message MetaModel {
+  string version = 1;
+  oneof metaModelExt {
+    MetaModelExt ext = 2;
+  };
+}
+
+message MetaModelExt {
+
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE models SYSTEM "./dtd/model.dtd">-->
+<meta-model>
+    <version>0.0.1.100</version>
+    <models>
+        <domain-model>
+            <id>ContextModel</id>
+            <name>上下文模型</name>
+            <resourcePath>/ContextModel.xml</resourcePath>
+        </domain-model>
+
+        <domain-model>
+            <id>FormModel</id>
+            <name>表单模型</name>
+            <resourcePath>/FormModel.xml</resourcePath>
+        </domain-model>
+
+        <domain-model>
+            <id>EntityModel</id>
+            <name>实体模型</name>
+            <resourcePath>/EntityModel.xml</resourcePath>
+        </domain-model>
+
+        <domain-model>
+            <id>FieldModel</id>
+            <name>字段模型</name>
+            <resourcePath>/FieldModel.xml</resourcePath>
+        </domain-model>
+    </models>
+</meta-model>
