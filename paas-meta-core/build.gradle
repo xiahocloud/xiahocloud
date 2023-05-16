@@ -67,11 +67,6 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
-
-    implementation 'org.springframework.boot:spring-boot-starter:2.3.12.RELEASE'
-    implementation 'org.springframework.boot:spring-boot-starter-web:2.3.12.RELEASE'
-
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.3.12.RELEASE'
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
     testCompileOnly 'org.projectlombok:lombok:1.18.14'
@@ -92,14 +87,6 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
     implementation 'com.alibaba.fastjson2:fastjson2:2.0.23'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
-/*    implementation 'org.boofcv:boofcv-core:0.39'
-    implementation 'org.boofcv:boofcv-io:0.39'
-    implementation 'org.boofcv:boofcv-recognition:0.39'
-    implementation 'org.boofcv:boofcv-alg:0.39'
-    implementation 'org.boofcv:boofcv-ip:0.39'
-    implementation 'org.boofcv:boofcv-factory:0.39'*/
-    implementation 'org.apache.pdfbox:pdfbox:2.0.24'
-    implementation 'com.google.zxing:core:3.4.1'
 }
 
 tasks.named('test') {

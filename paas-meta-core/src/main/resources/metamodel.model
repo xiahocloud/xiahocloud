@@ -6,25 +6,25 @@
         <domain-model>
             <id>ContextModel</id>
             <name>上下文模型</name>
-            <resourcePath>/ContextModel.xml</resourcePath>
+            <resourcePath>/models/ContextModel.xml</resourcePath>
         </domain-model>
 
         <domain-model>
             <id>FormModel</id>
             <name>表单模型</name>
-            <resourcePath>/FormModel.xml</resourcePath>
+            <resourcePath>/models/FormModel.xml</resourcePath>
         </domain-model>
 
         <domain-model>
             <id>EntityModel</id>
             <name>实体模型</name>
-            <resourcePath>/EntityModel.xml</resourcePath>
+            <resourcePath>/models/EntityModel.xml</resourcePath>
         </domain-model>
 
         <domain-model>
             <id>FieldModel</id>
             <name>字段模型</name>
-            <resourcePath>/FieldModel.xml</resourcePath>
+            <resourcePath>/models/FieldModel.xml</resourcePath>
         </domain-model>
     </models>
 </meta-model>
