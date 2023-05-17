@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+    <property base="AbstractContext">
+        <key>key</key>
+        <name>编码</name>
+        <desc>描述一个实体的唯一值</desc>
+    </property>
+    <property base="AbstractContext">
+        <key>name</key>
+        <name>名称</name>
+        <desc>描述一个实体的名称</desc>
+    </property>
+    <property base="AbstractContext">
+        <key>desc</key>
+        <name>描述</name>
+        <desc>描述一个实体的描述</desc>
+    </property>
+</properties>

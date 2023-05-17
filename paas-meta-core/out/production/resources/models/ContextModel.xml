@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model>
+    <propertites>
+        <id>ContextProperties</id>
+        <key>Properties</key>
+        <name>上下文属性</name>
+        <resourcePath>/ContextModelProperties.xml</resourcePath>,，
+    </propertites>
+    <contexts>
+        <context>
+            <id>SystemContext</id>
+            <key>System</key>
+            <name>系统上下文</name>
+        </context>
+
+        <context>
+            <id>AppContext</id>
+            <key>App</key>
+            <name>应用上下文</name>
+        </context>
+
+        <context>
+            <id>BoundedContext</id>
+            <key>Bounded</key>
+            <name>限界上下文</name>
+        </context>
+
+        <context>
+            <id>AggregateContext</id>
+            <key>Aggregate</key>
+            <name>聚合上下文</name>
+        </context>
+
+        <context>
+            <id>EntityContext</id>
+            <key>Entity</key>
+            <name>实体上下文</name>
+        </context>
+    </contexts>
+</model>

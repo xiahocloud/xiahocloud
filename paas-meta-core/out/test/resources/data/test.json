@@ -1,0 +1,1458 @@
+[
+  {
+    "_index" : "index_minimal_shard_7",
+    "_type" : "doc",
+    "_id" : "sdhdsy_11969924785_200111876980",
+    "_score" : 0.0,
+    "_source" : {
+      "code" : "200111876980",
+      "bizType" : "11969924863",
+      "metaId" : 11969924785,
+      "createdOn" : 1649512633222,
+      "followUp" : null,
+      "select1" : {
+        "keyword" : "approved"
+      },
+      "name_ignore_case_and_spaces" : "20220409-2323",
+      "long1" : null,
+      "isReadOnly" : 1,
+      "id" : 200111876980,
+      "name_py" : "20220409-2323",
+      "owner" : {
+        "code" : "11965792131",
+        "metaName" : "User",
+        "dataId" : "11965792131",
+        "metaId" : 629
+      },
+      "updatedBy" : {
+        "code" : "11965792131",
+        "metaName" : "User",
+        "dataId" : "11965792131",
+        "metaId" : 629
+      },
+      "dept" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "updatedOn" : 1649543644897,
+      "date1" : 1649433600000,
+      "version" : 4,
+      "name_reverse" : "3232-90402202",
+      "double3" : 210.0,
+      "entCode" : "sdhdsy",
+      "createdBy" : {
+        "code" : "11965792131",
+        "metaName" : "User",
+        "dataId" : "11965792131",
+        "metaId" : 629
+      },
+      "double2" : 210.0,
+      "double1" : 0.0,
+      "name" : "20220409-2323",
+      "simpleObject1" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject2" : {
+        "code" : "200097629996",
+        "metaName" : "project",
+        "dataId" : "200097629996",
+        "metaId" : 1126927071
+      },
+      "simpleObject3" : null,
+      "simpleObject4" : null,
+      "status" : 0
+    }
+  },
+  {
+    "_index" : "index_minimal_shard_7",
+    "_type" : "doc",
+    "_id" : "sdhdsy_11969924785_200144168923",
+    "_score" : 0.0,
+    "_source" : {
+      "code" : "200144168923",
+      "bizType" : "11969924863",
+      "metaId" : 11969924785,
+      "createdOn" : 1650633785374,
+      "followUp" : null,
+      "select1" : {
+        "keyword" : "approved"
+      },
+      "name_ignore_case_and_spaces" : "20220422-2888",
+      "long1" : null,
+      "isReadOnly" : 1,
+      "id" : 200144168923,
+      "name_py" : "20220422-2888",
+      "owner" : {
+        "code" : "11991341097",
+        "metaName" : "User",
+        "dataId" : "11991341097",
+        "metaId" : 629
+      },
+      "updatedBy" : {
+        "code" : "11965792131",
+        "metaName" : "User",
+        "dataId" : "11965792131",
+        "metaId" : 629
+      },
+      "dept" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "updatedOn" : 1650670748002,
+      "date1" : 1650556800000,
+      "version" : 4,
+      "name_reverse" : "8882-22402202",
+      "double3" : 11.0,
+      "entCode" : "sdhdsy",
+      "createdBy" : {
+        "code" : "11991341097",
+        "metaName" : "User",
+        "dataId" : "11991341097",
+        "metaId" : 629
+      },
+      "double2" : 11.0,
+      "double1" : 0.0,
+      "name" : "20220422-2888",
+      "simpleObject1" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject2" : {
+        "code" : "200097629996",
+        "metaName" : "project",
+        "dataId" : "200097629996",
+        "metaId" : 1126927071
+      },
+      "simpleObject3" : null,
+      "simpleObject4" : null,
+      "status" : 0
+    }
+  },
+  {
+    "_index" : "index_minimal_shard_7",
+    "_type" : "doc",
+    "_id" : "sdhdsy_11969924785_200024461014",
+    "_score" : 0.0,
+    "_source" : {
+      "code" : "200024461014",
+      "bizType" : "11969924863",
+      "metaId" : 11969924785,
+      "createdOn" : 1646917645082,
+      "followUp" : null,
+      "select1" : {
+        "keyword" : "approved"
+      },
+      "name_ignore_case_and_spaces" : "20220310-1659",
+      "long1" : null,
+      "isReadOnly" : 1,
+      "id" : 200024461014,
+      "name_py" : "20220310-1659",
+      "owner" : {
+        "code" : "11991341097",
+        "metaName" : "User",
+        "dataId" : "11991341097",
+        "metaId" : 629
+      },
+      "updatedBy" : {
+        "code" : "11965792085",
+        "metaName" : "User",
+        "dataId" : "11965792085",
+        "metaId" : 629
+      },
+      "dept" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "updatedOn" : 1646951669804,
+      "date1" : 1646841600000,
+      "version" : 4,
+      "name_reverse" : "9561-01302202",
+      "double3" : 615.0,
+      "entCode" : "sdhdsy",
+      "createdBy" : {
+        "code" : "11991341097",
+        "metaName" : "User",
+        "dataId" : "11991341097",
+        "metaId" : 629
+      },
+      "double2" : 615.0,
+      "double1" : 0.0,
+      "name" : "20220310-1659",
+      "simpleObject1" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject2" : {
+        "code" : "12075291262",
+        "metaName" : "project",
+        "dataId" : "12075291262",
+        "metaId" : 1126927071
+      },
+      "simpleObject3" : null,
+      "simpleObject4" : null,
+      "status" : 0
+    }
+  },
+  {
+    "_index" : "index_minimal_shard_7",
+    "_type" : "doc",
+    "_id" : "sdhdsy_11969924785_200027328555",
+    "_score" : 0.0,
+    "_source" : {
+      "code" : "200027328555",
+      "bizType" : "11969924863",
+      "metaId" : 11969924785,
+      "createdOn" : 1647007506227,
+      "followUp" : null,
+      "select1" : {
+        "keyword" : "approved"
+      },
+      "name_ignore_case_and_spaces" : "20220311-1701",
+      "long1" : null,
+      "isReadOnly" : 1,
+      "id" : 200027328555,
+      "name_py" : "20220311-1701",
+      "owner" : {
+        "code" : "11991403172",
+        "metaName" : "User",
+        "dataId" : "11991403172",
+        "metaId" : 629
+      },
+      "updatedBy" : {
+        "code" : "11965792131",
+        "metaName" : "User",
+        "dataId" : "11965792131",
+        "metaId" : 629
+      },
+      "dept" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "updatedOn" : 1647042520375,
+      "date1" : 1646928000000,
+      "version" : 13,
+      "name_reverse" : "1071-11302202",
+      "double3" : 2614.6,
+      "entCode" : "sdhdsy",
+      "createdBy" : {
+        "code" : "11991403172",
+        "metaName" : "User",
+        "dataId" : "11991403172",
+        "metaId" : 629
+      },
+      "double2" : 2614.6,
+      "double1" : 0.0,
+      "name" : "20220311-1701",
+      "simpleObject1" : {
+        "code" : "12161591528",
+        "metaName" : "Org",
+        "dataId" : "12161591528",
+        "metaId" : 628
+      },
+      "simpleObject2" : {
+        "code" : "12118821202",
+        "metaName" : "project",
+        "dataId" : "12118821202",
+        "metaId" : 1126927071
+      },
+      "simpleObject3" : null,
+      "simpleObject4" : null,
+      "status" : 0
+    }
+  },
+  {
+    "_index" : "index_minimal_shard_7",
+    "_type" : "doc",
+    "_id" : "sdhdsy_11969924785_200293623788",
+    "_score" : 0.0,
+    "_source" : {
+      "code" : "200293623788",
+      "bizType" : "11969924863",
+      "metaId" : 11969924785,
+      "createdOn" : 1655891277637,
+      "followUp" : null,
+      "select1" : {
+        "keyword" : "approved"
+      },
+      "name_ignore_case_and_spaces" : "20220622-5295",
+      "long1" : null,
+      "isReadOnly" : 1,
+      "id" : 200293623788,
+      "name_py" : "20220622-5295",
+      "owner" : {
+        "code" : "11965792220",
+        "metaName" : "User",
+        "dataId" : "11965792220",
+        "metaId" : 629
+      },
+      "updatedBy" : {
+        "code" : "11965792085",
+        "metaName" : "User",
+        "dataId" : "11965792085",
+        "metaId" : 629
+      },
+      "dept" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "updatedOn" : 1655937391933,
+      "date1" : 1655827200000,
+      "version" : 4,
+      "name_reverse" : "5925-22602202",
+      "double3" : 830.0,
+      "entCode" : "sdhdsy",
+      "createdBy" : {
+        "code" : "11965792220",
+        "metaName" : "User",
+        "dataId" : "11965792220",
+        "metaId" : 629
+      },
+      "double2" : 830.0,
+      "double1" : 0.0,
+      "name" : "20220622-5295",
+      "simpleObject1" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject2" : {
+        "code" : "200097629996",
+        "metaName" : "project",
+        "dataId" : "200097629996",
+        "metaId" : 1126927071
+      },
+      "simpleObject3" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject4" : null,
+      "status" : 0
+    }
+  },
+  {
+    "_index" : "index_minimal_shard_7",
+    "_type" : "doc",
+    "_id" : "sdhdsy_11969924785_200285016803",
+    "_score" : 0.0,
+    "_source" : {
+      "code" : "200285016803",
+      "bizType" : "11969924863",
+      "metaId" : 11969924785,
+      "createdOn" : 1655637438339,
+      "followUp" : null,
+      "select1" : {
+        "keyword" : "approved"
+      },
+      "name_ignore_case_and_spaces" : "20220619-5162",
+      "long1" : null,
+      "isReadOnly" : 1,
+      "id" : 200285016803,
+      "name_py" : "20220619-5162",
+      "owner" : {
+        "code" : "11965792220",
+        "metaName" : "User",
+        "dataId" : "11965792220",
+        "metaId" : 629
+      },
+      "updatedBy" : {
+        "code" : "11965792131",
+        "metaName" : "User",
+        "dataId" : "11965792131",
+        "metaId" : 629
+      },
+      "dept" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "updatedOn" : 1655678774528,
+      "date1" : 1655568000000,
+      "version" : 4,
+      "name_reverse" : "2615-91602202",
+      "double3" : 131.0,
+      "entCode" : "sdhdsy",
+      "createdBy" : {
+        "code" : "11965792220",
+        "metaName" : "User",
+        "dataId" : "11965792220",
+        "metaId" : 629
+      },
+      "double2" : 131.0,
+      "double1" : 0.0,
+      "name" : "20220619-5162",
+      "simpleObject1" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject2" : {
+        "code" : "200097629996",
+        "metaName" : "project",
+        "dataId" : "200097629996",
+        "metaId" : 1126927071
+      },
+      "simpleObject3" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject4" : null,
+      "status" : 0
+    }
+  },
+  {
+    "_index" : "index_minimal_shard_7",
+    "_type" : "doc",
+    "_id" : "sdhdsy_11969924785_200425841046",
+    "_score" : 0.0,
+    "_source" : {
+      "code" : "200425841046",
+      "bizType" : "11969924863",
+      "metaId" : 11969924785,
+      "createdOn" : 1659094853100,
+      "followUp" : null,
+      "select1" : {
+        "keyword" : "approved"
+      },
+      "name_ignore_case_and_spaces" : "20220729-6666",
+      "long1" : null,
+      "isReadOnly" : 1,
+      "id" : 200425841046,
+      "name_py" : "20220729-6666",
+      "owner" : {
+        "code" : "11965792220",
+        "metaName" : "User",
+        "dataId" : "11965792220",
+        "metaId" : 629
+      },
+      "updatedBy" : {
+        "code" : "11965792131",
+        "metaName" : "User",
+        "dataId" : "11965792131",
+        "metaId" : 629
+      },
+      "dept" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "updatedOn" : 1659137967614,
+      "date1" : 1659024000000,
+      "version" : 4,
+      "name_reverse" : "6666-92702202",
+      "double3" : 183.5,
+      "entCode" : "sdhdsy",
+      "createdBy" : {
+        "code" : "11965792220",
+        "metaName" : "User",
+        "dataId" : "11965792220",
+        "metaId" : 629
+      },
+      "double2" : 183.5,
+      "double1" : 0.0,
+      "name" : "20220729-6666",
+      "simpleObject1" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject2" : {
+        "code" : "200097629996",
+        "metaName" : "project",
+        "dataId" : "200097629996",
+        "metaId" : 1126927071
+      },
+      "simpleObject3" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject4" : null,
+      "status" : 0
+    }
+  },
+  {
+    "_index" : "index_minimal_shard_7",
+    "_type" : "doc",
+    "_id" : "sdhdsy_11969924785_200338299270",
+    "_score" : 0.0,
+    "_source" : {
+      "code" : "200338299270",
+      "bizType" : "11969924863",
+      "metaId" : 11969924785,
+      "createdOn" : 1657453615315,
+      "followUp" : null,
+      "select1" : {
+        "keyword" : "approved"
+      },
+      "name_ignore_case_and_spaces" : "20220710-5997",
+      "long1" : null,
+      "isReadOnly" : 1,
+      "id" : 200338299270,
+      "name_py" : "20220710-5997",
+      "owner" : {
+        "code" : "11965792220",
+        "metaName" : "User",
+        "dataId" : "11965792220",
+        "metaId" : 629
+      },
+      "updatedBy" : {
+        "code" : "200301457469",
+        "metaName" : "User",
+        "dataId" : "200301457469",
+        "metaId" : 629
+      },
+      "dept" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "updatedOn" : 1657495820448,
+      "date1" : 1657382400000,
+      "version" : 4,
+      "name_reverse" : "7995-01702202",
+      "double3" : 770.0,
+      "entCode" : "sdhdsy",
+      "createdBy" : {
+        "code" : "11965792220",
+        "metaName" : "User",
+        "dataId" : "11965792220",
+        "metaId" : 629
+      },
+      "double2" : 770.0,
+      "double1" : 0.0,
+      "name" : "20220710-5997",
+      "simpleObject1" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject2" : {
+        "code" : "200097629996",
+        "metaName" : "project",
+        "dataId" : "200097629996",
+        "metaId" : 1126927071
+      },
+      "simpleObject3" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject4" : null,
+      "status" : 0
+    }
+  },
+  {
+    "_index" : "index_minimal_shard_7",
+    "_type" : "doc",
+    "_id" : "sdhdsy_11969924785_200198378969",
+    "_score" : 0.0,
+    "_source" : {
+      "code" : "200198378969",
+      "bizType" : "11969924863",
+      "metaId" : 11969924785,
+      "createdOn" : 1652564131976,
+      "followUp" : null,
+      "select1" : {
+        "keyword" : "approved"
+      },
+      "name_ignore_case_and_spaces" : "20220515-3762",
+      "long1" : null,
+      "isReadOnly" : 0,
+      "id" : 200198378969,
+      "name_py" : "20220515-3762",
+      "owner" : {
+        "code" : "11965792131",
+        "metaName" : "User",
+        "dataId" : "11965792131",
+        "metaId" : 629
+      },
+      "updatedBy" : {
+        "code" : "11945482062",
+        "metaName" : "User",
+        "dataId" : "11945482062",
+        "metaId" : 629
+      },
+      "dept" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "updatedOn" : 1655713932062,
+      "date1" : 1652544000000,
+      "version" : 10,
+      "name_reverse" : "2673-51502202",
+      "double3" : 46.0,
+      "entCode" : "sdhdsy",
+      "createdBy" : {
+        "code" : "11965792131",
+        "metaName" : "User",
+        "dataId" : "11965792131",
+        "metaId" : 629
+      },
+      "double2" : 46.0,
+      "double1" : 0.0,
+      "name" : "20220515-3762",
+      "simpleObject1" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject2" : {
+        "code" : "200097629996",
+        "metaName" : "project",
+        "dataId" : "200097629996",
+        "metaId" : 1126927071
+      },
+      "simpleObject3" : null,
+      "simpleObject4" : null,
+      "status" : 0
+    }
+  },
+  {
+    "_index" : "index_minimal_shard_7",
+    "_type" : "doc",
+    "_id" : "sdhdsy_11969924785_200261027469",
+    "_score" : 0.0,
+    "_source" : {
+      "code" : "200261027469",
+      "bizType" : "11969924863",
+      "metaId" : 11969924785,
+      "createdOn" : 1654771110984,
+      "followUp" : null,
+      "select1" : {
+        "keyword" : "approved"
+      },
+      "name_ignore_case_and_spaces" : "20220609-4778",
+      "long1" : null,
+      "isReadOnly" : 1,
+      "id" : 200261027469,
+      "name_py" : "20220609-4778",
+      "owner" : {
+        "code" : "11965792220",
+        "metaName" : "User",
+        "dataId" : "11965792220",
+        "metaId" : 629
+      },
+      "updatedBy" : {
+        "code" : "11965792085",
+        "metaName" : "User",
+        "dataId" : "11965792085",
+        "metaId" : 629
+      },
+      "dept" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "updatedOn" : 1654786434676,
+      "date1" : 1654704000000,
+      "version" : 4,
+      "name_reverse" : "8774-90602202",
+      "double3" : 360.0,
+      "entCode" : "sdhdsy",
+      "createdBy" : {
+        "code" : "11965792220",
+        "metaName" : "User",
+        "dataId" : "11965792220",
+        "metaId" : 629
+      },
+      "double2" : 360.0,
+      "double1" : 0.0,
+      "name" : "20220609-4778",
+      "simpleObject1" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject2" : {
+        "code" : "200097629996",
+        "metaName" : "project",
+        "dataId" : "200097629996",
+        "metaId" : 1126927071
+      },
+      "simpleObject3" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject4" : null,
+      "status" : 0
+    }
+  },
+  {
+    "_index" : "index_minimal_shard_7",
+    "_type" : "doc",
+    "_id" : "sdhdsy_11969924785_200247454177",
+    "_score" : 0.0,
+    "_source" : {
+      "code" : "200247454177",
+      "bizType" : "11969924863",
+      "metaId" : 11969924785,
+      "createdOn" : 1654345369269,
+      "followUp" : null,
+      "select1" : {
+        "keyword" : "approved"
+      },
+      "name_ignore_case_and_spaces" : "20220604-4583",
+      "long1" : null,
+      "isReadOnly" : 1,
+      "id" : 200247454177,
+      "name_py" : "20220604-4583",
+      "owner" : {
+        "code" : "11965792220",
+        "metaName" : "User",
+        "dataId" : "11965792220",
+        "metaId" : 629
+      },
+      "updatedBy" : {
+        "code" : "11965792131",
+        "metaName" : "User",
+        "dataId" : "11965792131",
+        "metaId" : 629
+      },
+      "dept" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "updatedOn" : 1654358174341,
+      "date1" : 1654272000000,
+      "version" : 4,
+      "name_reverse" : "3854-40602202",
+      "double3" : 2090.0,
+      "entCode" : "sdhdsy",
+      "createdBy" : {
+        "code" : "11965792220",
+        "metaName" : "User",
+        "dataId" : "11965792220",
+        "metaId" : 629
+      },
+      "double2" : 2090.0,
+      "double1" : 0.0,
+      "name" : "20220604-4583",
+      "simpleObject1" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject2" : {
+        "code" : "200097629996",
+        "metaName" : "project",
+        "dataId" : "200097629996",
+        "metaId" : 1126927071
+      },
+      "simpleObject3" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject4" : null,
+      "status" : 0
+    }
+  },
+  {
+    "_index" : "index_minimal_shard_7",
+    "_type" : "doc",
+    "_id" : "sdhdsy_11969924785_200335246540",
+    "_score" : 0.0,
+    "_source" : {
+      "code" : "200335246540",
+      "bizType" : "11969924863",
+      "metaId" : 11969924785,
+      "createdOn" : 1657283878365,
+      "followUp" : null,
+      "select1" : {
+        "keyword" : "approved"
+      },
+      "name_ignore_case_and_spaces" : "20220708-5934",
+      "long1" : null,
+      "isReadOnly" : 1,
+      "id" : 200335246540,
+      "name_py" : "20220708-5934",
+      "owner" : {
+        "code" : "11965792229",
+        "metaName" : "User",
+        "dataId" : "11965792229",
+        "metaId" : 629
+      },
+      "updatedBy" : {
+        "code" : "11965792131",
+        "metaName" : "User",
+        "dataId" : "11965792131",
+        "metaId" : 629
+      },
+      "dept" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "updatedOn" : 1657323717613,
+      "date1" : 1657209600000,
+      "version" : 5,
+      "name_reverse" : "4395-80702202",
+      "double3" : 2832.0,
+      "entCode" : "sdhdsy",
+      "createdBy" : {
+        "code" : "11965792229",
+        "metaName" : "User",
+        "dataId" : "11965792229",
+        "metaId" : 629
+      },
+      "double2" : 2832.0,
+      "double1" : 0.0,
+      "name" : "20220708-5934",
+      "simpleObject1" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject2" : {
+        "code" : "12075291262",
+        "metaName" : "project",
+        "dataId" : "12075291262",
+        "metaId" : 1126927071
+      },
+      "simpleObject3" : {
+        "code" : "11966311899",
+        "metaName" : "Org",
+        "dataId" : "11966311899",
+        "metaId" : 628
+      },
+      "simpleObject4" : null,
+      "status" : 0
+    }
+  },
+  {
+    "_index" : "index_minimal_shard_7",
+    "_type" : "doc",
+    "_id" : "sdhdsy_11969924785_200816056818",
+    "_score" : 0.0,
+    "_source" : {
+      "code" : "200816056818",
+      "bizType" : "11969924863",
+      "metaId" : 11969924785,
+      "createdOn" : 1670665929795,
+      "followUp" : null,
+      "select1" : {
+        "keyword" : "approved"
+      },
+      "name_ignore_case_and_spaces" : "20221210-11601",
+      "long1" : null,
+      "isReadOnly" : 1,
+      "id" : 200816056818,
+      "name_py" : "20221210-11601",
+      "owner" : {
+        "code" : "11965792220",
+        "metaName" : "User",
+        "dataId" : "11965792220",
+        "metaId" : 629
+      },
+      "updatedBy" : {
+        "code" : "200301457469",
+        "metaName" : "User",
+        "dataId" : "200301457469",
+        "metaId" : 629
+      },
+      "dept" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "updatedOn" : 1670714788672,
+      "date1" : 1670601600000,
+      "version" : 5,
+      "name_reverse" : "10611-01212202",
+      "double3" : 542.0,
+      "entCode" : "sdhdsy",
+      "createdBy" : {
+        "code" : "11965792220",
+        "metaName" : "User",
+        "dataId" : "11965792220",
+        "metaId" : 629
+      },
+      "double2" : 542.0,
+      "double1" : 0.0,
+      "name" : "20221210-11601",
+      "simpleObject1" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject2" : {
+        "code" : "200097629996",
+        "metaName" : "project",
+        "dataId" : "200097629996",
+        "metaId" : 1126927071
+      },
+      "simpleObject3" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject4" : null,
+      "status" : 0
+    }
+  },
+  {
+    "_index" : "index_minimal_shard_7",
+    "_type" : "doc",
+    "_id" : "sdhdsy_11969924785_200252215201",
+    "_score" : 0.0,
+    "_source" : {
+      "code" : "200252215201",
+      "bizType" : "11969924863",
+      "metaId" : 11969924785,
+      "createdOn" : 1654515890027,
+      "followUp" : null,
+      "select1" : {
+        "keyword" : "approved"
+      },
+      "name_ignore_case_and_spaces" : "20220606-4642",
+      "long1" : null,
+      "isReadOnly" : 1,
+      "id" : 200252215201,
+      "name_py" : "20220606-4642",
+      "owner" : {
+        "code" : "11965792153",
+        "metaName" : "User",
+        "dataId" : "11965792153",
+        "metaId" : 629
+      },
+      "updatedBy" : {
+        "code" : "11965792131",
+        "metaName" : "User",
+        "dataId" : "11965792131",
+        "metaId" : 629
+      },
+      "dept" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "updatedOn" : 1654557190324,
+      "date1" : 1654444800000,
+      "version" : 4,
+      "name_reverse" : "2464-60602202",
+      "double3" : 147.0,
+      "entCode" : "sdhdsy",
+      "createdBy" : {
+        "code" : "11965792153",
+        "metaName" : "User",
+        "dataId" : "11965792153",
+        "metaId" : 629
+      },
+      "double2" : 147.0,
+      "double1" : 0.0,
+      "name" : "20220606-4642",
+      "simpleObject1" : {
+        "code" : "11966363629",
+        "metaName" : "Org",
+        "dataId" : "11966363629",
+        "metaId" : 628
+      },
+      "simpleObject2" : {
+        "code" : "12004530565",
+        "metaName" : "project",
+        "dataId" : "12004530565",
+        "metaId" : 1126927071
+      },
+      "simpleObject3" : {
+        "code" : "11966374664",
+        "metaName" : "Org",
+        "dataId" : "11966374664",
+        "metaId" : 628
+      },
+      "simpleObject4" : null,
+      "status" : 0
+    }
+  },
+  {
+    "_index" : "index_minimal_shard_7",
+    "_type" : "doc",
+    "_id" : "sdhdsy_11969924785_200252990121",
+    "_score" : 0.0,
+    "_source" : {
+      "code" : "200252990121",
+      "bizType" : "11969924863",
+      "metaId" : 11969924785,
+      "createdOn" : 1654557601533,
+      "followUp" : null,
+      "select1" : {
+        "keyword" : "approved"
+      },
+      "name_ignore_case_and_spaces" : "20220607-4664",
+      "long1" : null,
+      "isReadOnly" : 1,
+      "id" : 200252990121,
+      "name_py" : "20220607-4664",
+      "owner" : {
+        "code" : "11965792131",
+        "metaName" : "User",
+        "dataId" : "11965792131",
+        "metaId" : 629
+      },
+      "updatedBy" : {
+        "code" : "11965792085",
+        "metaName" : "User",
+        "dataId" : "11965792085",
+        "metaId" : 629
+      },
+      "dept" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "updatedOn" : 1654558743699,
+      "date1" : 1654531200000,
+      "version" : 4,
+      "name_reverse" : "4664-70602202",
+      "double3" : 567.0,
+      "entCode" : "sdhdsy",
+      "createdBy" : {
+        "code" : "11965792131",
+        "metaName" : "User",
+        "dataId" : "11965792131",
+        "metaId" : 629
+      },
+      "double2" : 567.0,
+      "double1" : 0.0,
+      "name" : "20220607-4664",
+      "simpleObject1" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject2" : {
+        "code" : "200097629996",
+        "metaName" : "project",
+        "dataId" : "200097629996",
+        "metaId" : 1126927071
+      },
+      "simpleObject3" : {
+        "code" : "11965785086",
+        "metaName" : "Org",
+        "dataId" : "11965785086",
+        "metaId" : 628
+      },
+      "simpleObject4" : null,
+      "status" : 0
+    }
+  },
+  {
+    "_index" : "index_minimal_shard_7",
+    "_type" : "doc",
+    "_id" : "sdhdsy_11969924785_200366020804",
+    "_score" : 0.0,
+    "_source" : {
+      "code" : "200366020804",
+      "bizType" : "11969924863",
+      "metaId" : 11969924785,
+      "createdOn" : 1658155535681,
+      "followUp" : null,
+      "select1" : {
+        "keyword" : "approved"
+      },
+      "name_ignore_case_and_spaces" : "20220718-6282",
+      "long1" : null,
+      "isReadOnly" : 1,
+      "id" : 200366020804,
+      "name_py" : "20220718-6282",
+      "owner" : {
+        "code" : "11965792220",
+        "metaName" : "User",
+        "dataId" : "11965792220",
+        "metaId" : 629
+      },
+      "updatedBy" : {
+        "code" : "11965792085",
+        "metaName" : "User",
+        "dataId" : "11965792085",
+        "metaId" : 629
+      },
+      "dept" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "updatedOn" : 1658185894594,
+      "date1" : 1658073600000,
+      "version" : 4,
+      "name_reverse" : "2826-81702202",
+      "double3" : 680.0,
+      "entCode" : "sdhdsy",
+      "createdBy" : {
+        "code" : "11965792220",
+        "metaName" : "User",
+        "dataId" : "11965792220",
+        "metaId" : 629
+      },
+      "double2" : 680.0,
+      "double1" : 0.0,
+      "name" : "20220718-6282",
+      "simpleObject1" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject2" : {
+        "code" : "200097629996",
+        "metaName" : "project",
+        "dataId" : "200097629996",
+        "metaId" : 1126927071
+      },
+      "simpleObject3" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject4" : null,
+      "status" : 0
+    }
+  },
+  {
+    "_index" : "index_minimal_shard_7",
+    "_type" : "doc",
+    "_id" : "sdhdsy_11969924785_200282332113",
+    "_score" : 0.0,
+    "_source" : {
+      "code" : "200282332113",
+      "bizType" : "11969924863",
+      "metaId" : 11969924785,
+      "createdOn" : 1655471237893,
+      "followUp" : null,
+      "select1" : {
+        "keyword" : "approved"
+      },
+      "name_ignore_case_and_spaces" : "20220617-5103",
+      "long1" : null,
+      "isReadOnly" : 1,
+      "id" : 200282332113,
+      "name_py" : "20220617-5103",
+      "owner" : {
+        "code" : "11965792220",
+        "metaName" : "User",
+        "dataId" : "11965792220",
+        "metaId" : 629
+      },
+      "updatedBy" : {
+        "code" : "11965792085",
+        "metaName" : "User",
+        "dataId" : "11965792085",
+        "metaId" : 629
+      },
+      "dept" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "updatedOn" : 1655505841274,
+      "date1" : 1655395200000,
+      "version" : 4,
+      "name_reverse" : "3015-71602202",
+      "double3" : 145.0,
+      "entCode" : "sdhdsy",
+      "createdBy" : {
+        "code" : "11965792220",
+        "metaName" : "User",
+        "dataId" : "11965792220",
+        "metaId" : 629
+      },
+      "double2" : 145.0,
+      "double1" : 0.0,
+      "name" : "20220617-5103",
+      "simpleObject1" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject2" : {
+        "code" : "200097629996",
+        "metaName" : "project",
+        "dataId" : "200097629996",
+        "metaId" : 1126927071
+      },
+      "simpleObject3" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject4" : null,
+      "status" : 0
+    }
+  },
+  {
+    "_index" : "index_minimal_shard_7",
+    "_type" : "doc",
+    "_id" : "sdhdsy_11969924785_200752387886",
+    "_score" : 0.0,
+    "_source" : {
+      "code" : "200752387886",
+      "bizType" : "11969924863",
+      "metaId" : 11969924785,
+      "createdOn" : 1669293925491,
+      "followUp" : null,
+      "select1" : {
+        "keyword" : "approved"
+      },
+      "name_ignore_case_and_spaces" : "20221124-11035",
+      "long1" : null,
+      "isReadOnly" : 1,
+      "id" : 200752387886,
+      "name_py" : "20221124-11035",
+      "owner" : {
+        "code" : "200419721951",
+        "metaName" : "User",
+        "dataId" : "200419721951",
+        "metaId" : 629
+      },
+      "updatedBy" : {
+        "code" : "11965792085",
+        "metaName" : "User",
+        "dataId" : "11965792085",
+        "metaId" : 629
+      },
+      "dept" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "updatedOn" : 1669333098712,
+      "date1" : 1669219200000,
+      "version" : 5,
+      "name_reverse" : "53011-42112202",
+      "double3" : 860.0,
+      "entCode" : "sdhdsy",
+      "createdBy" : {
+        "code" : "200419721951",
+        "metaName" : "User",
+        "dataId" : "200419721951",
+        "metaId" : 629
+      },
+      "double2" : 860.0,
+      "double1" : 0.0,
+      "name" : "20221124-11035",
+      "simpleObject1" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject2" : {
+        "code" : "200419896876",
+        "metaName" : "project",
+        "dataId" : "200419896876",
+        "metaId" : 1126927071
+      },
+      "simpleObject3" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject4" : null,
+      "status" : 0
+    }
+  },
+  {
+    "_index" : "index_minimal_shard_7",
+    "_type" : "doc",
+    "_id" : "sdhdsy_11969924785_200385328533",
+    "_score" : 0.0,
+    "_source" : {
+      "code" : "200385328533",
+      "bizType" : "11969924863",
+      "metaId" : 11969924785,
+      "createdOn" : 1658395946291,
+      "followUp" : null,
+      "select1" : {
+        "keyword" : "approved"
+      },
+      "name_ignore_case_and_spaces" : "20220721-6377",
+      "long1" : null,
+      "isReadOnly" : 1,
+      "id" : 200385328533,
+      "name_py" : "20220721-6377",
+      "owner" : {
+        "code" : "11965792229",
+        "metaName" : "User",
+        "dataId" : "11965792229",
+        "metaId" : 629
+      },
+      "updatedBy" : {
+        "code" : "11965792131",
+        "metaName" : "User",
+        "dataId" : "11965792131",
+        "metaId" : 629
+      },
+      "dept" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "updatedOn" : 1658446922779,
+      "date1" : 1658332800000,
+      "version" : 5,
+      "name_reverse" : "7736-12702202",
+      "double3" : 1660.0,
+      "entCode" : "sdhdsy",
+      "createdBy" : {
+        "code" : "11965792229",
+        "metaName" : "User",
+        "dataId" : "11965792229",
+        "metaId" : 629
+      },
+      "double2" : 1600.0,
+      "double1" : 60.0,
+      "name" : "20220721-6377",
+      "simpleObject1" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject2" : {
+        "code" : "12075291262",
+        "metaName" : "project",
+        "dataId" : "12075291262",
+        "metaId" : 1126927071
+      },
+      "simpleObject3" : {
+        "code" : "11966311899",
+        "metaName" : "Org",
+        "dataId" : "11966311899",
+        "metaId" : 628
+      },
+      "simpleObject4" : null,
+      "status" : 0
+    }
+  },
+  {
+    "_index" : "index_minimal_shard_7",
+    "_type" : "doc",
+    "_id" : "sdhdsy_11969924785_200295660010",
+    "_score" : 0.0,
+    "_source" : {
+      "code" : "200295660010",
+      "bizType" : "11969924863",
+      "metaId" : 11969924785,
+      "createdOn" : 1655939660043,
+      "followUp" : null,
+      "select1" : {
+        "keyword" : "approved"
+      },
+      "name_ignore_case_and_spaces" : "20220623-5324",
+      "long1" : null,
+      "isReadOnly" : 1,
+      "id" : 200295660010,
+      "name_py" : "20220623-5324",
+      "owner" : {
+        "code" : "11965792131",
+        "metaName" : "User",
+        "dataId" : "11965792131",
+        "metaId" : 629
+      },
+      "updatedBy" : {
+        "code" : "11965792085",
+        "metaName" : "User",
+        "dataId" : "11965792085",
+        "metaId" : 629
+      },
+      "dept" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "updatedOn" : 1655941687019,
+      "date1" : 1655913600000,
+      "version" : 4,
+      "name_reverse" : "4235-32602202",
+      "double3" : 239.0,
+      "entCode" : "sdhdsy",
+      "createdBy" : {
+        "code" : "11965792131",
+        "metaName" : "User",
+        "dataId" : "11965792131",
+        "metaId" : 629
+      },
+      "double2" : 239.0,
+      "double1" : 0.0,
+      "name" : "20220623-5324",
+      "simpleObject1" : {
+        "code" : "11966363944",
+        "metaName" : "Org",
+        "dataId" : "11966363944",
+        "metaId" : 628
+      },
+      "simpleObject2" : {
+        "code" : "200097629996",
+        "metaName" : "project",
+        "dataId" : "200097629996",
+        "metaId" : 1126927071
+      },
+      "simpleObject3" : {
+        "code" : "11965785086",
+        "metaName" : "Org",
+        "dataId" : "11965785086",
+        "metaId" : 628
+      },
+      "simpleObject4" : null,
+      "status" : 0
+    }
+  },
+  null
+]
