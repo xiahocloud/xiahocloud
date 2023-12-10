@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<models>
+    <model mid="PageModel">
+        <components>
+            <component>
+                <id>Flex</id>
+                <name>Flex布局</name>
+                <desc>Flex布局容器</desc>
+            </component>
+        </components>
+
+        <layouts>
+            <layout>
+                <id>布局</id>
+            </layout>
+        </layouts>
+    </model>
+</models>

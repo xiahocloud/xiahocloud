@@ -1,6 +1,6 @@
 package com.xiahou.yu.paasmetacore.factory;
 
-import com.xiahou.yu.paasmetacore.model.contextmodel.Context;
+import com.xiahou.yu.paasmetacore.models.contextmodel.Context;
 
 /**
  * description: 上下文工厂

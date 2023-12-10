@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<models>
+    <model mid="FieldModel">
+        <fields>
+            <field>
+                <id>Text</id>
+                <name>文本</name>
+                <desc>文本类型</desc>
+            </field>
+
+            <field extends="Text">
+                <id>ShortText</id>
+                <name>单行文本</name>
+                <desc>单行文本字段</desc>
+            </field>
+
+            <field extends="Text">
+                <id>TextArea</id>
+                <name>文本区</name>
+                <desc>文本区字段</desc>
+            </field>
+
+            <field extends="Text">
+                <id>Number</id>
+                <name>数值</name>
+                <desc>数值字段</desc>
+            </field>
+
+            <field extends="Text">
+                <id>Select</id>
+                <name>下拉框</name>
+                <desc>下拉选项</desc>
+            </field>
+
+            <field extends="Text">
+                <id>Formula</id>
+                <name>公式</name>
+                <desc>公式字段</desc>
+            </field>
+
+            <field extends="Text">
+                <id>BaseData</id>
+                <name>基础数据</name>
+                <desc>基础数据</desc>
+            </field>
+
+            <field extends="Number">
+                <id>Amount</id>
+                <name>金额</name>
+                <desc>金额</desc>
+            </field>
+        </fields>
+
+        <fieldProps>
+            <fieldPropRef rid="Text">
+                <ref>maxLength</ref>
+                <ref>minLength</ref>
+            </fieldPropRef>
+        </fieldProps>
+
+        <properties>
+            <propertie>
+                <id>height</id>
+                <name>高度</name>
+                <type>Page</type>
+            </propertie>
+            <propertie>
+                <id>weight</id>
+                <name>宽度</name>
+                <type>Page</type>
+            </propertie>
+            <propertie>
+                <id>backgroundColor</id>
+                <name>背景色</name>
+            </propertie>
+            <propertie>
+                <id>foregroundColor</id>
+                <name>前景色</name>
+            </propertie>
+
+            <propertie>
+                <id>maxLength</id>
+                <name>最大长度</name>
+                <type>Entity</type>
+            </propertie>
+
+            <propertie>
+                <id>minLength</id>
+                <name>最小长度</name>
+                <type>Entity</type>
+            </propertie>
+
+            <propertie>
+                <id>fName</id>
+                <name>字段名</name>
+                <type>Entity</type>
+                <desc>数据库字段名</desc>
+            </propertie>
+        </properties>
+    </model>
+</models>

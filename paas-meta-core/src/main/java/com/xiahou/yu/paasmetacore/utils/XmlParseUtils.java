@@ -4,14 +4,19 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
+import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.xiahou.yu.paasmetacore.constant.SystemConstant.META_MODEL_ELE_TYPE;
 
 /**
  * description: xml 解析工具
@@ -34,14 +39,16 @@ public class XmlParseUtils {
     }
 
     public static <T> List<T> getNodes(Document document, String path, Class<T> clazz) throws DocumentException {
-        final List<T> models = Lists.newArrayList();
+        List<T> models = Lists.newArrayList();
         List<Node> list = document.selectNodes(path);
         list.forEach(node -> {
-            final T t;
+            T t;
             try {
                 t = getNode(node, clazz);
             } catch (IllegalAccessException | InstantiationException e) {
                 log.error(e.getMessage(), e);
+                throw new RuntimeException(e);
+            } catch (InvocationTargetException | NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
             models.add(t);
@@ -49,23 +56,53 @@ public class XmlParseUtils {
         return models;
     }
 
-    public static <T> T getNode(Node node, Class<T> clazz) throws IllegalAccessException, InstantiationException {
-        final T t = clazz.newInstance();
-        final Field[] fields = clazz.getDeclaredFields();
-        final Field[] parentFields = clazz.getSuperclass().getDeclaredFields();
-        final List<Field> fieldList = Arrays.stream(fields).collect(Collectors.toList());
-        fieldList.addAll(Arrays.stream(parentFields).collect(Collectors.toList()));
+    public static <T> T getNode(Document document, String path, Class<T> clazz) throws DocumentException {
+        T t;
+        try {
+            Node node = document.selectSingleNode(path);
+            t = getNode(node, clazz);
+        } catch (IllegalAccessException | InstantiationException e) {
+            log.error(e.getMessage(), e);
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException | NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+        return t;
+    }
+
+    public static <T> T getNode(Node node, Class<T> clazz) throws NoSuchMethodException, InvocationTargetException,
+            InstantiationException, IllegalAccessException {
+        Constructor<T> declaredConstructor = clazz.getDeclaredConstructor();
+        T t = declaredConstructor.newInstance();
+        Field[] fields = clazz.getDeclaredFields();
+        Field[] parentFields = clazz.getSuperclass().getDeclaredFields();
+        List<Field> fieldList = Arrays.stream(fields).collect(Collectors.toList());
+        fieldList.addAll(Arrays.asList(parentFields));
         for (Field field : fieldList) {
             field.setAccessible(true);
-            final String name = field.getName();
-            final String val = node.selectSingleNode(name).getText();
-            field.set(t, val);
+            String name = field.getName();
+            Element element = (Element) node.selectSingleNode(name);
+            if (element == null) {
+                continue;
+            }
+            String val = element.getText();
+            Object realTypeVal = val;
+            switch (element.attributeValue(META_MODEL_ELE_TYPE)) {
+                case "Boolean":
+                    realTypeVal = Boolean.parseBoolean(val);
+                    break;
+                case null:
+                    break;
+                default:
+                    break;
+            }
+            field.set(t, realTypeVal);
         }
         return t;
     }
 
     public static String getNodeText(Document document, String path) {
-        final Node node = document.selectSingleNode(path);
+        Node node = document.selectSingleNode(path);
         return node.getText();
     }
 
