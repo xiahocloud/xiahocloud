@@ -1,69 +1,509 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<models>
-    <model mid="AbstractModel">
-        <properties>
-            <property>
-                <id>id</id>
-                <name>ID</name>
-                <dataType>Long</dataType>
-                <desc>技术上的唯一属性</desc>
-            </property>
 
-            <property>
-                <id>key</id>
-                <name>标识</name>
-                <dataType>String</dataType>
-                <desc>可见的唯一属性</desc>
-            </property>
+<Model>
+    <Properties>
+        <!-- 基础属性 -->
+        <Property>
+            <Id>id</Id>
+            <Name>全局唯一标识符</Name>
+            <DataType>Long</DataType>
+            <Desc>技术上的唯一属性</Desc>
+        </Property>
 
-            <property>
-                <id>name</id>
-                <name>名称</name>
-                <dataType>String</dataType>
-                <desc>中文名称</desc>
-            </property>
+        <Property>
+            <Id>tenant</Id>
+            <Name>租户编码</Name>
+            <DataType>String</DataType>
+            <Desc>租户唯一编码</Desc>
+        </Property>
 
-            <property>
-                <id>desc</id>
-                <name>描述</name>
-                <dataType>String</dataType>
-                <desc>关于属性的描述</desc>
-            </property>
+        <Property>
+            <Id>key</Id>
+            <Name>标识</Name>
+            <DataType>String</DataType>
+            <Desc>租户内可见的唯一属性</Desc>
+        </Property>
 
-            <property>
-                <id>version</id>
-                <name>版本</name>
-                <dataType>String</dataType>
-                <desc>版本号</desc>
-            </property>
+        <Property>
+            <Id>name</Id>
+            <Name>名称</Name>
+            <DataType>String</DataType>
+            <Desc>中文名称</Desc>
+        </Property>
 
-            <property>
-                <id>type</id>
-                <name>类型</name>
-                <dataType>Enum</dataType>
-                <desc>模型类型</desc>
-            </property>
+        <Property>
+            <Id>description</Id>
+            <Name>描述</Name>
+            <DataType>String</DataType>
+            <Desc>关于属性的描述</Desc>
+        </Property>
 
-            <property>
-                <id>status</id>
-                <name>状态</name>
-                <dataType>Integer</dataType>
-                <desc>描述元素的状态</desc>
-            </property>
+        <Property>
+            <Id>version</Id>
+            <Name>版本</Name>
+            <DataType>String</DataType>
+            <Desc>版本号</Desc>
+        </Property>
 
-            <property>
-                <id>enable</id>
-                <name>启用</name>
-                <dataType>Boolean</dataType>
-                <desc>启用状态， null / 1：启用， 0 ：禁用</desc>
-            </property>
+        <Property>
+            <Id>type</Id>
+            <Name>类型</Name>
+            <DataType>String</DataType>
+            <Desc>描述当前模型的类型</Desc>
+        </Property>
 
-            <property>
-                <id>visible</id>
-                <name>可见</name>
-                <dataType>Boolean</dataType>
-                <desc>可见性， null / 1：可见， 0 ：不可见</desc>
-            </property>
-        </properties>
-    </model>
-</models>
+        <Property>
+            <Id>status</Id>
+            <Name>状态</Name>
+            <DataType>Integer</DataType>
+            <Desc>描述元素的状态</Desc>
+        </Property>
+
+        <Property>
+            <Id>enable</Id>
+            <Name>启用</Name>
+            <DataType>Integer</DataType>
+            <Desc>启用状态， null / 1：启用， 0 ：禁用</Desc>
+        </Property>
+
+        <Property>
+            <Id>visible</Id>
+            <Name>可见</Name>
+            <DataType>Integer</DataType>
+            <Desc>可见性， null / 1：可见， 0 ：不可见</Desc>
+        </Property>
+
+        <Property>
+            <Id>app</Id>
+            <Name>应用标识</Name>
+            <DataType>String</DataType>
+            <Default>std</Default>
+            <Desc>所属应用的标识</Desc>
+        </Property>
+
+        <Property>
+            <Id>sys</Id>
+            <Name>系统标识</Name>
+            <DataType>Integer</DataType>
+            <Desc>可见性， null / 1：系统， 0 ：自定义</Desc>
+        </Property>
+
+        <Property>
+            <Id>namespace</Id>
+            <Name>命名空间</Name>
+            <DataType>String</DataType>
+            <Desc>模型或组件的命名空间</Desc>
+        </Property>
+
+        <Property>
+            <Id>createdTime</Id>
+            <Name>创建时间</Name>
+            <DataType>Long</DataType>
+            <Desc>记录创建的时间戳</Desc>
+        </Property>
+
+        <Property>
+            <Id>createdBy</Id>
+            <Name>创建人</Name>
+            <DataType>String</DataType>
+            <Desc>记录创建者的标识</Desc>
+        </Property>
+
+        <Property>
+            <Id>updatedTime</Id>
+            <Name>更新时间</Name>
+            <DataType>Long</DataType>
+            <Desc>记录最后更新的时间戳</Desc>
+        </Property>
+
+        <Property>
+            <Id>updatedBy</Id>
+            <Name>更新人</Name>
+            <DataType>String</DataType>
+            <Desc>记录最后更新者的标识</Desc>
+        </Property>
+
+
+
+
+        <!-- CSS3 页面样式属性 -->
+        <!-- 布局属性 -->
+        <Property>
+            <Id>display</Id>
+            <Name>显示类型</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>元素显示类型：block, inline, flex, grid等</Desc>
+        </Property>
+        <Property>
+            <Id>position</Id>
+            <Name>定位方式</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>定位方式：static, relative, absolute, fixed, sticky</Desc>
+        </Property>
+        <Property>
+            <Id>float</Id>
+            <Name>浮动</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>浮动方向：left, right, none</Desc>
+        </Property>
+        <Property>
+            <Id>clear</Id>
+            <Name>清除浮动</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>清除浮动：left, right, both, none</Desc>
+        </Property>
+        <Property>
+            <Id>overflow</Id>
+            <Name>溢出处理</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>内容溢出处理：visible, hidden, scroll, auto</Desc>
+        </Property>
+        <Property>
+            <Id>zIndex</Id>
+            <Name>层级</Name>
+            <DataType>Integer</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>元素层级</Desc>
+        </Property>
+
+        <!-- 盒模型属性 -->
+        <Property>
+            <Id>width</Id>
+            <Name>宽度</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>元素宽度</Desc>
+        </Property>
+        <Property>
+            <Id>height</Id>
+            <Name>高度</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>元素高度</Desc>
+        </Property>
+        <Property>
+            <Id>minWidth</Id>
+            <Name>最小宽度</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>元素最小宽度</Desc>
+        </Property>
+        <Property>
+            <Id>maxWidth</Id>
+            <Name>最大宽度</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>元素最大宽度</Desc>
+        </Property>
+        <Property>
+            <Id>minHeight</Id>
+            <Name>最小高度</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>元素最小高度</Desc>
+        </Property>
+        <Property>
+            <Id>maxHeight</Id>
+            <Name>最大高度</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>元素最大高度</Desc>
+        </Property>
+        <Property>
+            <Id>margin</Id>
+            <Name>外边距</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>元素外边距</Desc>
+        </Property>
+        <Property>
+            <Id>padding</Id>
+            <Name>内边距</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>元素内边距</Desc>
+        </Property>
+        <Property>
+            <Id>border</Id>
+            <Name>边框</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>元素边框</Desc>
+        </Property>
+        <Property>
+            <Id>borderRadius</Id>
+            <Name>圆角</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>边框圆角</Desc>
+        </Property>
+        <Property>
+            <Id>boxSizing</Id>
+            <Name>盒模型计算</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>盒模型计算方式：border-box, content-box</Desc>
+        </Property>
+        <Property>
+            <Id>boxShadow</Id>
+            <Name>阴影</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>元素阴影效果</Desc>
+        </Property>
+
+        <!-- 文字属性 -->
+        <Property>
+            <Id>fontFamily</Id>
+            <Name>字体族</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>字体族</Desc>
+        </Property>
+        <Property>
+            <Id>fontSize</Id>
+            <Name>字体大小</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>字体大小</Desc>
+        </Property>
+        <Property>
+            <Id>fontWeight</Id>
+            <Name>字体粗细</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>字体粗细：normal, bold, 100-900</Desc>
+        </Property>
+        <Property>
+            <Id>fontStyle</Id>
+            <Name>字体样式</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>字体样式：normal, italic, oblique</Desc>
+        </Property>
+        <Property>
+            <Id>lineHeight</Id>
+            <Name>行高</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>文本行高</Desc>
+        </Property>
+        <Property>
+            <Id>textAlign</Id>
+            <Name>文本对齐</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>文本对齐方式：left, center, right, justify</Desc>
+        </Property>
+        <Property>
+            <Id>textDecoration</Id>
+            <Name>文本装饰</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>文本装饰：none, underline, overline, line-through</Desc>
+        </Property>
+        <Property>
+            <Id>textTransform</Id>
+            <Name>文本转换</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>文本转换：none, uppercase, lowercase, capitalize</Desc>
+        </Property>
+        <Property>
+            <Id>letterSpacing</Id>
+            <Name>字符间距</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>字符间距</Desc>
+        </Property>
+        <Property>
+            <Id>wordSpacing</Id>
+            <Name>单词间距</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>单词间距</Desc>
+        </Property>
+
+        <!-- 颜色和背景 -->
+        <Property>
+            <Id>color</Id>
+            <Name>文字颜色</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>文字颜色</Desc>
+        </Property>
+        <Property>
+            <Id>backgroundColor</Id>
+            <Name>背景色</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>背景颜色</Desc>
+        </Property>
+        <Property>
+            <Id>backgroundImage</Id>
+            <Name>背景图片</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>背景图片URL</Desc>
+        </Property>
+        <Property>
+            <Id>backgroundPosition</Id>
+            <Name>背景位置</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>背景图片位置</Desc>
+        </Property>
+        <Property>
+            <Id>backgroundSize</Id>
+            <Name>背景尺寸</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>背景图片尺寸：cover, contain, auto</Desc>
+        </Property>
+        <Property>
+            <Id>backgroundRepeat</Id>
+            <Name>背景重复</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>背景重复方式：repeat, no-repeat, repeat-x, repeat-y</Desc>
+        </Property>
+        <Property>
+            <Id>opacity</Id>
+            <Name>透明度</Name>
+            <DataType>Float</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>元素透明度：0-1</Desc>
+        </Property>
+
+        <!-- Flexbox 属性 -->
+        <Property>
+            <Id>flexDirection</Id>
+            <Name>主轴方向</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>Flex主轴方向：row, column, row-reverse, column-reverse</Desc>
+        </Property>
+        <Property>
+            <Id>flexWrap</Id>
+            <Name>换行</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>Flex换行：nowrap, wrap, wrap-reverse</Desc>
+        </Property>
+        <Property>
+            <Id>justifyContent</Id>
+            <Name>主轴对齐</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>主轴对齐方式：flex-start, center, flex-end, space-between, space-around</Desc>
+        </Property>
+        <Property>
+            <Id>alignItems</Id>
+            <Name>交叉轴对齐</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>交叉轴对齐方式：flex-start, center, flex-end, stretch, baseline</Desc>
+        </Property>
+        <Property>
+            <Id>flexGrow</Id>
+            <Name>弹性增长</Name>
+            <DataType>Integer</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>弹性项增长因子</Desc>
+        </Property>
+        <Property>
+            <Id>flexShrink</Id>
+            <Name>弹性收缩</Name>
+            <DataType>Integer</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>弹性项收缩因子</Desc>
+        </Property>
+        <Property>
+            <Id>flexBasis</Id>
+            <Name>弹性基准</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>弹性项基准大小</Desc>
+        </Property>
+
+        <!-- Grid 属性 -->
+        <Property>
+            <Id>gridTemplateColumns</Id>
+            <Name>网格列模板</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>Grid列模板</Desc>
+        </Property>
+        <Property>
+            <Id>gridTemplateRows</Id>
+            <Name>网格行模板</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>Grid行模板</Desc>
+        </Property>
+        <Property>
+            <Id>gridGap</Id>
+            <Name>网格间隙</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>Grid间隙</Desc>
+        </Property>
+        <Property>
+            <Id>gridArea</Id>
+            <Name>网格区域</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>Grid区域定义</Desc>
+        </Property>
+
+        <!-- 变换和动画 -->
+        <Property>
+            <Id>transform</Id>
+            <Name>变换</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>元素变换：rotate, scale, translate等</Desc>
+        </Property>
+        <Property>
+            <Id>transition</Id>
+            <Name>过渡</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>CSS过渡效果</Desc>
+        </Property>
+        <Property>
+            <Id>animation</Id>
+            <Name>动画</Name>
+            <DataType>String</DataType>
+            <Scope>PageModel</Scope>
+            <Desc>CSS动画</Desc>
+        </Property>
+    </Properties>
+    <Relations>
+        <Relation>
+
+        </Relation>
+    </Relations>
+
+
+    <Refs>
+        <Ref>id</Ref>
+        <Ref>key</Ref>
+        <Ref>tenant</Ref>
+        <Ref>name</Ref>
+        <Ref>description</Ref>
+        <Ref>version</Ref>
+        <Ref>type</Ref>
+        <Ref>status</Ref>
+        <Ref>enable</Ref>
+        <Ref>visible</Ref>
+        <Ref>app</Ref>
+        <Ref>sys</Ref>
+        <Ref>namespace</Ref>
+    </Refs>
+</Model>

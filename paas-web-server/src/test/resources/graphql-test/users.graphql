@@ -1,0 +1,13 @@
+query users {
+    users {
+        id
+        name
+        email
+        age
+        posts {
+            id
+            title
+        }
+    }
+}
+

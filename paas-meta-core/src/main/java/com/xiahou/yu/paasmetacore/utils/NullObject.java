@@ -4,6 +4,7 @@ import com.xiahou.yu.paasmetacore.constant.ResultStatusEnum;
 import com.xiahou.yu.paasmetacore.constant.exception.PaaSException;
 import lombok.extern.slf4j.Slf4j;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -25,7 +26,9 @@ public class NullObject {
     public static <T> T getNullObject(Class<T> clazz) {
         final T t;
         try {
-            t = clazz.newInstance();
+            // 修复弃用的 newInstance() 方法
+            Constructor<T> constructor = clazz.getDeclaredConstructor();
+            t = constructor.newInstance();
             if (t instanceof AbstractNull) {
                 final Field isNullField = clazz.getSuperclass().getDeclaredField(IS_NULL);
                 isNullField.setAccessible(true);
@@ -35,7 +38,8 @@ public class NullObject {
                 props.put(IS_NULL, true);
                 return getInstanceWithIsNullField(t, props);
             }
-        } catch (InstantiationException | NoSuchFieldException | IllegalAccessException e) {
+        } catch (InstantiationException | NoSuchFieldException | IllegalAccessException |
+                 NoSuchMethodException | InvocationTargetException e) {
             throw new PaaSException(ResultStatusEnum.SYSTEM_ERROR, e.getMessage());
         }
         return t;
@@ -54,6 +58,7 @@ public class NullObject {
     }
 
 
+    @SuppressWarnings("unchecked")
     private static <T, E> E getFieldValue(T t, String fieldName, Class<E> fieldClazz) throws NoSuchMethodException,
             InvocationTargetException, IllegalAccessException {
         //通过反射获取值
@@ -62,6 +67,7 @@ public class NullObject {
         Method method = t.getClass().getDeclaredMethod(getter);
         Object value = method.invoke(t);
         log.info("类型为：{}", fieldClazz);
+        // 添加 @SuppressWarnings("unchecked") 来消除未检查转换警告
         return (E) value;
     }
 

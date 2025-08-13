@@ -1,8 +1,6 @@
 package com.xiahou.yu.paasmetacore.models.reader;
 
-import com.xiahou.yu.paasmetacore.MetaModel;
 import com.xiahou.yu.paasmetacore.constant.ResultStatusEnum;
-import com.xiahou.yu.paasmetacore.constant.SystemConstant;
 import com.xiahou.yu.paasmetacore.constant.exception.PaaSException;
 import com.xiahou.yu.paasmetacore.models.FieldModel;
 import com.xiahou.yu.paasmetacore.utils.XmlParseUtils;
@@ -21,15 +19,29 @@ import java.util.List;
  */
 public class FieldModelReader {
     public static FieldModel readModel(String path) {
-        FieldModel fieldModel = new FieldModel();
+        // 使用正确的构造函数创建FieldModel实例
+        FieldModel fieldModel = new FieldModel(
+            "FieldModel",
+            "字段模型",
+            "从XML文件读取的字段模型",
+            path,
+            null
+        );
+
         try {
-            URL url = MetamodelReader.class.getResource(path);
+            URL url = FieldModelReader.class.getResource(path);
+            if (url == null) {
+                throw new PaaSException(ResultStatusEnum.SYSTEM_ERROR, "文件不存在", "无法找到路径: " + path);
+            }
+
             Document document = XmlParseUtils.getDocument(url);
-            List<FieldModel.Field> fields = XmlParseUtils.getNodes(document, "/models/model/fields/field", FieldModel.Field.class);
 
-            List<FieldModel.Field> fields = XmlParseUtils.getNodes(document, "/models/model/modelProps/modelProp", FieldModel.Field.class);
+            // 解析字段信息
+            List<FieldModel.Component> components = XmlParseUtils.getNodes(document, "/Model/Components/Component", FieldModel.Component.class);
 
-            fieldModel.setFields(fields);
+            // 将解析的组件添加到字段模型中
+            components.forEach(fieldModel::addComponent);
+
         } catch (DocumentException e) {
             throw new PaaSException(ResultStatusEnum.SYSTEM_ERROR, e.getMessage(), "字段元数据解析异常");
         }

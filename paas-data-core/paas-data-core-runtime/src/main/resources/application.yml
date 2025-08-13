@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: paas-data-core-runtime
+
+# 日志配置
+logging:
+  level:
+    org.springframework.jdbc.core: DEBUG
+    org.springframework.data.jdbc: DEBUG
+    com.xiahou.yu.paasdatacore: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"

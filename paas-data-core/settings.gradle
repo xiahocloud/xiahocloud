@@ -1,0 +1,9 @@
+rootProject.name = 'paas-data-core'
+
+// 包含同级目录的 paas-meta-core 工程
+includeBuild '../paas-meta-core'
+
+// 包含子模块
+include 'paas-data-core-runtime'
+include 'paas-data-core-design'
+include 'paas-data-core-common'

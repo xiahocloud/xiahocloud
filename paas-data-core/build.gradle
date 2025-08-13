@@ -1,0 +1,71 @@
+plugins {
+    id 'java'
+    id 'io.freefair.lombok' version '8.10'
+}
+
+// 父工程配置
+allprojects {
+    group = findProperty('group') ?: 'com.xiahou.yu'
+    version = findProperty('version') ?: '1.0.0'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+// 子项目通用配置
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.freefair.lombok'
+
+    java {
+        sourceCompatibility = JavaVersion.valueOf("VERSION_${findProperty('javaVersion') ?: '21'}")
+        targetCompatibility = JavaVersion.valueOf("VERSION_${findProperty('javaVersion') ?: '21'}")
+    }
+
+    compileJava {
+        options.release = Integer.parseInt(findProperty('javaVersion')?.toString() ?: '21')
+        options.compilerArgs += ['--enable-preview']
+        options.encoding = 'UTF-8'
+        options.incremental = true
+        options.fork = true
+        options.forkOptions.jvmArgs = ['-Xmx2g']
+    }
+
+    compileTestJava {
+        options.release = Integer.parseInt(findProperty('javaVersion')?.toString() ?: '21')
+        options.compilerArgs += ['--enable-preview']
+    }
+
+    test {
+        jvmArgs += ['--enable-preview']
+        useJUnitPlatform()
+        maxHeapSize = "1G"
+        systemProperty 'java.awt.headless', 'true'
+        systemProperty 'file.encoding', 'UTF-8'
+    }
+
+    dependencies {
+        // Lombok支持 - 使用统一版本
+        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+        testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+        testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+        // 测试框架 - 使用统一版本
+        testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+        testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+        testImplementation "org.assertj:assertj-core:${assertjVersion}"
+    }
+
+    // JAR构建配置
+    jar {
+        manifest {
+            attributes(
+                'Implementation-Title': project.name,
+                'Implementation-Version': project.version,
+                'Implementation-Group': project.group
+            )
+        }
+    }
+}

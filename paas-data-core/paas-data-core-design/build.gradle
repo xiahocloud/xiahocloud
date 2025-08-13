@@ -1,0 +1,55 @@
+// paas-data-core-design 子模块配置
+// 负责设计时元数据定义和模型管理功能
+
+dependencies {
+    // 引用同级目录的 paas-meta-core 工程
+    implementation 'com.xiahou.yu:paas-meta-core'
+    // 修改为项目内部依赖
+    implementation project(':paas-data-core-common')
+
+    // Spring Boot - 使用统一版本
+    implementation "org.springframework.boot:spring-boot-starter:${springBootVersion}"
+
+    implementation "org.springframework.boot:spring-boot-starter-data-jdbc:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}"
+
+    // JPA 支持 - 添加实体注解支持
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+
+    // 数据库连接池 - HikariCP
+    implementation "com.zaxxer:HikariCP:${hikariCPVersion}"
+
+    // 数据库驱动 - 使用统一版本
+    runtimeOnly "org.postgresql:postgresql:${postgresqlVersion}"
+
+    // 测试数据库 - H2
+    testRuntimeOnly "com.h2database:h2:${h2Version}"
+
+    // JSON处理 - 用于元数据序列化
+    implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
+
+    // XML处理 - 用于元数据配置文件
+    implementation "jakarta.xml.bind:jakarta.xml.bind-api:${jakartaXmlBindVersion}"
+    implementation "org.glassfish.jaxb:jaxb-runtime:${jaxbRuntimeVersion}"
+    implementation "org.dom4j:dom4j:${dom4jVersion}"
+
+    // 工具类库
+    implementation "org.apache.commons:commons-lang3:${commonsLang3Version}"
+    implementation "com.google.guava:guava:${guavaVersion}"
+
+    // 测试框架 - 使用统一版本（继承自父项目）
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+}
+
+// 设计时模块特定配置
+jar {
+    archiveBaseName = 'paas-data-core-design'
+    manifest {
+        attributes(
+            'Implementation-Title': 'PaaS Data Core Design',
+            'Implementation-Description': '数据模型设计时模块'
+        )
+    }
+}

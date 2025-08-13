@@ -1,53 +1,148 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'io.freefair.lombok' version '8.10'
 }
-apply plugin: 'application'
 
-group = 'com.xiahou'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+// 从父级配置文件读取通用版本信息
+version = findProperty('version') ?: '1.0.0'
+group = findProperty('group') ?: 'com.xiahou.yu'
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
+java {
+    sourceCompatibility = JavaVersion.valueOf("VERSION_${findProperty('javaVersion') ?: '21'}")
+    targetCompatibility = JavaVersion.valueOf("VERSION_${findProperty('javaVersion') ?: '21'}")
+}
+
+compileJava {
+    options.release = Integer.parseInt(findProperty('javaVersion') ?: '21')
+    options.compilerArgs += ['--enable-preview']
+}
+
+compileTestJava {
+    options.release = Integer.parseInt(findProperty('javaVersion') ?: '21')
+    options.compilerArgs += ['--enable-preview']
+}
+
+test {
+    jvmArgs += ['--enable-preview']
+    useJUnitPlatform()
+}
+
+application {
+    mainClass = findProperty('mainClass') ?: 'com.xiahou.yu.paasmetacore.MetaModelDemo'
 }
 
 repositories {
-    mavenLocal()
-    maven { url 'https://maven.aliyun.com/repository/public/' }
-    maven { url 'https://maven.aliyun.com/repository/spring/' }
-    maven {
-        allowInsecureProtocol true
-        url 'http://8.142.78.63:8081/repository/maven-snapshots/'
-    }
-}
-
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
+    mavenCentral()
 }
 
 dependencies {
-    compileOnly 'org.projectlombok:lombok:1.18.30'
-    annotationProcessor 'org.projectlombok:lombok:1.18.30'
-    testCompileOnly 'org.projectlombok:lombok:1.18.30'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
-    implementation 'org.slf4j:slf4j-api:1.7.36'
-    implementation 'org.slf4j:slf4j-log4j12:1.7.36'
-    implementation 'jaxen:jaxen:1.2.0'
-    implementation 'org.dom4j:dom4j:2.1.4'
-    implementation 'com.google.code.gson:gson:2.9.1'
-    implementation 'com.google.guava:guava:31.1-jre'
-    implementation 'org.apache.commons:commons-lang3:3.12.0'
-    implementation 'commons-beanutils:commons-beanutils:1.9.4'
-    implementation 'cglib:cglib-nodep:3.3.0'
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.14.2'
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.2'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
-    implementation 'com.alibaba.fastjson2:fastjson2:2.0.23'
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+
+    // Lombok支持 - 使用统一版本
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    // CGLib动态代理 - 使用统一版本
+    implementation "cglib:cglib:${cglibVersion}"
+
+    // XML处理 - 使用统一版本
+    implementation "jakarta.xml.bind:jakarta.xml.bind-api:${jakartaXmlBindVersion}"
+    implementation "org.glassfish.jaxb:jaxb-runtime:${jaxbRuntimeVersion}"
+    implementation "org.glassfish.jaxb:jaxb-core:${jaxbRuntimeVersion}"
+
+    // DOM4J XML解析 - 使用统一版本
+    implementation "org.dom4j:dom4j:${dom4jVersion}"
+    implementation "jaxen:jaxen:${jaxenVersion}"
+
+    // JSON处理 - 使用统一版本
+    implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
+
+    // 日志框架 - 使用统一版本
+    implementation "org.slf4j:slf4j-api:${slf4jVersion}"
+    implementation "ch.qos.logback:logback-classic:${logbackVersion}"
+    implementation "ch.qos.logback:logback-core:${logbackVersion}"
+
+    // 工具类库 - 使用统一版本
+    implementation "org.apache.commons:commons-lang3:${commonsLang3Version}"
+    implementation "org.apache.commons:commons-collections4:${commonsCollections4Version}"
+    implementation "commons-io:commons-io:${commonsIoVersion}"
+
+    // Apache Commons BeanUtils - 使用统一版本
+    implementation "commons-beanutils:commons-beanutils:${commonsBeanutilsVersion}"
+
+    // Google Guava - 使用统一版本
+    implementation "com.google.guava:guava:${guavaVersion}"
+
+    // Spring框架 - 使用统一版本
+    implementation "org.springframework:spring-context:${springFrameworkVersion}"
+    implementation "org.springframework:spring-core:${springFrameworkVersion}"
+    implementation "org.springframework:spring-beans:${springFrameworkVersion}"
+    implementation "org.springframework:spring-expression:${springFrameworkVersion}"
+
+    // Spring Boot - 使用统一版本
+    implementation "org.springframework.boot:spring-boot-starter:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-logging:${springBootVersion}"
+
+    // 反射工具 - 使用统一版本
+    implementation "org.reflections:reflections:${reflectionsVersion}"
+
+    // 验证框架 - 使用统一版本
+    implementation "jakarta.validation:jakarta.validation-api:${jakartaValidationVersion}"
+    implementation "org.hibernate.validator:hibernate-validator:${hibernateValidatorVersion}"
+
+    // 测试框架 - 使用统一版本
+    testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
+    testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+    testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
+    testImplementation "org.assertj:assertj-core:${assertjVersion}"
+
+    // Spring Boot测试支持
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+
+    // 测试容器支持
+    testImplementation "org.testcontainers:junit-jupiter:${testcontainersVersion}"
+
+    // 性能测试工具
+    testImplementation "org.openjdk.jmh:jmh-core:${jmhVersion}"
+    testAnnotationProcessor "org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}"
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
+// JMH基准测试配置
+configurations {
+    jmh
+}
+
+// 测试配置优化
+test {
+    maxHeapSize = "1G"
+    systemProperty 'java.awt.headless', 'true'
+    systemProperty 'file.encoding', 'UTF-8'
+}
+
+// 编译配置优化
+compileJava {
+    options.encoding = 'UTF-8'
+    options.incremental = true
+    options.fork = true
+    options.forkOptions.jvmArgs = ['-Xmx2g']
+}
+
+// JAR构建配置
+jar {
+    manifest {
+        attributes(
+            'Implementation-Title': project.name,
+            'Implementation-Version': project.version,
+            'Main-Class': application.mainClass
+        )
+    }
 }

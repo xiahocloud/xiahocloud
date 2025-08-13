@@ -1,6 +1,7 @@
 package com.xiahou.yu.paasmetacore.factory;
 
 import com.xiahou.yu.paasmetacore.models.contextmodel.Context;
+import java.lang.reflect.Constructor;
 
 /**
  * description: 上下文工厂
@@ -18,6 +19,7 @@ public class ContextFactory {
         return build(DEFAULT_PACKAGE, classNameKey);
     }
 
+    @SuppressWarnings("unchecked")
     public static Context build(String packageName, String classNameKey) throws Exception {
         if (packageName == null) {
             packageName = DEFAULT_PACKAGE;
@@ -25,7 +27,9 @@ public class ContextFactory {
         String clazzName = packageName + "." + classNameKey + CONTEXT_SUFFIX;
 
         Class<?> clazz = Class.forName(clazzName);
-        Object o = clazz.newInstance();
+        // 使用推荐的方式替代已弃用的 newInstance() 方法
+        Constructor<?> constructor = clazz.getDeclaredConstructor();
+        Object o = constructor.newInstance();
         return (Context) o;
     }
 
