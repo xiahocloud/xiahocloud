@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE Models SYSTEM "./dtd/Model.dtd">-->
+<!--元模型定义了所有的模型， 并约束所有的模型-->
+<MetaModel>
+    <Version>0.0.1</Version>
+    <Models>
+        <Model import="/models/AbstractModel.xml">
+            <Id>AbstractModel</Id>
+            <Name>抽象模型</Name>
+            <Desc>用于定义模型的通用部分</Desc>
+        </Model>
+
+        <Model extends="AbstractModel" import="/models/FieldModel.xml">
+            <Id>FieldModel</Id>
+            <Name>字段模型</Name>
+            <Desc>用于定义字段的基础</Desc>
+        </Model>
+
+        <Model extends="AbstractModel" import="/models/PageModel.xml">
+            <Id>PageModel</Id>
+            <Name>页面模型</Name>
+            <Desc>用于定义页面的内容</Desc>
+        </Model>
+
+        <Model extends="AbstractModel" import="/models/DataModel.xml">
+            <Id>DataModel</Id>
+            <Name>数据模型</Name>
+            <Desc>用于数据层面的信息定义</Desc>
+        </Model>
+
+    </Models>
+</MetaModel>

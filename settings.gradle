@@ -1,0 +1,11 @@
+rootProject.name = 'xiahocloud'
+
+// 包含所有子模块
+include 'paas-web-server'
+include 'paas-application-core' 
+include 'paas-domain-core'
+include 'paas-data-core'
+
+// 包含其他独立项目
+includeBuild 'paas-meta-core'
+includeBuild 'paas-infra-core'

@@ -1,0 +1,32 @@
+// paas-infra-id-service 子模块配置
+// 负责基础设施核心服务，如雪花算法ID生成��
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.4' apply false
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.boot:spring-boot-dependencies:3.3.4'
+    }
+}
+
+dependencies {
+    // Spring Boot - 使用统一版本
+    implementation 'org.springframework.boot:spring-boot-starter'
+
+    // 配置处理
+    implementation 'org.springframework.boot:spring-boot-configuration-processor'
+
+    // 测试依赖
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.mockito:mockito-core'
+}
+
+// 测试配置
+test {
+    useJUnitPlatform()
+}

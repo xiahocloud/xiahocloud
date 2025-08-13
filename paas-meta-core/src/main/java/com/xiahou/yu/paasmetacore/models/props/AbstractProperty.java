@@ -14,7 +14,7 @@ import lombok.Data;
 public abstract class AbstractProperty {
     private String id;
     private String name;
-    private String desc;
+    private String description;
     private DataTypeEnum dataType;
 
 }

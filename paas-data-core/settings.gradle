@@ -1,0 +1,5 @@
+rootProject.name = 'paas-data-core'
+
+// 包含子模块
+include 'paas-data-core-runtime'
+include 'paas-data-core-design'

@@ -11,7 +11,7 @@ public final class SystemConstant {
     /**
      * 元模型描述文件根路径
      */
-    public static final String META_MODEL_ROOT_PATH = "/metamodel.xml";
+    public static final String META_MODEL_ROOT_PATH = "/Metamodel.xml";
 
     public static final String META_MODEL_VERSION = "version";
 

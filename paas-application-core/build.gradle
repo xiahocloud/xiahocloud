@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.4' apply false
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.xiahou.yu'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.boot:spring-boot-dependencies:3.3.4'
+    }
+}
+
+dependencies {
+    // 使用 includeBuild 方式引用 paas-domain-core 项目
+    implementation 'com.xiahou.yu:paas-domain-core'
+    
+    // Spring Boot 基础依赖
+    implementation 'org.springframework.boot:spring-boot-starter'
+    
+    // 测试依赖
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}

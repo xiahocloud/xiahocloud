@@ -2,6 +2,7 @@ package com.xiahou.yu.paasmetacore.constant.exception;
 
 import com.xiahou.yu.paasmetacore.constant.ResultStatusEnum;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * description: paas 异常
@@ -11,6 +12,7 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class PaaSException extends RuntimeException {
 
     private Object payload;
@@ -32,8 +34,11 @@ public class PaaSException extends RuntimeException {
     }
 
     public PaaSException(ResultStatusEnum resultStatusEnum, Object payload, String message) {
-        this(resultStatusEnum, payload, message == null ? resultStatusEnum.getMessage() : message,
-                new RuntimeException(message == null ? resultStatusEnum.getMessage() : message));
+        this(resultStatusEnum, payload, message == null ? resultStatusEnum.getMessage() : message, null);
+    }
+
+    public PaaSException(ResultStatusEnum resultStatusEnum, String message, Exception e) {
+        this(resultStatusEnum, null, message == null ? resultStatusEnum.getMessage() : message, e);
     }
 
     public PaaSException(ResultStatusEnum resultStatusEnum, Object payload, String message, Throwable throwable) {

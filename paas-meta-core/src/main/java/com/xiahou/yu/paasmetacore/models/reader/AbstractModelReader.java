@@ -20,15 +20,29 @@ import java.util.List;
  */
 public class AbstractModelReader {
     public static AbstractModel readModel(String path) {
-        AbstractModel abstractModel = new AbstractModel();
-        abstractModel.setProperties(List.of());
+        // 使用工厂方法创建AbstractModel实例，传入默认参数
+        AbstractModel abstractModel = AbstractModel.create(
+            "AbstractModel",
+            "抽象模型",
+            "从XML文件读取的抽象模型",
+            path,
+            null
+        );
+
         try {
-            URL url = MetamodelReader.class.getResource(path);
+            URL url = AbstractModelReader.class.getResource(path);
+            if (url == null) {
+                throw new PaaSException(ResultStatusEnum.META_CORE_ERROR, "文件不存在", "无法找到路径: " + path);
+            }
+
             Document document = XmlParseUtils.getDocument(url);
             List<Property> properties = XmlParseUtils.getNodes(document, "/models/model/properties/property", Property.class);
-            abstractModel.setProperties(properties);
+
+            // 将解析的属性添加到模型中
+            properties.forEach(abstractModel::addProperty);
+
         } catch (DocumentException e) {
-            throw new PaaSException(ResultStatusEnum.SYSTEM_ERROR, e.getMessage(), "抽象元数据解析异常");
+            throw new PaaSException(ResultStatusEnum.META_CORE_ERROR, e.getMessage(), "抽象元数据解析异常", e);
         }
         return abstractModel;
     }

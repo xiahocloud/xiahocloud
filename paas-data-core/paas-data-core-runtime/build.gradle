@@ -1,0 +1,39 @@
+// paas-data-core-runtime 子模块配置
+// 负责运行时数据访问和持久化功能
+// 新架构: runtime → design → meta-core
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.4' apply false
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.boot:spring-boot-dependencies:3.3.4'
+    }
+}
+
+dependencies {
+    // 依赖设计时模块 (新架构)
+    implementation project(':paas-data-core-design')
+
+    // 注意：不再直接依赖 paas-meta-core，通过 design 模块传递依赖
+
+    // Spring Boot - 使用统一版本
+    implementation 'org.springframework.boot:spring-boot-starter'
+
+    // 测试框架 - 使用统一版本（继承自父项目）
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+// 运行时模块特定配置
+jar {
+    archiveBaseName = 'paas-data-core-runtime'
+    manifest {
+        attributes(
+            'Implementation-Title': 'PaaS Data Core Runtime',
+            'Implementation-Description': '数据访问运行时模块'
+        )
+    }
+}

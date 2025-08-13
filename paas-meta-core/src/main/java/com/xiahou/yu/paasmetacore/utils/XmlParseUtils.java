@@ -1,6 +1,8 @@
 package com.xiahou.yu.paasmetacore.utils;
 
 import com.google.common.collect.Lists;
+import com.xiahou.yu.paasmetacore.constant.ResultStatusEnum;
+import com.xiahou.yu.paasmetacore.constant.exception.PaaSException;
 import lombok.extern.slf4j.Slf4j;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -47,9 +49,9 @@ public class XmlParseUtils {
                 t = getNode(node, clazz);
             } catch (IllegalAccessException | InstantiationException e) {
                 log.error(e.getMessage(), e);
-                throw new RuntimeException(e);
+                throw new PaaSException(ResultStatusEnum.META_CORE_ERROR, "XML节点解析失败", e);
             } catch (InvocationTargetException | NoSuchMethodException e) {
-                throw new RuntimeException(e);
+                throw new PaaSException(ResultStatusEnum.META_CORE_ERROR, "XML节点解析失败", e);
             }
             models.add(t);
         });
@@ -63,9 +65,9 @@ public class XmlParseUtils {
             t = getNode(node, clazz);
         } catch (IllegalAccessException | InstantiationException e) {
             log.error(e.getMessage(), e);
-            throw new RuntimeException(e);
+            throw new PaaSException(ResultStatusEnum.META_CORE_ERROR, "XML节点解析失败", e);
         } catch (InvocationTargetException | NoSuchMethodException e) {
-            throw new RuntimeException(e);
+            throw new PaaSException(ResultStatusEnum.META_CORE_ERROR, "XML节点解析失败", e);
         }
         return t;
     }

@@ -1,5 +1,7 @@
 package com.xiahou.yu.paasmetacore.constant;
 
+import lombok.Getter;
+
 /**
  * description 返回数据状态
  *
@@ -7,13 +9,18 @@ package com.xiahou.yu.paasmetacore.constant;
  * date     2021/11/28 10:42
  * @version 1.0
  */
+@Getter
 public enum ResultStatusEnum {
     /**
      * 成功
      */
     SUCCESS("00000", "成功。"),
 
-    SYSTEM_ERROR("B0001", "服务器异常。"),
+    META_CORE_ERROR("A00001", "模型层异常。"),
+
+    DATA_CORE_ERROR("A00002", "数据核心层异常。"),
+
+    SYSTEM_ERROR("B00001", "服务器异常。"),
 
     PARAMS_NOT_MATCHES("A0421", "参数不匹配。");
 
@@ -26,16 +33,8 @@ public enum ResultStatusEnum {
         this.setMessage(message);
     }
 
-    public String getCode() {
-        return code;
-    }
-
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
     }
 
     public void setMessage(String message) {

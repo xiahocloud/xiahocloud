@@ -1,0 +1,8 @@
+rootProject.name = 'paas-web-server'
+
+// 包含同级目录的所有相关工程
+includeBuild '../paas-meta-core'
+includeBuild '../paas-infra-core'
+includeBuild '../paas-data-core'
+includeBuild '../paas-application-core'
+includeBuild '../paas-domain-core'
