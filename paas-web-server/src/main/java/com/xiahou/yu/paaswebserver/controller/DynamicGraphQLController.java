@@ -1,81 +1,47 @@
 package com.xiahou.yu.paaswebserver.controller;
 
-import com.xiahou.yu.paaswebserver.dynamic.DynamicGraphQLSchemaBuilder;
-import com.xiahou.yu.paaswebserver.dynamic.EntityDefinition;
-import com.xiahou.yu.paaswebserver.dynamic.EntityDefinitionService;
-import com.xiahou.yu.paaswebserver.dynamic.FieldDefinition;
-import graphql.schema.GraphQLSchema;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import com.xiahou.yu.paaswebserver.cqrs.command.DynamicCommandHandler;
+import com.xiahou.yu.paaswebserver.cqrs.query.DynamicQueryHandler;
+import com.xiahou.yu.paaswebserver.dto.DynamicCommandResponse;
+import com.xiahou.yu.paaswebserver.dto.DynamicQueryResponse;
+import com.xiahou.yu.paaswebserver.dto.input.DynamicCommandInput;
+import com.xiahou.yu.paaswebserver.dto.input.DynamicQueryInput;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.stereotype.Controller;
 
-import java.util.List;
-import java.util.Map;
-
-@RestController
-@RequestMapping("/api/admin")
+/**
+ * 动态GraphQL控制器
+ * 基于CQRS模式处理动态查询和命令
+ *
+ * @author xiahou
+ */
+@Controller
+@RequiredArgsConstructor
+@Slf4j
 public class DynamicGraphQLController {
 
-    @Autowired
-    private EntityDefinitionService entityDefinitionService;
+    private final DynamicQueryHandler queryHandler;
+    private final DynamicCommandHandler commandHandler;
 
-    @Autowired
-    private DynamicGraphQLSchemaBuilder schemaBuilder;
-
-    @GetMapping("/entities")
-    public ResponseEntity<List<EntityDefinition>> getAllEntityDefinitions() {
-        List<EntityDefinition> entities = entityDefinitionService.getAllEntityDefinitions();
-        return ResponseEntity.ok(entities);
+    /**
+     * 动态查询接口
+     */
+    @QueryMapping
+    public DynamicQueryResponse dynamicQuery(@Argument DynamicQueryInput input) {
+        log.info("Received dynamic query request: {}", input);
+        return queryHandler.handle(input);
     }
 
-    @PostMapping("/entities")
-    public ResponseEntity<EntityDefinition> createEntityDefinition(@RequestBody Map<String, Object> request) {
-        String entityName = (String) request.get("entityName");
-        String displayName = (String) request.get("displayName");
-        String description = (String) request.get("description");
-
-        EntityDefinition entity = entityDefinitionService.createEntityDefinition(entityName, displayName, description);
-        return ResponseEntity.ok(entity);
-    }
-
-    @PostMapping("/entities/{entityId}/fields")
-    public ResponseEntity<FieldDefinition> addFieldToEntity(
-            @PathVariable Long entityId,
-            @RequestBody Map<String, Object> request) {
-
-        String fieldName = (String) request.get("fieldName");
-        String fieldTypeStr = (String) request.get("fieldType");
-        Boolean required = (Boolean) request.get("required");
-        String defaultValue = (String) request.get("defaultValue");
-        String displayName = (String) request.get("displayName");
-        String description = (String) request.get("description");
-
-        FieldDefinition.FieldType fieldType = FieldDefinition.FieldType.valueOf(fieldTypeStr.toUpperCase());
-
-        FieldDefinition field = entityDefinitionService.addFieldToEntity(
-            entityId, fieldName, fieldType, required, defaultValue, displayName, description);
-
-        return ResponseEntity.ok(field);
-    }
-
-    @GetMapping("/schema")
-    public ResponseEntity<String> getCurrentSchema() {
-        try {
-            GraphQLSchema schema = schemaBuilder.buildSchema();
-            return ResponseEntity.ok("Schema generated successfully. Total types: " + schema.getAllTypesAsList().size());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error generating schema: " + e.getMessage());
-        }
-    }
-
-    @PostMapping("/schema/refresh")
-    public ResponseEntity<String> refreshSchema() {
-        try {
-            // 重新构建schema
-            GraphQLSchema schema = schemaBuilder.buildSchema();
-            return ResponseEntity.ok("Schema refreshed successfully");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error refreshing schema: " + e.getMessage());
-        }
+    /**
+     * 动态命令接口
+     */
+    @MutationMapping
+    public DynamicCommandResponse dynamicCommand(@Argument DynamicCommandInput input) {
+        log.info("Received dynamic command request: {}", input);
+        return commandHandler.handle(input);
     }
 }
