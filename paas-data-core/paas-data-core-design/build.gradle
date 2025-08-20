@@ -14,42 +14,22 @@ dependencyManagement {
 }
 
 dependencies {
-    // 引用新的 paas-infra-id-service 模块
-    implementation 'com.xiahou.yu:paas-infra-id-service'
-
-    // Spring Boot - 使用统一版本
+    // Spring Boot 核心依赖
     implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-
-    // JPA 支持 - 添加实体注解支持
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 
-    // 数据库连接池 - HikariCP
-    implementation 'com.zaxxer:HikariCP'
+    // Lombok 支持
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 
-    // 数据库驱动 - 使用统一版本
-    runtimeOnly "org.postgresql:postgresql:${postgresqlVersion}"
+    // 测试框架
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    // 测试数据库 - H2
-    testRuntimeOnly "com.h2database:h2:${h2Version}"
-
-    // JSON处理 - 用于元数据序列化
-    implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
-    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
-    implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
-
-    // XML处理 - 用于元数据配置文件
-    implementation "jakarta.xml.bind:jakarta.xml.bind-api:${jakartaXmlBindVersion}"
-    implementation "org.glassfish.jaxb:jaxb-runtime:${jaxbRuntimeVersion}"
-    implementation "org.dom4j:dom4j:${dom4jVersion}"
-
-    // 工具类库
-    implementation "org.apache.commons:commons-lang3:${commonsLang3Version}"
-    implementation "com.google.guava:guava:${guavaVersion}"
-
-    // 测试框架 - 使用统一版本（继承自父项目）
-    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    // H2 数据库用于测试
+    testRuntimeOnly 'com.h2database:h2'
 }
 
 // 设计时模块特定配置

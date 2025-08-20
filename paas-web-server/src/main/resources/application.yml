@@ -14,26 +14,12 @@ spring:
       allowed-methods: "*"
       allowed-headers: "*"
 
-  # JPA 配置
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-
-  # H2 数据库配置
-  datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password: password
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+# PaaS 平台配置
+paas:
+  context:
+    # 使用Filter方式处理请求上下文（默认true）
+    # 设置为false则使用HandlerInterceptor方式
+    use-filter: true
 
 # 日志配置
 logging:

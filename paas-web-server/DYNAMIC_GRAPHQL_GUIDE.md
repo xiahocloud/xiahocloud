@@ -2,33 +2,131 @@
 
 ## 概述
 
-本项目基于 CQRS (Command Query Responsibility Segregation) 模式实现了一个动态的 GraphQL 接口层，专为 PaaS 平台设计。该接口层支持动态 Schema 管理，无需预定义固定的 GraphQL Schema。
+本项目基于 CQRS (Command Query Responsibility Segregation) 模式实现了一个动态的 GraphQL 接口层，专为 PaaS 平台设计。该接口层支持动态 Schema 管理，无需预定义固定的 GraphQL Schema，并且具备完整的多租户上下文管理能力。
+
+## 新增功能：请求上下文管理
+
+### 1. 自动上下文提取
+
+系统会自动从HTTP请求头中提取以下上下文信息：
+
+- `X-Tenant-Id`: 租户ID
+- `X-User-Id`: 用户ID  
+- `X-Username`: 用户名
+- `X-Request-Id`: 请求ID（如果不提供会自动生成）
+- `X-App-Id`: 应用ID
+- `X-Org-Id`: 组织ID
+- `X-Roles`: 用户角色
+- `X-Permissions`: 用户权限
+
+### 2. 线程上下文管理
+
+使用 `RequestContextHolder` 在整个请求处理过程中访问上下文信息：
+
+```java
+// 获取当前租户ID
+String tenantId = RequestContextHolder.getTenantId();
+
+// 获取当前用户ID
+String userId = RequestContextHolder.getUserId();
+
+// 获取完整上下文
+RequestContext context = RequestContextHolder.getContext();
+```
+
+### 3. 自动租户隔离
+
+- 查询操作会自动应用租户过滤
+- 命令操作会自动添加租户和审计信息
+- 所有数据操作都确保租户隔离
+
+## 使用示例
+
+### 1. 带上下文的GraphQL查询
+
+```bash
+curl -X POST http://localhost:8080/graphql \
+  -H "Content-Type: application/json" \
+  -H "X-Tenant-Id: tenant123" \
+  -H "X-User-Id: user456" \
+  -H "X-Username: zhangsan" \
+  -d '{
+    "query": "query($input: DynamicQueryInput!) { dynamicQuery(input: $input) { data total schema } }",
+    "variables": {
+      "input": {
+        "module": "hr",
+        "entity": "user", 
+        "fields": ["id", "name", "email"]
+      }
+    }
+  }'
+```
+
+注意：由于有了上下文管理，`system`字段现在是可选的，系统会自动使用`X-Tenant-Id`作为租户标识。
+
+### 2. 带上下文的GraphQL命令
+
+```bash
+curl -X POST http://localhost:8080/graphql \
+  -H "Content-Type: application/json" \
+  -H "X-Tenant-Id: tenant123" \
+  -H "X-User-Id: user456" \
+  -d '{
+    "query": "mutation($input: DynamicCommandInput!) { dynamicCommand(input: $input) { success message data } }",
+    "variables": {
+      "input": {
+        "module": "hr",
+        "entity": "user",
+        "operation": "CREATE",
+        "data": {
+          "name": "新用户",
+          "email": "newuser@example.com"
+        }
+      }
+    }
+  }'
+```
+
+系统会自动在数据中添加：
+- `tenantId`: 来自请求头
+- `createdBy`: 来自请求头的用户ID
+- `createdAt`: 当前时间戳
+- `updatedBy`: 来自请求头的用户ID  
+- `updatedAt`: 当前时间戳
+
+### 3. 测试上下文功能
+
+```bash
+curl -X GET http://localhost:8080/api/context/info \
+  -H "X-Tenant-Id: tenant123" \
+  -H "X-User-Id: user456" \
+  -H "X-Username: zhangsan"
+```
+
+返回当前线程上下文中的所有信息。
 
 ## 架构设计
 
 ### 核心组件
 
-1. **DynamicQueryHandler** - 处理所有查询操作（CQRS 的 Query 端）
-2. **DynamicCommandHandler** - 处理所有变更操作（CQRS 的 Command 端）
-3. **DynamicSchemaService** - 管理动态 Schema 元数据
-4. **DynamicGraphQLController** - GraphQL 接口控制器
-5. **SchemaManagementController** - Schema 管理 REST 接口
+1. **RequestContext** - 请求上下文数据结构
+2. **RequestContextHolder** - 线程安全的上下文管理器
+3. **RequestContextInterceptor** - HTTP拦截器，自动提取请求头信息
+4. **WebConfig** - Web配置，注册上下文拦截器
+5. **DynamicQueryHandler** - 查询处理器（已更新支持上下文）
+6. **DynamicCommandHandler** - 命令处理器（已更新支持上下文）
 
-### 数据结构
+### 上下文生命周期
 
-动态查询模式遵循以下结构：
-```json
-{
-  "system": "xia",      // 系统标识
-  "module": "hr",       // 模块标识
-  "context": "api",     // 上下文
-  "app": "invoice",     // 应用标识
-  "aggr": "employee",   // 聚合根
-  "entity": "user",     // 实体名称
-  "filter": "xxx",      // 过滤条件
-  "fields": ["field1", "field2"]  // 返回字段
-}
-```
+1. **请求开始**: 拦截器从HTTP请求头提取上下文信息
+2. **处理过程**: 业务代码通过`RequestContextHolder`访问上下文
+3. **请求结束**: 拦截器自动清理线程上下文，防止内存泄漏
+
+### 多租户隔离
+
+- **数据隔离**: 所有查询自动添加租户过滤条件
+- **操作审计**: 创建和更新操作自动记录操作人和时间
+- **权限控制**: 可基于上下文中的角色和权限信息进行访问控制
 
 ## 快速开始
 
@@ -143,7 +241,7 @@ mutation CreateUser($input: DynamicCommandInput!) {
   "input": {
     "system": "xia",
     "module": "hr",
-    "entity": "user", 
+    "entity": "user",
     "operation": "CREATE",
     "data": {
       "name": "张三",

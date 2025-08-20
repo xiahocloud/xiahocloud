@@ -1,8 +1,6 @@
 package com.xiahou.yu.paasdatacore.design.repository;
 
 import com.xiahou.yu.paasdatacore.design.metamodel.PageModel;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -93,14 +91,13 @@ public interface PageModelRepository extends BaseRepository<PageModel, Long> {
     List<PageModel> findByTenantAndPermissionAndEnabled(String tenant, String permission, Boolean enabled);
 
     /**
-     * 自定义查询：根据页面路径前缀查找
+     * 根据页面路径前缀查找（使用方法名约定替代自定义查询）
      *
      * @param tenant 租户编码
-     * @param pathPrefix 路径前缀
+     * @param pagePath 页面路径（支持LIKE查询）
      * @return 页面模型列表
      */
-    @Query("SELECT * FROM t_page_model WHERE tenant = :tenant AND page_path LIKE :pathPrefix%")
-    List<PageModel> findByPagePathPrefix(@Param("tenant") String tenant, @Param("pathPrefix") String pathPrefix);
+    List<PageModel> findByTenantAndPagePathStartingWith(String tenant, String pagePath);
 
     /**
      * 统计指定页面类型的数量
@@ -109,6 +106,5 @@ public interface PageModelRepository extends BaseRepository<PageModel, Long> {
      * @param pageType 页面类型
      * @return 页面数量
      */
-    @Query("SELECT COUNT(*) FROM t_page_model WHERE tenant = :tenant AND page_type = :pageType")
-    long countByTenantAndPageType(@Param("tenant") String tenant, @Param("pageType") String pageType);
+    long countByTenantAndPageType(String tenant, String pageType);
 }
