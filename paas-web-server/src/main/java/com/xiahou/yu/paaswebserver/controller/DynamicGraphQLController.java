@@ -31,7 +31,7 @@ public class DynamicGraphQLController {
      * 动态查询接口
      */
     @QueryMapping
-    public DynamicQueryResponse dynamicQuery(@Argument DynamicQueryInput input) {
+    public DynamicQueryResponse dynamicQuery(@Argument("input") DynamicQueryInput input) {
         log.info("Received dynamic query request: {}", input);
         return queryHandler.handle(input);
     }
@@ -40,7 +40,7 @@ public class DynamicGraphQLController {
      * 动态命令接口
      */
     @MutationMapping
-    public DynamicCommandResponse dynamicCommand(@Argument DynamicCommandInput input) {
+    public DynamicCommandResponse dynamicCommand(@Argument("input") DynamicCommandInput input) {
         log.info("Received dynamic command request: {}", input);
         return commandHandler.handle(input);
     }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 /**
  * 动态Schema元数据
+ * @author wanghaoxin
  */
 @Data
 public class DynamicSchemaMetadata {
@@ -14,8 +15,11 @@ public class DynamicSchemaMetadata {
     private String app;
     private String aggr;
     private String entity;
-    private Map<String, String> fieldTypes; // fieldName -> fieldType
-    private Map<String, Object> fieldConstraints; // fieldName -> constraints
+    // fieldName -> fieldType
+    private Map<String, String> fieldTypes;
+    // fieldName -> constraints
+    private Map<String, Object> fieldConstraints;
     private String primaryKey;
-    private Map<String, String> relationships; // fieldName -> relatedEntity
+    // fieldName -> relatedEntity
+    private Map<String, String> relationships;
 }
