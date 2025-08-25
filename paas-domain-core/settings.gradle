@@ -1,1 +1,7 @@
 rootProject.name = 'paas-domain-core'
+
+// 子模块
+include 'paas-domain-core-design'
+include 'paas-domain-core-runtime'
+// 包含依赖的独立项目
+includeBuild '../paas-meta-core'

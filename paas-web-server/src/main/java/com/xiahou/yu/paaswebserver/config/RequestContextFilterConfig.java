@@ -1,8 +1,12 @@
 package com.xiahou.yu.paaswebserver.config;
 
-import com.xiahou.yu.paaswebserver.context.RequestContext;
-import com.xiahou.yu.paaswebserver.context.RequestContextHolder;
-import jakarta.servlet.*;
+import com.xiahou.yu.paasinfracommon.context.RequestContext;
+import com.xiahou.yu.paasinfracommon.context.RequestContextHolder;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -85,8 +89,8 @@ public class RequestContextFilterConfig {
 
             // 排除不需要处理的路径
             return !requestURI.startsWith("/actuator/") &&
-                   !requestURI.equals("/favicon.ico") &&
-                   !requestURI.equals("/error");
+                    !requestURI.equals("/favicon.ico") &&
+                    !requestURI.equals("/error");
         }
 
         /**
@@ -127,8 +131,8 @@ public class RequestContextFilterConfig {
                 response.setHeader(HEADER_REQUEST_ID, requestId);
 
                 log.debug("Request context initialized by Filter: {} {} - tenantId={}, userId={}, requestId={}",
-                         request.getMethod(), request.getRequestURI(),
-                         context.getTenantId(), context.getUserId(), context.getRequestId());
+                        request.getMethod(), request.getRequestURI(),
+                        context.getTenantId(), context.getUserId(), context.getRequestId());
 
             } catch (Exception e) {
                 log.error("Failed to initialize request context in Filter", e);

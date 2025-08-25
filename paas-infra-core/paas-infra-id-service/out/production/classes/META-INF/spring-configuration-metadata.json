@@ -2,8 +2,8 @@
   "groups": [
     {
       "name": "snowflake",
-      "type": "com.xiahou.yu.paasdatacore.common.snowflake.SnowflakeConfig$SnowflakeProperties",
-      "sourceType": "com.xiahou.yu.paasdatacore.common.snowflake.SnowflakeConfig",
+      "type": "com.xiahou.yu.paasdomincore.common.snowflake.SnowflakeConfig$SnowflakeProperties",
+      "sourceType": "com.xiahou.yu.paasdomincore.common.snowflake.SnowflakeConfig",
       "sourceMethod": "snowflakeProperties()"
     }
   ],
@@ -12,13 +12,13 @@
       "name": "snowflake.datacenter-id",
       "type": "java.lang.Long",
       "description": "数据中心ID (0-31)",
-      "sourceType": "com.xiahou.yu.paasdatacore.common.snowflake.SnowflakeConfig$SnowflakeProperties"
+      "sourceType": "com.xiahou.yu.paasdomincore.common.snowflake.SnowflakeConfig$SnowflakeProperties"
     },
     {
       "name": "snowflake.worker-id",
       "type": "java.lang.Long",
       "description": "工作机器ID (0-31)",
-      "sourceType": "com.xiahou.yu.paasdatacore.common.snowflake.SnowflakeConfig$SnowflakeProperties"
+      "sourceType": "com.xiahou.yu.paasdomincore.common.snowflake.SnowflakeConfig$SnowflakeProperties"
     }
   ],
   "hints": []

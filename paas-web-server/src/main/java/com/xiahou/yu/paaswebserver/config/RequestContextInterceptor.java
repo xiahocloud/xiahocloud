@@ -1,7 +1,7 @@
 package com.xiahou.yu.paaswebserver.config;
 
-import com.xiahou.yu.paaswebserver.context.RequestContext;
-import com.xiahou.yu.paaswebserver.context.RequestContextHolder;
+import com.xiahou.yu.paasinfracommon.context.RequestContext;
+import com.xiahou.yu.paasinfracommon.context.RequestContextHolder;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +34,13 @@ public class RequestContextInterceptor implements HandlerInterceptor {
     private static final String HEADER_PERMISSIONS = "X-Permissions";
     private static final String HEADER_USER_AGENT = "User-Agent";
 
+    // 系统级参数HTTP头常量
+    private static final String HEADER_SYSTEM = "X-System";
+    private static final String HEADER_MODULE = "X-Module";
+    private static final String HEADER_CONTEXT = "X-Context";
+    private static final String HEADER_APP = "X-App";
+    private static final String HEADER_AGGR = "X-Aggr";
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         try {
@@ -49,6 +56,13 @@ public class RequestContextInterceptor implements HandlerInterceptor {
             context.setRoles(getHeaderValue(request, HEADER_ROLES));
             context.setPermissions(getHeaderValue(request, HEADER_PERMISSIONS));
             context.setUserAgent(getHeaderValue(request, HEADER_USER_AGENT));
+
+            // 从请求头中提取系统级参数
+            context.setSystem(getHeaderValue(request, HEADER_SYSTEM));
+            context.setModule(getHeaderValue(request, HEADER_MODULE));
+            context.setContext(getHeaderValue(request, HEADER_CONTEXT));
+            context.setApp(getHeaderValue(request, HEADER_APP));
+            context.setAggr(getHeaderValue(request, HEADER_AGGR));
 
             // 请求ID：如果请求头中没有，则生成一个
             String requestId = getHeaderValue(request, HEADER_REQUEST_ID);
@@ -70,8 +84,8 @@ public class RequestContextInterceptor implements HandlerInterceptor {
             response.setHeader(HEADER_REQUEST_ID, requestId);
 
             log.debug("Request context initialized: {} {} - tenantId={}, userId={}, requestId={}",
-                     request.getMethod(), request.getRequestURI(),
-                     context.getTenantId(), context.getUserId(), context.getRequestId());
+                    request.getMethod(), request.getRequestURI(),
+                    context.getTenantId(), context.getUserId(), context.getRequestId());
 
             return true;
         } catch (Exception e) {
@@ -83,7 +97,7 @@ public class RequestContextInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
-                               Object handler, Exception ex) {
+                                Object handler, Exception ex) {
         try {
             // 清除线程上下文，防止内存泄漏
             RequestContextHolder.clearContext();

@@ -1,7 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '3.3.4'
     id 'io.spring.dependency-management' version '1.1.6'
-    id 'java'
+    id 'java-library'
 }
 
 group = 'com.xiahou.yu'
@@ -16,17 +16,21 @@ configurations {
 
 repositories {
     mavenCentral()
+    mavenLocal() // 添加本地 Maven 仓库支持
 }
 
 dependencies {
+    // 当前项目的依赖
+    implementation 'com.xiahou.yu:paas-application-core'
+    api 'com.xiahou.yu:paas-infra-common'
+
+    // TransmittableThreadLocal 支持
+
     // Spring Boot 核心依赖
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-graphql'
     implementation 'com.graphql-java:graphql-java-extended-scalars:21.0'
-
-    // Alibaba TransmittableThreadLocal 支持
-    implementation 'com.alibaba:transmittable-thread-local:2.14.4'
 
     // Lombok 支持
     compileOnly 'org.projectlombok:lombok'

@@ -1,3 +1,4 @@
 rootProject.name = 'paas-infra-core'
 include 'paas-infra-id-service'
+include 'paas-infra-common'
 

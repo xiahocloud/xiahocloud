@@ -1,7 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.3.4' apply false
-    id 'io.spring.dependency-management' version '1.1.6'
+    id 'maven-publish'
 }
 
 group = 'com.xiahou.yu'
@@ -11,19 +10,15 @@ repositories {
     mavenCentral()
 }
 
-dependencyManagement {
-    imports {
-        mavenBom 'org.springframework.boot:spring-boot-dependencies:3.3.4'
-    }
+dependencies {
+
 }
 
-dependencies {
-    // 使用 includeBuild 方式引用 paas-data-core 项目
-    implementation 'com.xiahou.yu:paas-data-core'
-    
-    // Spring Boot 基础依赖
-    implementation 'org.springframework.boot:spring-boot-starter'
-    
-    // 测试依赖
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+// 配置 Maven 发布
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
 }

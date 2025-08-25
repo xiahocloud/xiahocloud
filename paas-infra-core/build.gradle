@@ -15,11 +15,21 @@ allprojects {
 
 subprojects {
     apply plugin: 'java'
-    
+    apply plugin: 'maven-publish'
+
     sourceCompatibility = '21'
     targetCompatibility = '21'
     
     repositories {
         mavenCentral()
+    }
+
+    // 配置 Maven 发布
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                from components.java
+            }
+        }
     }
 }
