@@ -1,0 +1,39 @@
+plugins {
+    id 'java-library'
+}
+
+group = 'com.xiahou.yu'
+version = '0.0.1-SNAPSHOT'
+description = 'paas-infra-common'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Alibaba TransmittableThreadLocal 支持
+    api 'com.alibaba:transmittable-thread-local:2.14.4'
+
+    // SLF4J 日志支持
+    implementation 'org.slf4j:slf4j-api:2.0.9'
+
+    // Lombok 支持
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+    testCompileOnly 'org.projectlombok:lombok:1.18.30'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    // 测试依赖
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.3.4'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
