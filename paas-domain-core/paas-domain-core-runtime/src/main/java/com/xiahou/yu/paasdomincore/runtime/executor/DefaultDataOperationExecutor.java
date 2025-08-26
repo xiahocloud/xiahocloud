@@ -130,22 +130,46 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
         Object execute(CommandContext context);
     }
 
+    private interface EntityExecutor {
+        Object metaEntityHandler(CommandContext context);
+
+        Object stdEntityHandler(CommandContext context);
+
+        Object customEntityHandler(CommandContext context);
+    }
+
     /**
      * 创建操作策略
      */
-    private static class CreateOperationStrategy implements DataOperationStrategy {
+    private static class CreateOperationStrategy implements DataOperationStrategy, EntityExecutor {
         @Override
         public Object execute(CommandContext context) {
             log.info("Executing CREATE operation for {}", context.getEntity());
             // 这里应该调用实际的数据访问层进行数据创建
             return Map.of("success", true, "message", "Data created successfully");
         }
+
+        @Override
+        public Object metaEntityexecute(CommandContext context) {
+
+        }
+
+        @Override
+        public Object stdEntityexecute(CommandContext context) {
+
+        }
+
+        @Override
+        public Object customEntityHandler(CommandContext context) {
+
+        }
+
     }
 
     /**
      * 更新操作策略
      */
-    private static class UpdateOperationStrategy implements DataOperationStrategy {
+    private static class UpdateOperationStrategy implements DataOperationStrategy, EntityExecutor {
         @Override
         public Object execute(CommandContext context) {
             String aggr = context.getAttribute("aggr");
@@ -158,7 +182,7 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
     /**
      * 删除操作策略
      */
-    private static class DeleteOperationStrategy implements DataOperationStrategy {
+    private static class DeleteOperationStrategy implements DataOperationStrategy, EntityExecutor {
         @Override
         public Object execute(CommandContext context) {
             String aggr = context.getAttribute("aggr");
@@ -171,7 +195,7 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
     /**
      * 查询操作策略
      */
-    private static class QueryOperationStrategy implements DataOperationStrategy {
+    private static class QueryOperationStrategy implements DataOperationStrategy, EntityExecutor {
         @Override
         public Object execute(CommandContext context) {
             String aggr = context.getAttribute("aggr");

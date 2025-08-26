@@ -2,7 +2,7 @@ package com.xiahou.yu.paaswebserver.cqrs.query;
 
 import com.xiahou.yu.paaswebserver.dto.input.DynamicQueryInput;
 import com.xiahou.yu.paaswebserver.dto.DynamicQueryResponse;
-import com.xiahou.yu.paasdomincore.runtime.dto.DynamicDataObject;
+import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
 import com.xiahou.yu.paaswebserver.entity.DynamicSchemaMetadata;
 import com.xiahou.yu.paaswebserver.service.DynamicSchemaService;
 import com.xiahou.yu.paasinfracommon.context.RequestContextHolder;

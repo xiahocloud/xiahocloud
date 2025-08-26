@@ -1,4 +1,4 @@
-package com.xiahou.yu.paasdomincore.runtime.metaobject;
+package com.xiahou.yu.paasdomincore.design.metaobject;
 
 /**
  * 调用器接口

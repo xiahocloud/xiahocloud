@@ -63,7 +63,6 @@ public class DefaultDataOperationService implements DataOperationService {
         return CommandContext.builder()
                 .entity(entity)
                 .data(data)
-                .conditions(conditions)
                 .build();
     }
 }

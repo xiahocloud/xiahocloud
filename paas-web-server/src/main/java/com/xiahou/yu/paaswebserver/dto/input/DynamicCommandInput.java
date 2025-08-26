@@ -1,5 +1,6 @@
 package com.xiahou.yu.paaswebserver.dto.input;
 
+import com.xiahou.yu.paasdomincore.design.filter.Filter;
 import lombok.Data;
 import java.util.Map;
 
@@ -26,7 +27,17 @@ public class DynamicCommandInput {
     private Map<String, Object> data;
 
     /**
-     * 查询/更新/删除条件
+     * 查询/更新/删除条件 - 使用统一的Filter
+     * -- SETTER --
+     *  设置过滤条件
+
      */
-    private Map<String, Object> conditions;
+    private Filter filter;
+
+    /**
+     * 获取有效的过滤条件
+     */
+    public Filter getEffectiveFilter() {
+        return filter != null ? filter : Filter.empty();
+    }
 }

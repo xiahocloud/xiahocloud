@@ -1,8 +1,8 @@
 package com.xiahou.yu.paaswebserver.dto.input;
 
+import com.xiahou.yu.paasdomincore.design.filter.Filter;
 import lombok.Data;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 动态查询输入DTO
@@ -23,19 +23,17 @@ public class DynamicQueryInput {
     private String entity;
 
     /**
-     * 过滤条件表达式
+     * 过滤条件 - 使用统一的Filter对象
+     * -- SETTER --
+     *  设置过滤条件
+
      */
-    private String filter;
+    private Filter filter;
 
     /**
      * 需要查询的字段列表
      */
     private List<String> fields;
-
-    /**
-     * 过滤参数
-     */
-    private Map<String, Object> filterParams;
 
     /**
      * 页码
@@ -51,4 +49,11 @@ public class DynamicQueryInput {
      * 排序字段
      */
     private List<String> orderBy;
+
+    /**
+     * 获取有效的过滤条件
+     */
+    public Filter getEffectiveFilter() {
+        return filter != null ? filter : Filter.empty();
+    }
 }

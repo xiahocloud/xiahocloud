@@ -1,6 +1,6 @@
 package com.xiahou.yu.paasdomincore.runtime.example;
 
-import com.xiahou.yu.paasdomincore.runtime.dto.DynamicDataObject;
+import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;

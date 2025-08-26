@@ -1,4 +1,4 @@
-package com.xiahou.yu.paasdomincore.runtime.metaobject;
+package com.xiahou.yu.paasdomincore.design.metaobject;
 
 /**
  * 默认对象包装器工厂实现

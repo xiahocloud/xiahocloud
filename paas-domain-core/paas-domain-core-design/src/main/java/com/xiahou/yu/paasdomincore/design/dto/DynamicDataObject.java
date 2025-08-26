@@ -1,6 +1,6 @@
-package com.xiahou.yu.paasdomincore.runtime.dto;
+package com.xiahou.yu.paasdomincore.design.dto;
 
-import com.xiahou.yu.paasdomincore.runtime.metaobject.MetaObject;
+import com.xiahou.yu.paasdomincore.design.metaobject.MetaObject;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;

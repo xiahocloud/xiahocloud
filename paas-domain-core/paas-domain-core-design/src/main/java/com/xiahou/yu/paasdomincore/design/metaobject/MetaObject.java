@@ -1,4 +1,4 @@
-package com.xiahou.yu.paasdomincore.runtime.metaobject;
+package com.xiahou.yu.paasdomincore.design.metaobject;
 
 import lombok.extern.slf4j.Slf4j;
 

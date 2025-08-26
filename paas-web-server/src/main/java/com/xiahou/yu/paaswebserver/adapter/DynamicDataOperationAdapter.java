@@ -3,12 +3,12 @@ package com.xiahou.yu.paaswebserver.adapter;
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
 import com.xiahou.yu.paasdomincore.design.command.CommandType;
 import com.xiahou.yu.paasdomincore.design.service.DataOperationService;
-import com.xiahou.yu.paasdomincore.runtime.dto.DynamicDataObject;
+import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
+import com.xiahou.yu.paasdomincore.design.filter.Filter;
 import com.xiahou.yu.paasinfracommon.context.RequestContextHolder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -27,10 +27,10 @@ public class DynamicDataOperationAdapter {
     private final DataOperationService dataOperationService;
 
     /**
-     * 处理动态数据操作命令 - 使用DynamicDataObject替代Map参数
+     * 处理动态数据操作命令 - 使用Filter替代conditions参数
      */
     public DataOperationResult handleCommand(String entity, String operation, DynamicDataObject data,
-                                             DynamicDataObject conditions) {
+                                             Filter filter) {
 
         // 从线程上下文获取系统级参数
         String system = RequestContextHolder.getSystem();
@@ -46,17 +46,17 @@ public class DynamicDataOperationAdapter {
                 entity, operation, tenantId, userId, requestId);
 
         try {
-            // 创建命令上下文 - 不再需要在上下文中传递系统级参数
+            // 创建命令上下文 - 使用统一的Filter系统
             CommandContext commandContext = CommandContext.builder()
                     .entity(entity)
                     .data(data != null ? data.toMap() : null)
-                    .conditions(conditions != null ? conditions.toMap() : null)
+                    .filter(filter)
                     .build();
 
             // 解析操作类型
             CommandType commandType = parseCommandType(operation);
 
-            // 执行操作 - 修正方法调用顺序
+            // 执行操作
             Object result = dataOperationService.execute(commandContext, commandType);
 
             // 将结果包装为DynamicDataObject
@@ -77,14 +77,23 @@ public class DynamicDataOperationAdapter {
     }
 
     /**
-     * 重载方法：支持传统的Map参数，内部转换为DynamicDataObject
+     * 重载方法：支持传统的Map参数，内部转换为Filter
      */
     public DataOperationResult handleCommand(String entity, String operation, Map<String, Object> data,
                                              Map<String, Object> conditions) {
         DynamicDataObject dataObject = data != null ? DynamicDataObject.fromMap(data) : null;
-        DynamicDataObject conditionsObject = conditions != null ? DynamicDataObject.fromMap(conditions) : null;
+        Filter filter = conditions != null ? Filter.fromMap(conditions) : Filter.empty();
 
-        return handleCommand(entity, operation, dataObject, conditionsObject);
+        return handleCommand(entity, operation, dataObject, filter);
+    }
+
+    /**
+     * 重载方法：支持DynamicDataObject条件参数，转换为Filter
+     */
+    public DataOperationResult handleCommand(String entity, String operation, DynamicDataObject data,
+                                             DynamicDataObject conditions) {
+        Filter filter = conditions != null ? Filter.fromConditions(conditions) : Filter.empty();
+        return handleCommand(entity, operation, data, filter);
     }
 
     private CommandType parseCommandType(String operation) {
