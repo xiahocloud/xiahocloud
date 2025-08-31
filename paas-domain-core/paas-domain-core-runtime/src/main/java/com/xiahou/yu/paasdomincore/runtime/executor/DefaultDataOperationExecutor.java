@@ -131,11 +131,25 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
     }
 
     private interface EntityExecutor {
-        Object metaEntityHandler(CommandContext context);
 
-        Object stdEntityHandler(CommandContext context);
+        default Object execute(CommandContext context) {
+            String entityType = context.getAttribute("entityType");
+            if ("meta".equalsIgnoreCase(entityType)) {
+                return metaEntityExecute(context);
+            } else if ("std".equalsIgnoreCase(entityType)) {
+                return stdEntityExecute(context);
+            } else if ("custom".equalsIgnoreCase(entityType)) {
+                return customEntityExecute(context);
+            } else {
+                throw new IllegalArgumentException("Unsupported entity type: " + entityType);
+            }
+        }
 
-        Object customEntityHandler(CommandContext context);
+        Object metaEntityExecute(CommandContext context);
+
+        Object stdEntityExecute(CommandContext context);
+
+        Object customEntityExecute(CommandContext context);
     }
 
     /**
@@ -149,19 +163,21 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
             return Map.of("success", true, "message", "Data created successfully");
         }
 
-        @Override
-        public Object metaEntityexecute(CommandContext context) {
 
+
+        @Override
+        public Object metaEntityExecute(CommandContext context) {
+            return null;
         }
 
         @Override
-        public Object stdEntityexecute(CommandContext context) {
-
+        public Object stdEntityExecute(CommandContext context) {
+            return null;
         }
 
         @Override
-        public Object customEntityHandler(CommandContext context) {
-
+        public Object customEntityExecute(CommandContext context) {
+            return  null;
         }
 
     }
@@ -177,6 +193,22 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
             // 这里应该调用实际的数据访问层进行数据更新
             return Map.of("success", true, "message", "Data updated successfully");
         }
+
+
+        @Override
+        public Object metaEntityExecute(CommandContext context) {
+            return null;
+        }
+
+        @Override
+        public Object stdEntityExecute(CommandContext context) {
+            return null;
+        }
+
+        @Override
+        public Object customEntityExecute(CommandContext context) {
+            return null;
+        }
     }
 
     /**
@@ -190,6 +222,22 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
             // 这里应该调用实际的数据访问层进行数据删除
             return Map.of("success", true, "message", "Data deleted successfully");
         }
+
+
+        @Override
+        public Object metaEntityExecute(CommandContext context) {
+            return null;
+        }
+
+        @Override
+        public Object stdEntityExecute(CommandContext context) {
+            return null;
+        }
+
+        @Override
+        public Object customEntityExecute(CommandContext context) {
+            return null;
+        }
     }
 
     /**
@@ -202,6 +250,21 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
             log.info("Executing QUERY operation for {}.{}", aggr, context.getEntity());
             // 这里应该调用实际的数据访问层进行数据查询
             return Map.of("success", true, "data", List.of(), "message", "Data queried successfully");
+        }
+
+        @Override
+        public Object metaEntityExecute(CommandContext context) {
+            return null;
+        }
+
+        @Override
+        public Object stdEntityExecute(CommandContext context) {
+            return null;
+        }
+
+        @Override
+        public Object customEntityExecute(CommandContext context) {
+            return null;
         }
     }
 }

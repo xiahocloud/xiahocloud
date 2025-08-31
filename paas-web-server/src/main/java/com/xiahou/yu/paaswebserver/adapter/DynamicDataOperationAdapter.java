@@ -29,8 +29,7 @@ public class DynamicDataOperationAdapter {
     /**
      * 处理动态数据操作命令 - 使用Filter替代conditions参数
      */
-    public DataOperationResult handleCommand(String entity, String operation, DynamicDataObject data,
-                                             Filter filter) {
+    public DataOperationResult handleCommand(String entity, String operation, DynamicDataObject data, Filter filter) {
 
         // 从线程上下文获取系统级参数
         String system = RequestContextHolder.getSystem();
