@@ -14,15 +14,24 @@ public enum ResultStatusEnum {
     /**
      * 成功
      */
-    SUCCESS("00000", "成功。"),
+    SUCCESS("A00000", "成功。"),
+    SYSTEM_ERROR("A00001", "服务器异常。"),
 
-    META_CORE_ERROR("A00001", "模型层异常。"),
+    META_CORE_ERROR("A10001", "模型层异常。"),
 
-    DATA_CORE_ERROR("A00002", "数据核心层异常。"),
+    DOMAIN_CORE_ERROR("A20001", "数据核心层异常。"),
 
-    SYSTEM_ERROR("B00001", "服务器异常。"),
+    APPLICATION_CORE_ERROR("A30001", "应用层异常。"),
 
-    PARAMS_NOT_MATCHES("A0421", "参数不匹配。");
+    /**
+     * 根据key获取枚举，未匹配到
+     */
+    ENUM_NOT_MATCHES("A00002", "枚举未匹配。"),
+
+    PARAMS_NOT_MATCHES("B00001", "业务异常。");
+
+
+
 
     private String code;
 

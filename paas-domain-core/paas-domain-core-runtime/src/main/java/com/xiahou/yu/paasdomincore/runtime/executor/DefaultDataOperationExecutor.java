@@ -6,6 +6,8 @@ import com.xiahou.yu.paasdomincore.design.command.Command;
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
 import com.xiahou.yu.paasdomincore.design.command.CommandType;
 import com.xiahou.yu.paasdomincore.design.executor.DataOperationExecutor;
+import com.xiahou.yu.paasdomincore.design.register.EntityTypeRegister;
+import com.xiahou.yu.paasdomincore.design.util.EntityTypeEnum;
 import com.xiahou.yu.paasdomincore.runtime.chain.DefaultHandlerChain;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -126,22 +128,22 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
     /**
      * 数据操作策略接口
      */
-    private interface DataOperationStrategy {
+    private interface DataOperationStrategy extends EntityExecutor {
         Object execute(CommandContext context);
     }
 
     private interface EntityExecutor {
 
-        default Object execute(CommandContext context) {
-            String entityType = context.getAttribute("entityType");
-            if ("meta".equalsIgnoreCase(entityType)) {
+        default Object executeByEntityType(CommandContext context) {
+            String entity = context.getEntity();
+            EntityTypeEnum entityType = EntityTypeRegister.getEntityType(entity);
+
+            if (EntityTypeEnum.META_ENTITY == entityType) {
                 return metaEntityExecute(context);
-            } else if ("std".equalsIgnoreCase(entityType)) {
+            } else if (EntityTypeEnum.STD_ENTITY == entityType) {
                 return stdEntityExecute(context);
-            } else if ("custom".equalsIgnoreCase(entityType)) {
-                return customEntityExecute(context);
             } else {
-                throw new IllegalArgumentException("Unsupported entity type: " + entityType);
+                return customEntityExecute(context);
             }
         }
 
@@ -155,14 +157,13 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
     /**
      * 创建操作策略
      */
-    private static class CreateOperationStrategy implements DataOperationStrategy, EntityExecutor {
+    private static class CreateOperationStrategy implements DataOperationStrategy {
         @Override
         public Object execute(CommandContext context) {
             log.info("Executing CREATE operation for {}", context.getEntity());
             // 这里应该调用实际的数据访问层进行数据创建
-            return Map.of("success", true, "message", "Data created successfully");
+            return executeByEntityType(context);
         }
-
 
 
         @Override
