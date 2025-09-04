@@ -6,10 +6,13 @@ import com.xiahou.yu.paasdomincore.design.command.Command;
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
 import com.xiahou.yu.paasdomincore.design.command.CommandType;
 import com.xiahou.yu.paasdomincore.design.executor.DataOperationExecutor;
-import com.xiahou.yu.paasdomincore.design.register.EntityTypeRegister;
-import com.xiahou.yu.paasdomincore.design.util.EntityTypeEnum;
+import com.xiahou.yu.paasdomincore.design.constant.EntityTypeEnum;
+import com.xiahou.yu.paasdomincore.design.registry.EntityTypeRegister;
 import com.xiahou.yu.paasdomincore.runtime.chain.DefaultHandlerChain;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -23,17 +26,17 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @author xiahou
  */
-@Component
 @Slf4j
+@Component
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DefaultDataOperationExecutor implements DataOperationExecutor {
 
-    private final Map<String, Handler> preHandlers = new ConcurrentHashMap<>();
-    private final Map<String, Handler> postHandlers = new ConcurrentHashMap<>();
-    private final Map<CommandType, DataOperationStrategy> strategies = new ConcurrentHashMap<>();
+    private static final Map<String, Handler> PRE_HANDLERS = new ConcurrentHashMap<>();
+    private static final Map<String, Handler> POST_HANDLERS = new ConcurrentHashMap<>();
+    private static final Map<CommandType, DataOperationStrategy> STRATEGIES = new ConcurrentHashMap<>();
 
-    public DefaultDataOperationExecutor() {
-        initializeStrategies();
-    }
+    private final ApplicationContext applicationContext;
+
 
     @Override
     public <T> T execute(Command<T> command) {
@@ -57,7 +60,7 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
             }
 
             // 2. 执行核心业务逻辑
-            DataOperationStrategy strategy = strategies.get(commandType);
+            DataOperationStrategy strategy = STRATEGIES.get(commandType);
             if (strategy == null) {
                 throw new UnsupportedOperationException("Unsupported command type: " + commandType);
             }
@@ -84,7 +87,7 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
     @Override
     public void registerPreHandler(String handlerName, Object handler) {
         if (handler instanceof Handler) {
-            preHandlers.put(handlerName, (Handler) handler);
+            PRE_HANDLERS.put(handlerName, (Handler) handler);
             log.info("Registered pre-handler: {}", handlerName);
         } else {
             throw new IllegalArgumentException("Handler must implement Handler interface");
@@ -94,7 +97,7 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
     @Override
     public void registerPostHandler(String handlerName, Object handler) {
         if (handler instanceof Handler) {
-            postHandlers.put(handlerName, (Handler) handler);
+            POST_HANDLERS.put(handlerName, (Handler) handler);
             log.info("Registered post-handler: {}", handlerName);
         } else {
             throw new IllegalArgumentException("Handler must implement Handler interface");
@@ -103,26 +106,26 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
 
     @Override
     public void removeHandler(String handlerName) {
-        preHandlers.remove(handlerName);
-        postHandlers.remove(handlerName);
+        PRE_HANDLERS.remove(handlerName);
+        POST_HANDLERS.remove(handlerName);
         log.info("Removed handler: {}", handlerName);
     }
 
     private HandlerChain createPreHandlerChain(CommandContext context) {
-        List<Handler> handlers = new ArrayList<>(preHandlers.values());
+        List<Handler> handlers = new ArrayList<>(PRE_HANDLERS.values());
         return new DefaultHandlerChain(handlers);
     }
 
     private HandlerChain createPostHandlerChain(CommandContext context) {
-        List<Handler> handlers = new ArrayList<>(postHandlers.values());
+        List<Handler> handlers = new ArrayList<>(POST_HANDLERS.values());
         return new DefaultHandlerChain(handlers);
     }
 
     private void initializeStrategies() {
-        strategies.put(CommandType.CREATE, new CreateOperationStrategy());
-        strategies.put(CommandType.UPDATE, new UpdateOperationStrategy());
-        strategies.put(CommandType.DELETE, new DeleteOperationStrategy());
-        strategies.put(CommandType.QUERY, new QueryOperationStrategy());
+        STRATEGIES.put(CommandType.CREATE, new CreateOperationStrategy());
+        STRATEGIES.put(CommandType.UPDATE, new UpdateOperationStrategy());
+        STRATEGIES.put(CommandType.DELETE, new DeleteOperationStrategy());
+        STRATEGIES.put(CommandType.QUERY, new QueryOperationStrategy());
     }
 
     /**
@@ -173,6 +176,7 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
 
         @Override
         public Object stdEntityExecute(CommandContext context) {
+            applicationContext.getBean()
             return null;
         }
 

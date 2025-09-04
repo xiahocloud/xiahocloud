@@ -1,4 +1,4 @@
-package com.xiahou.yu.paasdomincore.design.util;
+package com.xiahou.yu.paasdomincore.design.constant;
 
 import com.xiahou.yu.paasdomincore.design.enumgetter.EnumGetter;
 import lombok.Getter;
