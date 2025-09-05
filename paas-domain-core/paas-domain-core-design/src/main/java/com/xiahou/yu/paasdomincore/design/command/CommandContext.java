@@ -20,7 +20,7 @@ public class CommandContext {
     /**
      * 实体标识
      */
-    private String entity;
+    private String entityName;
 
     /**
      * 数据载荷

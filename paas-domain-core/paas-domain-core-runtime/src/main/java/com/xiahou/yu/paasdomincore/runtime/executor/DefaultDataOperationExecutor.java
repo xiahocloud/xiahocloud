@@ -6,9 +6,13 @@ import com.xiahou.yu.paasdomincore.design.command.Command;
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
 import com.xiahou.yu.paasdomincore.design.command.CommandType;
 import com.xiahou.yu.paasdomincore.design.executor.DataOperationExecutor;
-import com.xiahou.yu.paasdomincore.design.constant.EntityTypeEnum;
-import com.xiahou.yu.paasdomincore.design.registry.EntityTypeRegister;
 import com.xiahou.yu.paasdomincore.runtime.chain.DefaultHandlerChain;
+import com.xiahou.yu.paasdomincore.runtime.strategy.DataOperationStrategy;
+import com.xiahou.yu.paasdomincore.runtime.strategy.impl.CreateOperationStrategy;
+import com.xiahou.yu.paasdomincore.runtime.strategy.impl.DeleteOperationStrategy;
+import com.xiahou.yu.paasdomincore.runtime.strategy.impl.QueryOperationStrategy;
+import com.xiahou.yu.paasdomincore.runtime.strategy.impl.UpdateOperationStrategy;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +37,22 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
 
     private static final Map<String, Handler> PRE_HANDLERS = new ConcurrentHashMap<>();
     private static final Map<String, Handler> POST_HANDLERS = new ConcurrentHashMap<>();
-    private static final Map<CommandType, DataOperationStrategy> STRATEGIES = new ConcurrentHashMap<>();
+    private final Map<CommandType, DataOperationStrategy> strategies = new ConcurrentHashMap<>();
 
     private final ApplicationContext applicationContext;
+    private final CreateOperationStrategy createOperationStrategy;
+    private final UpdateOperationStrategy updateOperationStrategy;
+    private final DeleteOperationStrategy deleteOperationStrategy;
+    private final QueryOperationStrategy queryOperationStrategy;
 
+    @PostConstruct
+    private void initializeStrategies() {
+        strategies.put(CommandType.CREATE, createOperationStrategy);
+        strategies.put(CommandType.UPDATE, updateOperationStrategy);
+        strategies.put(CommandType.DELETE, deleteOperationStrategy);
+        strategies.put(CommandType.QUERY, queryOperationStrategy);
+        log.info("Initialized {} operation strategies", strategies.size());
+    }
 
     @Override
     public <T> T execute(Command<T> command) {
@@ -48,7 +64,7 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
     public <T> T execute(CommandContext context, CommandType commandType) {
         String aggr = context.getAttribute("aggr");
         log.info("Executing {} operation for entity: {}.{}",
-                commandType, aggr, context.getEntity());
+                commandType, aggr, context.getEntityName());
 
         try {
             // 1. 执行前置处理器链
@@ -60,7 +76,7 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
             }
 
             // 2. 执行核心业务逻辑
-            DataOperationStrategy strategy = STRATEGIES.get(commandType);
+            DataOperationStrategy strategy = strategies.get(commandType);
             if (strategy == null) {
                 throw new UnsupportedOperationException("Unsupported command type: " + commandType);
             }
@@ -119,157 +135,5 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
     private HandlerChain createPostHandlerChain(CommandContext context) {
         List<Handler> handlers = new ArrayList<>(POST_HANDLERS.values());
         return new DefaultHandlerChain(handlers);
-    }
-
-    private void initializeStrategies() {
-        STRATEGIES.put(CommandType.CREATE, new CreateOperationStrategy());
-        STRATEGIES.put(CommandType.UPDATE, new UpdateOperationStrategy());
-        STRATEGIES.put(CommandType.DELETE, new DeleteOperationStrategy());
-        STRATEGIES.put(CommandType.QUERY, new QueryOperationStrategy());
-    }
-
-    /**
-     * 数据操作策略接口
-     */
-    private interface DataOperationStrategy extends EntityExecutor {
-        Object execute(CommandContext context);
-    }
-
-    private interface EntityExecutor {
-
-        default Object executeByEntityType(CommandContext context) {
-            String entity = context.getEntity();
-            EntityTypeEnum entityType = EntityTypeRegister.getEntityType(entity);
-
-            if (EntityTypeEnum.META_ENTITY == entityType) {
-                return metaEntityExecute(context);
-            } else if (EntityTypeEnum.STD_ENTITY == entityType) {
-                return stdEntityExecute(context);
-            } else {
-                return customEntityExecute(context);
-            }
-        }
-
-        Object metaEntityExecute(CommandContext context);
-
-        Object stdEntityExecute(CommandContext context);
-
-        Object customEntityExecute(CommandContext context);
-    }
-
-    /**
-     * 创建操作策略
-     */
-    private static class CreateOperationStrategy implements DataOperationStrategy {
-        @Override
-        public Object execute(CommandContext context) {
-            log.info("Executing CREATE operation for {}", context.getEntity());
-            // 这里应该调用实际的数据访问层进行数据创建
-            return executeByEntityType(context);
-        }
-
-
-        @Override
-        public Object metaEntityExecute(CommandContext context) {
-            return null;
-        }
-
-        @Override
-        public Object stdEntityExecute(CommandContext context) {
-            applicationContext.getBean()
-            return null;
-        }
-
-        @Override
-        public Object customEntityExecute(CommandContext context) {
-            return  null;
-        }
-
-    }
-
-    /**
-     * 更新操作策略
-     */
-    private static class UpdateOperationStrategy implements DataOperationStrategy, EntityExecutor {
-        @Override
-        public Object execute(CommandContext context) {
-            String aggr = context.getAttribute("aggr");
-            log.info("Executing UPDATE operation for {}.{}", aggr, context.getEntity());
-            // 这里应该调用实际的数据访问层进行数据更新
-            return Map.of("success", true, "message", "Data updated successfully");
-        }
-
-
-        @Override
-        public Object metaEntityExecute(CommandContext context) {
-            return null;
-        }
-
-        @Override
-        public Object stdEntityExecute(CommandContext context) {
-            return null;
-        }
-
-        @Override
-        public Object customEntityExecute(CommandContext context) {
-            return null;
-        }
-    }
-
-    /**
-     * 删除操作策略
-     */
-    private static class DeleteOperationStrategy implements DataOperationStrategy, EntityExecutor {
-        @Override
-        public Object execute(CommandContext context) {
-            String aggr = context.getAttribute("aggr");
-            log.info("Executing DELETE operation for {}.{}", aggr, context.getEntity());
-            // 这里应该调用实际的数据访问层进行数据删除
-            return Map.of("success", true, "message", "Data deleted successfully");
-        }
-
-
-        @Override
-        public Object metaEntityExecute(CommandContext context) {
-            return null;
-        }
-
-        @Override
-        public Object stdEntityExecute(CommandContext context) {
-            return null;
-        }
-
-        @Override
-        public Object customEntityExecute(CommandContext context) {
-            return null;
-        }
-    }
-
-    /**
-     * 查询操作策略
-     */
-    private static class QueryOperationStrategy implements DataOperationStrategy, EntityExecutor {
-        @Override
-        public Object execute(CommandContext context) {
-            String aggr = context.getAttribute("aggr");
-            log.info("Executing QUERY operation for {}.{}", aggr, context.getEntity());
-            // 这里应该调用实际的数据访问层进行数据查询
-            return Map.of("success", true, "data", List.of(), "message", "Data queried successfully");
-        }
-
-        @Override
-        public Object metaEntityExecute(CommandContext context) {
-            return null;
-        }
-
-        @Override
-        public Object stdEntityExecute(CommandContext context) {
-            return null;
-        }
-
-        @Override
-        public Object customEntityExecute(CommandContext context) {
-            return null;
-        }
     }
 }

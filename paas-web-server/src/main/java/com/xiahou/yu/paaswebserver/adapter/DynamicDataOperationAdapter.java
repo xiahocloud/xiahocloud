@@ -47,7 +47,7 @@ public class DynamicDataOperationAdapter {
         try {
             // 创建命令上下文 - 使用统一的Filter系统
             CommandContext commandContext = CommandContext.builder()
-                    .entity(entity)
+                    .entityName(entity)
                     .data(data != null ? data.toMap() : null)
                     .filter(filter)
                     .build();

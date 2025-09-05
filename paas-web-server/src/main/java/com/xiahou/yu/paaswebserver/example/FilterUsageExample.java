@@ -101,7 +101,7 @@ public class FilterUsageExample {
 
         // 在 CommandContext 中使用
         CommandContext context = CommandContext.builder()
-            .entity("User")
+            .entityName("User")
             .build();
 
         // 设置过滤器

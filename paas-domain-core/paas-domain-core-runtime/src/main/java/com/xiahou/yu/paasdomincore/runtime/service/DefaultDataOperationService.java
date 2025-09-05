@@ -52,7 +52,7 @@ public class DefaultDataOperationService implements DataOperationService {
         // 从当前线程上下文获取系统级参数并添加到 CommandContext 的 attributes 中
         // 注意：这里需要通过反射或其他方式获取线程上下文，因为这个模块不应该直接依赖 web 模块
         // 暂时使用日志记录，实际应该通过依赖注入或事件机制获取
-        log.info("Executing {} operation for entity: {}", commandType, context.getEntity());
+        log.info("Executing {} operation for entity: {}", commandType, context.getEntityName());
 
         return dataOperationExecutor.execute(context, commandType);
     }
@@ -60,7 +60,7 @@ public class DefaultDataOperationService implements DataOperationService {
     @Override
     public CommandContext buildContext(String entity, Map<String, Object> data, Map<String, Object> conditions) {
         return CommandContext.builder()
-                .entity(entity)
+                .entityName(entity)
                 .data(data)
                 .build();
     }

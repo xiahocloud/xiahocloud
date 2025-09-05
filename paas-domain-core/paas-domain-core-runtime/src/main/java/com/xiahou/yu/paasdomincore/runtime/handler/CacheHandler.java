@@ -110,7 +110,7 @@ public class CacheHandler implements Handler {
                   .append(":")
                   .append(aggr)
                   .append(":")
-                  .append(context.getEntity());
+                  .append(context.getEntityName());
 
         // 对于查询操作，添加查询条件到缓存键
         if (context.getConditions() != null && !context.getConditions().isEmpty()) {
@@ -126,7 +126,7 @@ public class CacheHandler implements Handler {
         String aggr = context.getAttribute("aggr");
 
         String prefix = String.format("%s:%s:%s:%s",
-                system, module, aggr, context.getEntity());
+                system, module, aggr, context.getEntityName());
 
         // 清除所有相关的缓存项
         cache.entrySet().removeIf(entry -> entry.getKey().startsWith(prefix));

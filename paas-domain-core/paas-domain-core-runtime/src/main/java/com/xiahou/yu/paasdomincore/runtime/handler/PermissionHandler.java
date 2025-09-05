@@ -21,19 +21,19 @@ public class PermissionHandler implements Handler {
     @Override
     public boolean handle(CommandContext context, HandlerChain chain) {
         String aggr = context.getAttribute("aggr");
-        log.info("Checking permissions for {}.{}", aggr, context.getEntity());
+        log.info("Checking permissions for {}.{}", aggr, context.getEntityName());
 
         String userId = context.getAttribute("userId");
         String operation = context.getAttribute("commandType");
 
         if (!hasPermission(userId, context, operation)) {
             log.warn("Permission denied for user {} on {}.{} with operation {}",
-                    userId, aggr, context.getEntity(), operation);
+                    userId, aggr, context.getEntityName(), operation);
             return false;
         }
 
         log.info("Permission check passed for user {} on {}.{}",
-                userId, aggr, context.getEntity());
+                userId, aggr, context.getEntityName());
         return chain.proceed(context);
     }
 
@@ -65,7 +65,7 @@ public class PermissionHandler implements Handler {
         String system = context.getAttribute("system");
         String aggr = context.getAttribute("aggr");
         String resourceKey = String.format("%s.%s.%s",
-                system, aggr, context.getEntity());
+                system, aggr, context.getEntityName());
         String permissionKey = String.format("%s:%s", resourceKey, operation);
 
         // 这里应该调用实际的权限服务

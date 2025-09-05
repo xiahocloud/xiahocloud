@@ -23,7 +23,7 @@ public class DataAutoFillHandler implements Handler {
     @Override
     public boolean handle(CommandContext context, HandlerChain chain) {
         String aggr = context.getAttribute("aggr");
-        log.info("Auto-filling system fields for {}.{}", aggr, context.getEntity());
+        log.info("Auto-filling system fields for {}.{}", aggr, context.getEntityName());
 
         String operation = context.getAttribute("commandType");
 

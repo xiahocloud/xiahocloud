@@ -55,7 +55,7 @@ public class AuditLogHandler implements Handler {
         log.info("AUDIT_START: Operation={}, Entity={}.{}, User={}, Time={}",
                 operation,
                 aggr,
-                context.getEntity(),
+                context.getEntityName(),
                 context.getAttribute("userId"),
                 LocalDateTime.now());
     }
@@ -65,7 +65,7 @@ public class AuditLogHandler implements Handler {
         log.info("AUDIT_END: Operation={}, Entity={}.{}, Success={}, Time={}",
                 operation,
                 aggr,
-                context.getEntity(),
+                context.getEntityName(),
                 success,
                 LocalDateTime.now());
     }

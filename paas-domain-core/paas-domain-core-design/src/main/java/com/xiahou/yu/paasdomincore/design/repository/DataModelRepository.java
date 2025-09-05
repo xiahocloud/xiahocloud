@@ -4,7 +4,7 @@ import com.xiahou.yu.paasdomincore.design.metamodel.DataModel;
 import org.springframework.stereotype.Repository;
 
 /**
- * 数据模型Repository接口
+ * 数据模型 Repository 接口
  * 提供数据模型的数据访问操作
  *
  * @author paas-data-core-design

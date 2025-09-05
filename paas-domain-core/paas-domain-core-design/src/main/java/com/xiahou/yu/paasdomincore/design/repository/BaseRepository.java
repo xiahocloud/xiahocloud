@@ -3,29 +3,36 @@ package com.xiahou.yu.paasdomincore.design.repository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
-import java.util.List;
-import java.util.Optional;
+import java.io.Serializable;
 
 /**
- * 基础仓储接口
- * 提供通用的CRUD操作方法
+ * 基础 Repository 接口 - Spring Data JDBC 版本
+ * 所有数据访问层都应该继承此接口
  *
  * @param <T> 实体类型
  * @param <ID> 主键类型
- * @author paas-data-core-design
- * @version 0.0.1
+ * @author xiahou
  */
 @NoRepositoryBean
-public interface BaseRepository<T, ID> extends CrudRepository<T, ID> {
+public interface BaseRepository<T, ID extends Serializable> extends CrudRepository<T, ID> {
 
     /**
-     * 根据租户和key查找实体
+     * 根据租户和业务键查找实体
      *
      * @param tenant 租户编码
-     * @param key 业务标识
+     * @param key 业务键
      * @return 实体对象
      */
-    Optional<T> findByTenantAndKey(String tenant, String key);
+    T findByTenantAndKey(String tenant, String key);
+
+    /**
+     * 检查租户内业务键是否存在
+     *
+     * @param tenant 租户编码
+     * @param key 业务键
+     * @return 是否存在
+     */
+    boolean existsByTenantAndKey(String tenant, String key);
 
     /**
      * 根据租户查找所有实体
@@ -33,31 +40,5 @@ public interface BaseRepository<T, ID> extends CrudRepository<T, ID> {
      * @param tenant 租户编码
      * @return 实体列表
      */
-    List<T> findByTenant(String tenant);
-
-    /**
-     * 根据租户和名称查找实体
-     *
-     * @param tenant 租户编码
-     * @param name 名称
-     * @return 实体列表
-     */
-    List<T> findByTenantAndNameContaining(String tenant, String name);
-
-    /**
-     * 检查在指定租户下key是否存在
-     *
-     * @param tenant 租户编码
-     * @param key 业务标识
-     * @return 是否存在
-     */
-    boolean existsByTenantAndKey(String tenant, String key);
-
-    /**
-     * 根据租户删除实体
-     *
-     * @param tenant 租户编码
-     * @return 删除的记录数
-     */
-    long deleteByTenant(String tenant);
+    Iterable<T> findByTenant(String tenant);
 }
