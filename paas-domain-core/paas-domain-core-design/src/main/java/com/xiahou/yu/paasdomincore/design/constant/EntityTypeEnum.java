@@ -12,8 +12,19 @@ import lombok.Getter;
  */
 @Getter
 public enum EntityTypeEnum implements EnumGetter<EntityTypeEnum> {
+    /**
+     * 直接传入map 的形式存储的实体信息
+     */
     CUSTOM_ENTITY("custom_entity", "自定义实体"),
-    STD_ENTITY("system_entity", "系统实体"),
+
+    /**
+     * 系统实体, 预定义的标准实体信息
+     */
+    SYSTEM_ENTITY("system_entity", "系统实体"),
+
+    /**
+     * 元数据实体, 通过元数据方式存入的实体信息
+     */
     META_ENTITY("meta_entity", "元数据实体");
 
     private final String key;

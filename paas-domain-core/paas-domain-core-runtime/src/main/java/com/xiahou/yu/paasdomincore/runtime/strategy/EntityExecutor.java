@@ -2,6 +2,7 @@ package com.xiahou.yu.paasdomincore.runtime.strategy;
 
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
 import com.xiahou.yu.paasdomincore.design.constant.EntityTypeEnum;
+import com.xiahou.yu.paasdomincore.design.registry.EntityRegistryManager;
 import com.xiahou.yu.paasdomincore.design.registry.EntityTypeRegister;
 
 /**
@@ -20,12 +21,12 @@ public interface EntityExecutor {
      */
     default Object executeByEntityType(CommandContext context) {
         String entity = context.getEntityName();
-        EntityTypeEnum entityType = EntityTypeRegister.getEntityType(entity);
+        EntityTypeEnum entityType = EntityRegistryManager.getEntityType(entity);
 
         if (EntityTypeEnum.META_ENTITY == entityType) {
             return metaEntityExecute(context);
-        } else if (EntityTypeEnum.STD_ENTITY == entityType) {
-            return stdEntityExecute(context);
+        } else if (EntityTypeEnum.SYSTEM_ENTITY == entityType) {
+            return systemEntityExecute(context);
         } else {
             return customEntityExecute(context);
         }
@@ -45,7 +46,7 @@ public interface EntityExecutor {
      * @param context 命令上下文
      * @return 执行结果
      */
-    Object stdEntityExecute(CommandContext context);
+    Object systemEntityExecute(CommandContext context);
 
     /**
      * 执行自定义实体操作

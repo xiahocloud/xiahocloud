@@ -50,7 +50,7 @@ public class QueryOperationStrategy implements DataOperationStrategy, EntityExec
     }
 
     @Override
-    public Object stdEntityExecute(CommandContext context) {
+    public Object systemEntityExecute(CommandContext context) {
         log.info("Executing STD entity QUERY for {}", context.getEntityName());
         String entityName = context.getEntityName();
 

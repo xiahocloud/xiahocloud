@@ -53,7 +53,7 @@ public class UpdateOperationStrategy implements DataOperationStrategy, EntityExe
     }
 
     @Override
-    public Object stdEntityExecute(CommandContext context) {
+    public Object systemEntityExecute(CommandContext context) {
         log.info("Executing STD entity UPDATE for {}", context.getEntityName());
         String entityName = context.getEntityName();
         Map<String, Object> data = context.getData();

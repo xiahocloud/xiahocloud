@@ -33,6 +33,7 @@ dependencies {
 
     // 添加 javax.annotation 支持 (Spring Boot 3.x 需要)
     implementation 'jakarta.annotation:jakarta.annotation-api'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
 
     // Lombok 支持
     compileOnly 'org.projectlombok:lombok'

@@ -1,5 +1,6 @@
 package com.xiahou.yu.paasdomincore.design.metamodel;
 
+import com.xiahou.yu.paasdomincore.design.constant.EntityTypeEnum;
 import com.xiahou.yu.paasdomincore.design.registry.EntityRegister;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

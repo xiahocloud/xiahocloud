@@ -1,6 +1,9 @@
 package com.xiahou.yu.paasdomincore.runtime.strategy.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
+import com.xiahou.yu.paasdomincore.design.registry.EntityRegister;
+import com.xiahou.yu.paasdomincore.design.registry.EntityRegistryManager;
 import com.xiahou.yu.paasdomincore.design.repository.RepositoryManager;
 import com.xiahou.yu.paasdomincore.runtime.strategy.DataOperationStrategy;
 import com.xiahou.yu.paasdomincore.runtime.strategy.EntityExecutor;
@@ -22,11 +25,25 @@ import java.util.Map;
 public class CreateOperationStrategy implements DataOperationStrategy, EntityExecutor {
 
     private final RepositoryManager repositoryManager;
+    private final EntityRegistryManager entityRegistryManager;
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public Object execute(CommandContext context) {
         log.info("Executing CREATE operation for {}", context.getEntityName());
         return executeByEntityType(context);
+    }
+
+    private <T> T convertToEntity(String entityName, Map<String, Object> data) {
+        try {
+            String entityClassName = "com.xiahou.yu.paaswebserver.entity." + entityName;
+            Class<?> entityClass = Class.forName(entityClassName);
+            return objectMapper.convertValue(data, entityClass);
+        } catch (Exception e) {
+            log.error("Error converting data to entity {}: {}", entityName, e.getMessage());
+            return null;
+        }
     }
 
     @Override
@@ -38,7 +55,9 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
         try {
             if (repositoryManager != null && repositoryManager.hasRepository(entityName)) {
                 // 将 Map 数据转换为对应的实体对象
-                Object entity = convertToEntity(entityName, data);
+                Class<?> entityClass = entityRegistryManager.getEntityClass(entityName);
+
+                T entity = convertToEntity(entityName, data);
                 if (entity != null) {
                     // 使用 RepositoryManager 统一保存接口
                     Object savedEntity = repositoryManager.save(entityName, entity);
@@ -57,7 +76,7 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
     }
 
     @Override
-    public Object stdEntityExecute(CommandContext context) {
+    public Object systemEntityExecute(CommandContext context) {
         log.info("Executing STD entity CREATE for {}", context.getEntityName());
         String entityName = context.getEntityName();
         Map<String, Object> data = context.getData();
@@ -65,6 +84,7 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
         try {
             if (repositoryManager != null && repositoryManager.hasRepository(entityName)) {
                 // 将 Map 数据转换为对应的实体对象
+                EntityRegister
                 Object entity = convertToEntity(entityName, data);
                 if (entity != null) {
                     // 保存实体
@@ -103,39 +123,4 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
         }
     }
 
-    /**
-     * 将 Map 数据转换为对应的实体对象
-     * 这里使用简单的反射机制，也可以集成 ObjectMapper 等工具
-     */
-    private Object convertToEntity(String entityName, Map<String, Object> data) {
-        try {
-            // 根据实体名称获取对应的实体类
-            String entityClassName = "com.xiahou.yu.paaswebserver.entity." + entityName;
-            Class<?> entityClass = Class.forName(entityClassName);
-
-            // 创建实体实例
-            Object entity = entityClass.getDeclaredConstructor().newInstance();
-
-            // 设置字段值（这里使用简单的反射，实际项目中可以使用 BeanUtils 或 ObjectMapper）
-            java.lang.reflect.Field[] fields = entityClass.getDeclaredFields();
-            for (java.lang.reflect.Field field : fields) {
-                field.setAccessible(true);
-                Object value = data.get(field.getName());
-                if (value != null) {
-                    // 类型转换处理
-                    if (field.getType() == java.time.LocalDateTime.class && value instanceof String) {
-                        value = java.time.LocalDateTime.parse((String) value);
-                    } else if (field.getType() == Long.class && value instanceof Integer) {
-                        value = ((Integer) value).longValue();
-                    }
-                    field.set(entity, value);
-                }
-            }
-
-            return entity;
-        } catch (Exception e) {
-            log.error("Error converting data to entity {}: {}", entityName, e.getMessage());
-            return null;
-        }
-    }
 }

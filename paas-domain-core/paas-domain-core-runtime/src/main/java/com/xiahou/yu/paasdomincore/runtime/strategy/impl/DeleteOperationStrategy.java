@@ -50,7 +50,7 @@ public class DeleteOperationStrategy implements DataOperationStrategy, EntityExe
     }
 
     @Override
-    public Object stdEntityExecute(CommandContext context) {
+    public Object systemEntityExecute(CommandContext context) {
         log.info("Executing STD entity DELETE for {}", context.getEntityName());
         String entityName = context.getEntityName();
 
