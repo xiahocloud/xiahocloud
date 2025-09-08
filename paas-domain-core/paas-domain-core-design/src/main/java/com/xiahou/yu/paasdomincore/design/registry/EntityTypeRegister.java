@@ -162,7 +162,7 @@ class EntityTypeRegister {
      */
     boolean isStdEntity(String entityName) {
         EntityTypeEnum entityType = getEntityType(entityName);
-        return EntityTypeEnum.STD_ENTITY.equals(entityType);
+        return EntityTypeEnum.SYSTEM_ENTITY.equals(entityType);
     }
 
     /**

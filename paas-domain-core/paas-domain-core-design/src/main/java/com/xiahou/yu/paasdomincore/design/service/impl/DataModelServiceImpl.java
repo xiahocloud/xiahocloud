@@ -49,13 +49,13 @@ public class DataModelServiceImpl implements DataModelService {
     @Override
     public Optional<DataModel> findByTenantAndKey(String tenant, String key) {
         log.debug("根据租户和key查找数据模型: tenant={}, key={}", tenant, key);
-        return dataModelRepository.findByTenantAndKey(tenant, key);
+        return Optional.ofNullable(dataModelRepository.findByTenantAndKey(tenant, key));
     }
 
     @Override
     public List<DataModel> findByTenant(String tenant) {
         log.debug("根据租户查找所有数据模型: {}", tenant);
-        return dataModelRepository.findByTenant(tenant);
+        return (List<DataModel>) dataModelRepository.findByTenant(tenant);
     }
 
     @Override

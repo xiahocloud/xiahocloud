@@ -49,14 +49,14 @@ public class PageModelServiceImpl implements PageModelService {
     @Override
     public Optional<PageModel> findByTenantAndKey(String tenant, String key) {
         log.debug("根据租户和key查找页面模型: tenant={}, key={}", tenant, key);
-        return pageModelRepository.findByTenantAndKey(tenant, key);
+        return Optional.ofNullable(pageModelRepository.findByTenantAndKey(tenant, key));
     }
 
     @Override
     public List<PageModel> findByTenant(String tenant) {
-        log.debug("根据租户查找所有页面模型: {}", tenant);
-        return pageModelRepository.findByTenant(tenant);
+        return List.of();
     }
+
 
     @Override
     public List<PageModel> findByPageType(String tenant, String pageType) {

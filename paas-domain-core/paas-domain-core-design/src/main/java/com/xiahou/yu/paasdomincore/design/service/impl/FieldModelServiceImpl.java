@@ -49,13 +49,13 @@ public class FieldModelServiceImpl implements FieldModelService {
     @Override
     public Optional<FieldModel> findByTenantAndKey(String tenant, String key) {
         log.debug("根据租户和key查找字段模型: tenant={}, key={}", tenant, key);
-        return fieldModelRepository.findByTenantAndKey(tenant, key);
+        return Optional.ofNullable(fieldModelRepository.findByTenantAndKey(tenant, key));
     }
 
     @Override
     public List<FieldModel> findByTenant(String tenant) {
         log.debug("根据租户查找所有字段模型: {}", tenant);
-        return fieldModelRepository.findByTenant(tenant);
+        return (List<FieldModel>) fieldModelRepository.findByTenant(tenant);
     }
 
     @Override

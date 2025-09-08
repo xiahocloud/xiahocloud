@@ -3,7 +3,6 @@ package com.xiahou.yu.paasdomincore.runtime.strategy;
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
 import com.xiahou.yu.paasdomincore.design.constant.EntityTypeEnum;
 import com.xiahou.yu.paasdomincore.design.registry.EntityRegistryManager;
-import com.xiahou.yu.paasdomincore.design.registry.EntityTypeRegister;
 
 /**
  * 实体执行器接口
@@ -14,6 +13,13 @@ import com.xiahou.yu.paasdomincore.design.registry.EntityTypeRegister;
 public interface EntityExecutor {
 
     /**
+     * 获取实体注册管理器实例
+     *
+     * @return EntityRegistryManager实例
+     */
+    EntityRegistryManager getEntityRegistryManager();
+
+    /**
      * 根据实体类型执行相应的处理逻辑
      *
      * @param context 命令上下文
@@ -21,7 +27,7 @@ public interface EntityExecutor {
      */
     default Object executeByEntityType(CommandContext context) {
         String entity = context.getEntityName();
-        EntityTypeEnum entityType = EntityRegistryManager.getEntityType(entity);
+        EntityTypeEnum entityType = getEntityRegistryManager().getEntityType(entity);
 
         if (EntityTypeEnum.META_ENTITY == entityType) {
             return metaEntityExecute(context);

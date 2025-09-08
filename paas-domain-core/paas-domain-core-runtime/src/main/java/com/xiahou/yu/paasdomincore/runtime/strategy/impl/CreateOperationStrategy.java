@@ -35,11 +35,9 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
         return executeByEntityType(context);
     }
 
-    private <T> T convertToEntity(String entityName, Map<String, Object> data) {
+    private <T> T convertToEntity(String entityName, Map<String, Object> data, Class<T> clazz) {
         try {
-            String entityClassName = "com.xiahou.yu.paaswebserver.entity." + entityName;
-            Class<?> entityClass = Class.forName(entityClassName);
-            return objectMapper.convertValue(data, entityClass);
+            return objectMapper.convertValue(data, clazz);
         } catch (Exception e) {
             log.error("Error converting data to entity {}: {}", entityName, e.getMessage());
             return null;
@@ -56,8 +54,7 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
             if (repositoryManager != null && repositoryManager.hasRepository(entityName)) {
                 // 将 Map 数据转换为对应的实体对象
                 Class<?> entityClass = entityRegistryManager.getEntityClass(entityName);
-
-                T entity = convertToEntity(entityName, data);
+                Object entity = convertToEntity(entityName, data, entityClass);
                 if (entity != null) {
                     // 使用 RepositoryManager 统一保存接口
                     Object savedEntity = repositoryManager.save(entityName, entity);
@@ -84,8 +81,8 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
         try {
             if (repositoryManager != null && repositoryManager.hasRepository(entityName)) {
                 // 将 Map 数据转换为对应的实体对象
-                EntityRegister
-                Object entity = convertToEntity(entityName, data);
+                Class<?> entityClass = entityRegistryManager.getEntityClass(entityName);
+                Object entity = convertToEntity(entityName, data, entityClass);
                 if (entity != null) {
                     // 保存实体
                     Object savedEntity = repositoryManager.save(entityName, entity);
@@ -121,6 +118,11 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
             log.error("Error creating custom entity: {}", entityName, e);
             return Map.of("success", false, "message", "Failed to create custom entity: " + e.getMessage());
         }
+    }
+
+    @Override
+    public EntityRegistryManager getEntityRegistryManager() {
+        return this.entityRegistryManager;
     }
 
 }
