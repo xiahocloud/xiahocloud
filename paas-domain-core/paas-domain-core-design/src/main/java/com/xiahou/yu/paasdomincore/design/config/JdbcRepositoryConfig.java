@@ -9,6 +9,7 @@ import org.springframework.data.jdbc.core.convert.JdbcArrayColumns; // 确保导
 import org.springframework.data.jdbc.core.convert.JdbcConverter;
 import org.springframework.data.jdbc.core.convert.JdbcCustomConversions;
 import org.springframework.data.jdbc.core.convert.RelationResolver;
+import org.springframework.data.jdbc.core.dialect.JdbcDialect;
 import org.springframework.data.jdbc.core.mapping.JdbcMappingContext;
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 import org.springframework.data.relational.core.dialect.Dialect;
@@ -87,8 +88,8 @@ public class JdbcRepositoryConfig {
      */
     @Bean
     public JdbcArrayColumns jdbcArrayColumns(Dialect dialect) {
-        // 从 Dialect 获取数组支持
-        return dialect.getArraySupport();
+        return dialect instanceof JdbcDialect ? ((JdbcDialect) dialect).getArraySupport()
+                : JdbcArrayColumns.DefaultSupport.INSTANCE;
     }
 
     /**
