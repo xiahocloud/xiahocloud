@@ -2,7 +2,8 @@ package com.xiahou.yu.paasdomincore.design.repository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,9 +16,9 @@ import java.util.Optional;
  *
  * @author xiahou
  */
-@Service
-@RequiredArgsConstructor
 @Slf4j
+@Component
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RepositoryManager {
 
     private final RepositoryRegister repositoryRegister;

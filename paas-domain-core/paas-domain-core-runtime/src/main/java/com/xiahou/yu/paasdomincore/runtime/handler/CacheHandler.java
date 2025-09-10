@@ -113,8 +113,8 @@ public class CacheHandler implements Handler {
                   .append(context.getEntityName());
 
         // 对于查询操作，添加查询条件到缓存键
-        if (context.getConditions() != null && !context.getConditions().isEmpty()) {
-            keyBuilder.append(":").append(context.getConditions().hashCode());
+        if (context.getFilter() != null && !context.getFilter().isEmpty()) {
+            keyBuilder.append(":").append(context.getFilter().hashCode());
         }
 
         return keyBuilder.toString();

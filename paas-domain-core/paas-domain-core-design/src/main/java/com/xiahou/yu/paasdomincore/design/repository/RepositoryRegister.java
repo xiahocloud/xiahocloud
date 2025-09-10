@@ -94,6 +94,15 @@ public class RepositoryRegister implements InitializingBean {
     }
 
     /**
+     * 移除指定实体的 Repository
+     *
+     * @param entityName 实体名称
+     */
+    public void removeRepository(String entityName) {
+        repositoryMap.remove(entityName);
+    }
+
+    /**
      * 获取所有已注册的实体名称
      *
      * @return 实体名称集合

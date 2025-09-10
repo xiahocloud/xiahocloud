@@ -11,9 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
     HibernateJpaAutoConfiguration.class
 })
 @ComponentScan(basePackages = {
-    "com.xiahou.yu.paaswebserver",
-    "com.xiahou.yu.paasdomincore.runtime",
-    "com.xiahou.yu.paasinfracommon"
+    "com.xiahou.yu"
 })
 public class PaasWebServerApplication {
 

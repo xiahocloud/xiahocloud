@@ -14,7 +14,7 @@ public class DynamicCommandInput {
     /**
      * 实体标识
      */
-    private String entity;
+    private String entityName;
 
     /**
      * 操作类型: CREATE, UPDATE, DELETE

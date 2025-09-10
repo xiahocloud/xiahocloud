@@ -1,5 +1,6 @@
 package com.xiahou.yu.paaswebserver.cqrs.command;
 
+import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
 import com.xiahou.yu.paaswebserver.adapter.DynamicDataOperationAdapter;
 import com.xiahou.yu.paaswebserver.dto.DynamicCommandResponse;
 import com.xiahou.yu.paaswebserver.dto.input.DynamicCommandInput;
@@ -24,10 +25,10 @@ public class PluggableDynamicCommandHandler implements DynamicCommandHandler {
     @Override
     public DynamicCommandResponse handle(DynamicCommandInput input) {
         log.info("Handling dynamic command with pluggable architecture: entity={}, operation={}",
-                input.getEntity(), input.getOperation());
+                input.getEntityName(), input.getOperation());
         // 调用数据操作适配器
         DynamicDataOperationAdapter.DataOperationResult result = dataOperationAdapter.handleCommand(
-                input.getEntity(), input.getOperation(), input.getData()
+                input.getEntityName(), input.getOperation(), DynamicDataObject.fromMap(input.getData()), input.getFilter()
         );
 
         // 转换响应格式

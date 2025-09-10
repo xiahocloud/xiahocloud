@@ -127,7 +127,7 @@ public class FilterUsageExample {
 
         // 创建命令输入
         DynamicCommandInput commandInput = new DynamicCommandInput();
-        commandInput.setEntity("Order");
+        commandInput.setEntityName("Order");
         commandInput.setOperation("UPDATE");
 
         // 设置嵌套字段过滤条件
@@ -150,7 +150,7 @@ public class FilterUsageExample {
 
         // 创建查询输入
         DynamicQueryInput queryInput = new DynamicQueryInput();
-        queryInput.setEntity("Product");
+        queryInput.setEntityName("Product");
         queryInput.setPage(1);
         queryInput.setSize(20);
         queryInput.setFields(Arrays.asList("id", "name", "category.name", "supplier.company"));

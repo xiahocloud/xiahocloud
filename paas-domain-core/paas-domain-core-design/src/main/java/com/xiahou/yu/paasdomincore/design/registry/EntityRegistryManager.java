@@ -3,6 +3,7 @@ package com.xiahou.yu.paasdomincore.design.registry;
 import com.xiahou.yu.paasdomincore.design.constant.EntityTypeEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -15,9 +16,9 @@ import java.util.Set;
  * @author wanghaoxin
  * @date 2025/9/8
  */
-@Service
-@RequiredArgsConstructor
 @Slf4j
+@Component
+@RequiredArgsConstructor
 public class EntityRegistryManager {
 
     private final EntityTypeRegister entityTypeRegister;

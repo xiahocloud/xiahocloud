@@ -75,26 +75,6 @@ public class DynamicDataOperationAdapter {
         }
     }
 
-    /**
-     * 重载方法：支持传统的Map参数，内部转换为Filter
-     */
-    public DataOperationResult handleCommand(String entity, String operation, Map<String, Object> data,
-                                             Map<String, Object> conditions) {
-        DynamicDataObject dataObject = data != null ? DynamicDataObject.fromMap(data) : null;
-        Filter filter = conditions != null ? Filter.fromMap(conditions) : Filter.empty();
-
-        return handleCommand(entity, operation, dataObject, filter);
-    }
-
-    /**
-     * 重载方法：支持DynamicDataObject条件参数，转换为Filter
-     */
-    public DataOperationResult handleCommand(String entity, String operation, DynamicDataObject data,
-                                             DynamicDataObject conditions) {
-        Filter filter = conditions != null ? Filter.fromConditions(conditions) : Filter.empty();
-        return handleCommand(entity, operation, data, filter);
-    }
-
     private CommandType parseCommandType(String operation) {
         try {
             return CommandType.valueOf(operation.toUpperCase());

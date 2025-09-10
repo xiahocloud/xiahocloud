@@ -40,13 +40,13 @@ public class DynamicQueryHandler {
         String contextRequestId = RequestContextHolder.getRequestId();
 
         log.debug("Processing dynamic query: entity={} - Context: system={}, module={}, tenantId={}, userId={}, requestId={}",
-                 input.getEntity(), system, module, contextTenantId, contextUserId, contextRequestId);
+                 input.getEntityName(), system, module, contextTenantId, contextUserId, contextRequestId);
 
         // 验证输入
         validateQueryInput(input, system, module);
 
         // 获取Schema元数据
-        DynamicSchemaMetadata metadata = getSchemaMetadata(system, module, context, app, aggr, input.getEntity());
+        DynamicSchemaMetadata metadata = getSchemaMetadata(system, module, context, app, aggr, input.getEntityName());
 
         // 构建查询，传入上下文信息 - 现在返回DynamicDataObject列表
         List<DynamicDataObject> data = executeQuery(input, metadata, contextTenantId);
@@ -76,7 +76,7 @@ public class DynamicQueryHandler {
             throw new IllegalArgumentException("Missing system parameter in headers");
         }
 
-        if (module == null || input.getEntity() == null) {
+        if (module == null || input.getEntityName() == null) {
             throw new IllegalArgumentException("Missing required parameters: module or entity");
         }
     }
@@ -158,6 +158,6 @@ public class DynamicQueryHandler {
         String aggr = RequestContextHolder.getAggr();
 
         return String.format("%s.%s.%s.%s.%s.%s",
-            system, module, context, app, aggr, input.getEntity());
+            system, module, context, app, aggr, input.getEntityName());
     }
 }

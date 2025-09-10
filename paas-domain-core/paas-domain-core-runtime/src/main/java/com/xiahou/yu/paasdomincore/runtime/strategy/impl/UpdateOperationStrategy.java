@@ -2,8 +2,10 @@ package com.xiahou.yu.paasdomincore.runtime.strategy.impl;
 
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
 import com.xiahou.yu.paasdomincore.design.repository.RepositoryManager;
+import com.xiahou.yu.paasdomincore.design.registry.EntityRegistryManager;
 import com.xiahou.yu.paasdomincore.runtime.strategy.DataOperationStrategy;
 import com.xiahou.yu.paasdomincore.runtime.strategy.EntityExecutor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,10 +19,17 @@ import java.util.Map;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UpdateOperationStrategy implements DataOperationStrategy, EntityExecutor {
 
-    @Autowired(required = false)
-    private RepositoryManager repositoryManager;
+    private final RepositoryManager repositoryManager;
+
+    private final EntityRegistryManager entityRegistryManager;
+
+    @Override
+    public EntityRegistryManager getEntityRegistryManager() {
+        return entityRegistryManager;
+    }
 
     @Override
     public Object execute(CommandContext context) {

@@ -4,33 +4,21 @@ import com.xiahou.yu.paasdomincore.design.constant.EntityTypeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 实体类型注册中心（内部实现）
- * 由 EntityRegistryManager 统一管理，不建议直接使用
+ * 实体类型注册器
+ * 管理实体类型的注册和查询
  *
- * @author wanghaoxin
- * @date 2025/9/4
+ * @author xiahou
  */
 @Component
 @Slf4j
-class EntityTypeRegister {
+public class EntityTypeRegister {
 
-    /**
-     * 实体名称 -> 实体类型映射
-     */
     private static final Map<String, EntityTypeEnum> ENTITY_TYPE_ENUM_MAP = new ConcurrentHashMap<>();
-
-    /**
-     * 实体名称 -> 实体类映射
-     */
     private static final Map<String, Class<?>> ENTITY_CLASS_MAP = new ConcurrentHashMap<>();
-
-    /**
-     * 实体名称 -> 描述映射
-     */
     private static final Map<String, String> ENTITY_DESCRIPTION_MAP = new ConcurrentHashMap<>();
 
     /**
@@ -38,19 +26,12 @@ class EntityTypeRegister {
      *
      * @param entityRegister 实体注册信息
      */
-    void register(EntityRegister entityRegister) {
+    public void register(EntityRegister entityRegister) {
         String entityName = entityRegister.getEntityName();
-        EntityTypeEnum entityType = entityRegister.getEntityType();
-        Class<?> entityClass = entityRegister.getEntityClass();
-        String description = entityRegister.getDescription();
-
-        // 注册到各个映射表
-        ENTITY_TYPE_ENUM_MAP.put(entityName, entityType);
-        ENTITY_CLASS_MAP.put(entityName, entityClass);
-        ENTITY_DESCRIPTION_MAP.put(entityName, description);
-
-        log.info("Entity registered: name={}, type={}, class={}, description={}",
-                entityName, entityType, entityClass.getSimpleName(), description);
+        ENTITY_TYPE_ENUM_MAP.put(entityName, entityRegister.getEntityType());
+        ENTITY_CLASS_MAP.put(entityName, entityRegister.getEntityClass());
+        ENTITY_DESCRIPTION_MAP.put(entityName, entityRegister.getDescription());
+        log.debug("Entity registered: {} -> {}", entityName, entityRegister.getEntityType());
     }
 
     /**
@@ -60,22 +41,20 @@ class EntityTypeRegister {
      * @param entityClass 实体类
      * @param entityType 实体类型
      */
-    void registerClass(String entityName, Class<?> entityClass, EntityTypeEnum entityType) {
+    public void registerClass(String entityName, Class<?> entityClass, EntityTypeEnum entityType) {
         ENTITY_TYPE_ENUM_MAP.put(entityName, entityType);
         ENTITY_CLASS_MAP.put(entityName, entityClass);
-        ENTITY_DESCRIPTION_MAP.put(entityName, entityName + " - " + entityType.getDescription());
-
-        log.info("Entity class registered: name={}, type={}, class={}",
-                entityName, entityType, entityClass.getSimpleName());
+        ENTITY_DESCRIPTION_MAP.put(entityName, entityClass.getSimpleName());
+        log.debug("Entity class registered: {} -> {} ({})", entityName, entityClass.getSimpleName(), entityType);
     }
 
     /**
-     * 注册实体类（默认为标准实体）
+     * 注册实体类（默认为系统实体）
      *
      * @param entityName 实体名称
      * @param entityClass 实体类
      */
-    void registerClass(String entityName, Class<?> entityClass) {
+    public void registerClass(String entityName, Class<?> entityClass) {
         registerClass(entityName, entityClass, EntityTypeEnum.SYSTEM_ENTITY);
     }
 
@@ -84,29 +63,30 @@ class EntityTypeRegister {
      *
      * @param entityRegisters 实体注册信息列表
      */
-    void registerAll(EntityRegister... entityRegisters) {
+    public void registerAll(EntityRegister... entityRegisters) {
         for (EntityRegister entityRegister : entityRegisters) {
             register(entityRegister);
         }
+        log.info("Batch registered {} entities", entityRegisters.length);
     }
 
     /**
-     * 获取实体类型
+     * 获取实体类型（静态方法）
      *
      * @param entityName 实体名称
      * @return 实体类型
      */
-    static EntityTypeEnum getEntityType(String entityName) {
-        return ENTITY_TYPE_ENUM_MAP.get(entityName);
+    public static EntityTypeEnum getEntityType(String entityName) {
+        return ENTITY_TYPE_ENUM_MAP.getOrDefault(entityName, EntityTypeEnum.CUSTOM_ENTITY);
     }
 
     /**
-     * 获取实体类
+     * 获取实体类（静态方法）
      *
      * @param entityName 实体名称
      * @return 实体类
      */
-    static Class<?> getEntityClass(String entityName) {
+    public static Class<?> getEntityClass(String entityName) {
         return ENTITY_CLASS_MAP.get(entityName);
     }
 
@@ -116,7 +96,7 @@ class EntityTypeRegister {
      * @param entityName 实体名称
      * @return 实体描述
      */
-    String getEntityDescription(String entityName) {
+    public String getEntityDescription(String entityName) {
         return ENTITY_DESCRIPTION_MAP.get(entityName);
     }
 
@@ -126,7 +106,7 @@ class EntityTypeRegister {
      * @param entityClass 实体类
      * @return 实体名称
      */
-    String getEntityNameByClass(Class<?> entityClass) {
+    public String getEntityNameByClass(Class<?> entityClass) {
         return ENTITY_CLASS_MAP.entrySet().stream()
                 .filter(entry -> entry.getValue().equals(entityClass))
                 .map(Map.Entry::getKey)
@@ -140,7 +120,7 @@ class EntityTypeRegister {
      * @param entityName 实体名称
      * @return 是否已注册
      */
-    boolean isRegistered(String entityName) {
+    public boolean isRegistered(String entityName) {
         return ENTITY_TYPE_ENUM_MAP.containsKey(entityName);
     }
 
@@ -150,19 +130,18 @@ class EntityTypeRegister {
      * @param entityClass 实体类
      * @return 是否已注册
      */
-    boolean isClassRegistered(Class<?> entityClass) {
+    public boolean isClassRegistered(Class<?> entityClass) {
         return ENTITY_CLASS_MAP.containsValue(entityClass);
     }
 
     /**
-     * 检查实体是否为标准实体
+     * 检查实体是否为系统实体
      *
      * @param entityName 实体名称
-     * @return 是否为标准实体
+     * @return 是否为系统实体
      */
-    boolean isStdEntity(String entityName) {
-        EntityTypeEnum entityType = getEntityType(entityName);
-        return EntityTypeEnum.SYSTEM_ENTITY.equals(entityType);
+    public boolean isStdEntity(String entityName) {
+        return EntityTypeEnum.SYSTEM_ENTITY.equals(getEntityType(entityName));
     }
 
     /**
@@ -171,9 +150,8 @@ class EntityTypeRegister {
      * @param entityName 实体名称
      * @return 是否为自定义实体
      */
-    boolean isCustomEntity(String entityName) {
-        EntityTypeEnum entityType = getEntityType(entityName);
-        return EntityTypeEnum.CUSTOM_ENTITY.equals(entityType);
+    public boolean isCustomEntity(String entityName) {
+        return EntityTypeEnum.CUSTOM_ENTITY.equals(getEntityType(entityName));
     }
 
     /**
@@ -182,9 +160,8 @@ class EntityTypeRegister {
      * @param entityName 实体名称
      * @return 是否为元数据实体
      */
-    boolean isMetaEntity(String entityName) {
-        EntityTypeEnum entityType = getEntityType(entityName);
-        return EntityTypeEnum.META_ENTITY.equals(entityType);
+    public boolean isMetaEntity(String entityName) {
+        return EntityTypeEnum.META_ENTITY.equals(getEntityType(entityName));
     }
 
     /**
@@ -192,8 +169,8 @@ class EntityTypeRegister {
      *
      * @return 实体名称集合
      */
-    java.util.Set<String> getAllEntityNames() {
-        return ENTITY_TYPE_ENUM_MAP.keySet();
+    public Set<String> getAllEntityNames() {
+        return new HashSet<>(ENTITY_TYPE_ENUM_MAP.keySet());
     }
 
     /**
@@ -201,34 +178,35 @@ class EntityTypeRegister {
      *
      * @return 实体类集合
      */
-    java.util.Collection<Class<?>> getAllEntityClasses() {
-        return ENTITY_CLASS_MAP.values();
+    public Collection<Class<?>> getAllEntityClasses() {
+        return new ArrayList<>(ENTITY_CLASS_MAP.values());
     }
 
     /**
-     * 获取指定类型的所有实体名称
+     * 根据类型获取实体名称
      *
      * @param entityType 实体类型
      * @return 实体名称集合
      */
-    java.util.Set<String> getEntityNamesByType(EntityTypeEnum entityType) {
+    public Set<String> getEntityNamesByType(EntityTypeEnum entityType) {
         return ENTITY_TYPE_ENUM_MAP.entrySet().stream()
                 .filter(entry -> entry.getValue().equals(entityType))
                 .map(Map.Entry::getKey)
-                .collect(java.util.stream.Collectors.toSet());
+                .collect(HashSet::new, HashSet::add, HashSet::addAll);
     }
 
     /**
-     * 获取指定类型的所有实体类
+     * 根据类型获取实体类
      *
      * @param entityType 实体类型
      * @return 实体类集合
      */
-    java.util.Set<Class<?>> getEntityClassesByType(EntityTypeEnum entityType) {
+    public Set<Class<?>> getEntityClassesByType(EntityTypeEnum entityType) {
         return ENTITY_TYPE_ENUM_MAP.entrySet().stream()
                 .filter(entry -> entry.getValue().equals(entityType))
                 .map(entry -> ENTITY_CLASS_MAP.get(entry.getKey()))
-                .collect(java.util.stream.Collectors.toSet());
+                .filter(Objects::nonNull)
+                .collect(HashSet::new, HashSet::add, HashSet::addAll);
     }
 
     /**
@@ -237,10 +215,10 @@ class EntityTypeRegister {
      * @param entityName 实体名称
      * @return 实体实例
      */
-    Object createEntityInstance(String entityName) {
+    public Object createEntityInstance(String entityName) {
         Class<?> entityClass = getEntityClass(entityName);
         if (entityClass == null) {
-            log.warn("Entity class not found for: {}", entityName);
+            log.warn("No entity class found for: {}", entityName);
             return null;
         }
 
@@ -255,10 +233,10 @@ class EntityTypeRegister {
     /**
      * 清空注册信息（主要用于测试）
      */
-    void clear() {
+    public void clear() {
         ENTITY_TYPE_ENUM_MAP.clear();
         ENTITY_CLASS_MAP.clear();
         ENTITY_DESCRIPTION_MAP.clear();
-        log.info("Entity register cleared");
+        log.info("Entity type register cleared");
     }
 }

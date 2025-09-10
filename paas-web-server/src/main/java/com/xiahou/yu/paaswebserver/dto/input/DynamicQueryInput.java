@@ -20,7 +20,7 @@ public class DynamicQueryInput {
     /**
      * 实体标识
      */
-    private String entity;
+    private String entityName;
 
     /**
      * 过滤条件 - 使用统一的Filter对象
