@@ -63,3 +63,4 @@ public class CommandContext {
         return filter != null ? filter : Filter.empty();
     }
 }
+

@@ -30,6 +30,11 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
+    public EntityRegistryManager getEntityRegistryManager() {
+        return entityRegistryManager;
+    }
+
+    @Override
     public Object execute(CommandContext context) {
         log.info("Executing CREATE operation for {}", context.getEntityName());
         return executeByEntityType(context);
@@ -118,11 +123,6 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
             log.error("Error creating custom entity: {}", entityName, e);
             return Map.of("success", false, "message", "Failed to create custom entity: " + e.getMessage());
         }
-    }
-
-    @Override
-    public EntityRegistryManager getEntityRegistryManager() {
-        return this.entityRegistryManager;
     }
 
 }

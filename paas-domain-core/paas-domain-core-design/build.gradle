@@ -22,13 +22,12 @@ dependencyManagement {
 }
 
 dependencies {
-    // 当前项目的依赖
-    implementation 'com.xiahou.yu:paas-meta-core'
-    api 'com.xiahou.yu:paas-infra-common'
-
     // Spring Boot 核心依赖
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+
+    // 添加数据库驱动
+    implementation 'org.postgresql:postgresql'
 
     // Lombok 支持
     compileOnly 'org.projectlombok:lombok'
