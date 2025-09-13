@@ -3,6 +3,27 @@ spring:
   application:
     name: paas-web-server
 
+  # 允许Bean定义覆盖
+  main:
+    allow-bean-definition-overriding: true
+
+  # 数据源配置
+  datasource:
+    url: jdbc:postgresql://localhost:5432/db_xiaho?currentSchema=s_xiaho
+    username: postgres
+    password: Wanghaoxin115277
+    driver-class-name: org.postgresql.Driver
+
+    # 连接池配置
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      auto-commit: true
+      pool-name: HikariCP-DataCore
+
   # GraphQL 配置
   graphql:
     graphiql:
@@ -14,6 +35,10 @@ spring:
       allowed-methods: "*"
       allowed-headers: "*"
 
+# 服务器配置
+server:
+  port: 8080
+
 # PaaS 平台配置
 paas:
   context:
@@ -24,10 +49,10 @@ paas:
 # 日志配置
 logging:
   level:
-    com.xiahou.yu.paaswebserver: DEBUG
+    com.xiahou.yu.paasdomincore.design: DEBUG
+    org.springframework.scheduling: DEBUG
     org.springframework.graphql: DEBUG
+    org.springframework.jdbc: DEBUG
     root: INFO
-
-# 服务器配置
-server:
-  port: 8080
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"

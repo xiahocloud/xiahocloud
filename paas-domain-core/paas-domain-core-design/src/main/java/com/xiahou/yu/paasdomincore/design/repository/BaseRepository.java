@@ -1,5 +1,6 @@
 package com.xiahou.yu.paasdomincore.design.repository;
 
+import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
@@ -23,6 +24,7 @@ public interface BaseRepository<T, ID extends Serializable> extends CrudReposito
      * @param key 业务键
      * @return 实体对象
      */
+    @Query("SELECT * FROM data_model WHERE tenant = :tenant AND key = :key")
     T findByTenantAndKey(String tenant, String key);
 
     /**
@@ -32,6 +34,7 @@ public interface BaseRepository<T, ID extends Serializable> extends CrudReposito
      * @param key 业务键
      * @return 是否存在
      */
+    @Query("SELECT COUNT(*) > 0 FROM data_model WHERE tenant = :tenant AND key = :key")
     boolean existsByTenantAndKey(String tenant, String key);
 
     /**
@@ -40,5 +43,6 @@ public interface BaseRepository<T, ID extends Serializable> extends CrudReposito
      * @param tenant 租户编码
      * @return 实体列表
      */
+    @Query("SELECT * FROM data_model WHERE tenant = :tenant")
     Iterable<T> findByTenant(String tenant);
 }

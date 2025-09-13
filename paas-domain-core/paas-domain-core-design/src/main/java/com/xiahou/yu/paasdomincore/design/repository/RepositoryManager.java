@@ -96,10 +96,12 @@ public class RepositoryManager {
      * @param key 业务键
      * @return 实体对象
      */
+/*
     public <T> T findByTenantAndKey(String entityName, String tenant, String key) {
         BaseRepository<T, Serializable> repository = getRepository(entityName);
         return repository.findByTenantAndKey(tenant, key);
     }
+*/
 
     /**
      * 根据租户查找所有实体

@@ -15,8 +15,8 @@ import java.util.Optional;
  * @author paas-data-core-design
  * @version 0.0.1
  */
-@Configuration
-@EnableJdbcAuditing(dateTimeProviderRef = "auditingDateTimeProvider")
+/*@Configuration
+@EnableJdbcAuditing(dateTimeProviderRef = "auditingDateTimeProvider")*/
 public class AuditConfig {
 
     /**

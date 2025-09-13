@@ -22,12 +22,14 @@ dependencyManagement {
 }
 
 dependencies {
+    // 当前项目的依赖
+    implementation 'com.xiahou.yu:paas-meta-core'
+    api 'com.xiahou.yu:paas-infra-common'
+
     // Spring Boot 核心依赖
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-
-    // 添加数据库驱动
-    implementation 'org.postgresql:postgresql'
+    runtimeOnly 'org.postgresql:postgresql'
 
     // Lombok 支持
     compileOnly 'org.projectlombok:lombok'
@@ -38,8 +40,6 @@ dependencies {
     // 测试框架
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    // H2 数据库用于测试
-    testRuntimeOnly 'com.h2database:h2'
 }
 
 // 设计时模块特定配置
