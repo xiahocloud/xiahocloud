@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Model>
+    <Properties>
+        <!-- 数据库表属性 -->
+        <Property>
+            <Id>tableName</Id>
+            <Name>表名</Name>
+            <DataType>String</DataType>
+            <Scope>EntityModel</Scope>
+            <Desc>数据库表名</Desc>
+        </Property>
+        <Property>
+            <Id>tableComment</Id>
+            <Name>表注释</Name>
+            <DataType>String</DataType>
+            <Scope>EntityModel</Scope>
+            <Desc>数据库表注释</Desc>
+        </Property>
+        <Property>
+            <Id>engine</Id>
+            <Name>存储引擎</Name>
+            <DataType>String</DataType>
+            <Scope>EntityModel</Scope>
+            <Desc>数据库存储引擎：InnoDB, MyISAM等</Desc>
+        </Property>
+        <Property>
+            <Id>charset</Id>
+            <Name>字符集</Name>
+            <DataType>String</DataType>
+            <Scope>EntityModel</Scope>
+            <Desc>表字符集：utf8, utf8mb4等</Desc>
+        </Property>
+        <Property>
+            <Id>collation</Id>
+            <Name>排序规则</Name>
+            <DataType>String</DataType>
+            <Scope>EntityModel</Scope>
+            <Desc>表排序规则</Desc>
+        </Property>
+        <Property>
+            <Id>autoIncrementStart</Id>
+            <Name>自增起始值</Name>
+            <DataType>Integer</DataType>
+            <Scope>EntityModel</Scope>
+            <Desc>自增字段起始值</Desc>
+        </Property>
+        <Property>
+            <Id>tablespace</Id>
+            <Name>表空间</Name>
+            <DataType>String</DataType>
+            <Scope>EntityModel</Scope>
+            <Desc>数据库表空间</Desc>
+        </Property>
+        <Property>
+            <Id>partitioned</Id>
+            <Name>分区</Name>
+            <DataType>Boolean</DataType>
+            <Scope>EntityModel</Scope>
+            <Desc>是否分区表</Desc>
+        </Property>
+        <Property>
+            <Id>partitionBy</Id>
+            <Name>分区字段</Name>
+            <DataType>String</DataType>
+            <Scope>EntityModel</Scope>
+            <Desc>分区依据字段</Desc>
+        </Property>
+    </Properties>
+</Model>

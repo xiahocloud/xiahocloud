@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Model>
+    <Properties>
+    </Properties>
+
+    <Components>
+        <Component>
+            <Id>flex</Id>
+            <Name>Flex面板</Name>
+            <Desc>Flex布局容器</Desc>
+        </Component>
+        <Component>
+            <Id>form</Id>
+            <Name>Form表单</Name>
+            <Desc>表单容器</Desc>
+        </Component>
+    </Components>
+</Model>
