@@ -12,6 +12,7 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StopWatch;
 
 /**
  * 动态GraphQL控制器
@@ -32,8 +33,19 @@ public class DynamicGraphQLController {
      */
     @QueryMapping
     public DynamicQueryResponse dynamicQuery(@Argument("input") DynamicQueryInput input) {
+        StopWatch stopWatch = new StopWatch("DynamicQuery");
+        stopWatch.start("query-execution");
+
         log.info("Received dynamic query request: {}", input);
-        return queryHandler.handle(input);
+
+        try {
+            DynamicQueryResponse response = queryHandler.handle(input);
+            log.info("Dynamic query response: {}", response.toString());
+            return response;
+        } finally {
+            stopWatch.stop();
+            log.info("Dynamic query executed: {}", stopWatch.prettyPrint());
+        }
     }
 
     /**
@@ -41,7 +53,18 @@ public class DynamicGraphQLController {
      */
     @MutationMapping
     public DynamicCommandResponse dynamicCommand(@Argument("input") DynamicCommandInput input) {
+        StopWatch stopWatch = new StopWatch("DynamicCommand");
+        stopWatch.start("command-execution");
+
         log.info("Received dynamic command request: {}", input);
-        return commandHandler.handle(input);
+
+        try {
+            DynamicCommandResponse response = commandHandler.handle(input);
+            log.info("Dynamic command response: {}", response.toString());
+            return response;
+        } finally {
+            stopWatch.stop();
+            log.info("Dynamic command executed: {}", stopWatch.prettyPrint());
+        }
     }
 }

@@ -113,7 +113,7 @@ public class RepositoryRegister implements InitializingBean {
 
     /**
      * 从 Bean 名称中提取实体名称
-     * 例如：dataModelRepository -> DataModel
+     * 例如：dataModelRepository -> EntityModel
      *      userRepository -> User
      *
      * @param beanName Bean 名称

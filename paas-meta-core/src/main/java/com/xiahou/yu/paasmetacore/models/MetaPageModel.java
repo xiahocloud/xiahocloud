@@ -3,9 +3,9 @@ package com.xiahou.yu.paasmetacore.models;
 /**
  * 页面模型，继承自AbstractModel
  */
-public final class PageModel extends AbstractModel {
+public final class MetaPageModel extends AbstractModel {
 
-    public PageModel(String id, String name, String description, String importPath, String extendsModel) {
+    public MetaPageModel(String id, String name, String description, String importPath, String extendsModel) {
         super(id, name, description, importPath, extendsModel);
     }
 

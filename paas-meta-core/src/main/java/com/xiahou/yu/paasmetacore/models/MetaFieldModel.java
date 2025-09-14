@@ -1,17 +1,16 @@
 package com.xiahou.yu.paasmetacore.models;
 
-import com.xiahou.yu.paasmetacore.models.props.Property;
 import java.util.List;
 import java.util.Map;
 
 /**
  * 字段模型，继承自AbstractModel
  */
-public final class FieldModel extends AbstractModel {
+public final class MetaFieldModel extends AbstractModel {
 
     private final Map<String, Component> components = new java.util.concurrent.ConcurrentHashMap<>();
 
-    public FieldModel(String id, String name, String description, String importPath, String extendsModel) {
+    public MetaFieldModel(String id, String name, String description, String importPath, String extendsModel) {
         super(id, name, description, importPath, extendsModel);
     }
 

@@ -22,7 +22,7 @@
 *   `models/`: 存放具体的模型定义文件。
     *   `AbstractModel.xml`: 定义通用的抽象模型及其基础属性引用。
     *   `PageModel.xml`: 定义页面模型及其特有属性和组件。
-    *   `DataModel.xml`: (未提供，但根据 Metamodel.xml 存在) 定义数据模型。
+    *   `EntityModel.xml`: (未提供，但根据 Metamodel.xml 存在) 定义数据模型。
     *   `FieldModel.xml`: 定义字段模型，其中包含组件（字段类型）的定义。
 *   `models/props/`: 存放抽象属性定义文件。
     *   `AbstractProperties.xml`: 一个集中式的属性库，定义了平台中所有可复用的基础属性。
@@ -89,7 +89,7 @@
             <Id>columnName</Id>
             <Name>列名</Name>
             <DataType>String</DataType>
-            <Scope>DataModel</Scope> <!-- 表示该属性适用于 DataModel 及其组件 -->
+            <Scope>EntityModel</Scope> <!-- 表示该属性适用于 EntityModel 及其组件 -->
             <Desc>数据库字段名</Desc>
         </Property>
         <!-- 其他 Property 声明... -->
@@ -107,7 +107,7 @@
     *   `DataType`：**必填**。对应的 Java 数据类型（如 `Long`, `String`, `Integer`, `Float`, `Boolean`, `java.util.Date` 等）。
     *   `Desc`：属性的描述信息。
     *   `Default`：**可选**。属性的默认值（如 `app` 属性的 `std`）。
-    *   `Scope`：**可选**。**新增的关键属性。** 表示该属性主要适用于哪种类型的模型或组件。这有助于在可视化设计器中进行过滤和提示，例如 `display` 属性只对 `PageModel` 及其 UI 组件有意义，而 `columnName` 属性只对 `DataModel` 中的字段有意义。
+    *   `Scope`：**可选**。**新增的关键属性。** 表示该属性主要适用于哪种类型的模型或组件。这有助于在可视化设计器中进行过滤和提示，例如 `display` 属性只对 `PageModel` 及其 UI 组件有意义，而 `columnName` 属性只对 `EntityModel` 中的字段有意义。
 
 **注意：** 在这里，`Property` 定义中并未直接包含 `dbType`、`javaComment`、`dbComment` 等信息。这意味着：
 *   `dbType` 可能需要根据 `DataType` 进行映射推导，或者在实际引用（`Ref`）时进行补充。
@@ -266,7 +266,7 @@
     *   **字段名：** `Ref` 标签的 `Id` 属性值转换为 `snake_case` 格式。
     *   **字段类型：** `Ref` 标签所引用 `Property` 的 `DataType` 属性值（需要通过映射转换为具体的数据库类型，例如 `Long` -> `BIGINT`, `String` -> `VARCHAR(255)`。**请注意，你提供的 Property 定义中没有 `dbType`，这需要生成器进行智能推导或有额外的配置。**
     *   **注释：** `Ref` 标签所引用 `Property` 的 `Desc` 属性值。
-    *   **其他数据库约束：** `nullable`, `primaryKey`, `unique`, `defaultValue`, `autoIncrement` 等属性将根据 `Ref` 引用的 `Property` 定义（特别是那些 `Scope="DataModel"` 的属性）来生成相应的 DDL。
+    *   **其他数据库约束：** `nullable`, `primaryKey`, `unique`, `defaultValue`, `autoIncrement` 等属性将根据 `Ref` 引用的 `Property` 定义（特别是那些 `Scope="EntityModel"` 的属性）来生成相应的 DDL。
 
 ### 9. 元模型在 PaaS 数据核心模块中的集成 (与之前一致，但更精确)
 
@@ -303,7 +303,7 @@ graph TD
 
 *   **职责：**
     *   **代码生成：** 根据 `paas-meta-core` 解析的元模型信息，自动生成 `paas-data-core-runtime` 所需的 Java 源代码（实体类、DAO、Service 等）。此阶段需要根据 `Ref` 引用的 `Property` 的 `DataType` 来生成正确的 Java 字段类型，并根据 `Desc` 生成 Java 注释。
-    *   **数据库 DDL 生成：** 根据元模型中非抽象模型及其引用属性的定义（尤其是带有 `DataModel` `Scope` 的属性），生成数据库表的 DDL 脚本。此阶段需要将 `DataType` 映射到具体的 `dbType`，并根据 `Desc` 生成字段注释，处理 `nullable`, `primaryKey`, `unique` 等约束。
+    *   **数据库 DDL 生成：** 根据元模型中非抽象模型及其引用属性的定义（尤其是带有 `EntityModel` `Scope` 的属性），生成数据库表的 DDL 脚本。此阶段需要将 `DataType` 映射到具体的 `dbType`，并根据 `Desc` 生成字段注释，处理 `nullable`, `primaryKey`, `unique` 等约束。
     *   **元模型校验：** 对元模型定义进行深层校验，确保属性引用有效、继承关系合法、数据类型一致性等。
 
 #### 9.4 `paas-data-core-runtime` (运行时)

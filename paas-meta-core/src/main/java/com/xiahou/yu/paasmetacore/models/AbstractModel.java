@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author paas-meta-core
  */
 public sealed class AbstractModel
-    permits AbstractModel.ConcreteModel, PageModel, FieldModel, DataModel {
+    permits AbstractModel.ConcreteModel, MetaPageModel, MetaFieldModel, MetaEntityModel {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractModel.class);
 

@@ -11,6 +11,8 @@ import java.util.Map;
 @Data
 public class DynamicCommandInput {
 
+    private RequestContext requestContext;
+
     /**
      * 实体标识
      */

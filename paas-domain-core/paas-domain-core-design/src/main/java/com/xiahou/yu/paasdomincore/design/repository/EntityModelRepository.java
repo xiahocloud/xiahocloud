@@ -1,6 +1,6 @@
 package com.xiahou.yu.paasdomincore.design.repository;
 
-import com.xiahou.yu.paasdomincore.design.metamodel.DataModel;
+import com.xiahou.yu.paasdomincore.design.metamodel.EntityModel;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  * @version 0.0.1
  */
 @Repository
-public interface DataModelRepository extends BaseRepository<DataModel, Long> {
+public interface EntityModelRepository extends BaseRepository<EntityModel, Long> {
 
     /**
      * 根据类型查找数据模型
@@ -19,7 +19,7 @@ public interface DataModelRepository extends BaseRepository<DataModel, Long> {
      * @param type 模型类型
      * @return 数据模型列表
      */
-    java.util.List<DataModel> findByType(String type);
+    java.util.List<EntityModel> findByType(String type);
 
     /**
      * 根据命名空间查找数据模型
@@ -27,7 +27,7 @@ public interface DataModelRepository extends BaseRepository<DataModel, Long> {
      * @param namespace 命名空间
      * @return 数据模型列表
      */
-    java.util.List<DataModel> findByNamespace(String namespace);
+    java.util.List<EntityModel> findByNamespace(String namespace);
 
     /**
      * 根据应用标识查找数据模型
@@ -35,7 +35,7 @@ public interface DataModelRepository extends BaseRepository<DataModel, Long> {
      * @param app 应用标识
      * @return 数据模型列表
      */
-    java.util.List<DataModel> findByApp(String app);
+    java.util.List<EntityModel> findByApp(String app);
 
     /**
      * 检查租户内key是否存在

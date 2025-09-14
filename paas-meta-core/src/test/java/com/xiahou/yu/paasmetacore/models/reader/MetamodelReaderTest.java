@@ -1,7 +1,7 @@
 package com.xiahou.yu.paasmetacore.models.reader;
 
 import com.xiahou.yu.paasmetacore.MetaModel;
-import com.xiahou.yu.paasmetacore.models.FieldModel;
+import com.xiahou.yu.paasmetacore.models.MetaFieldModel;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.slf4j.Logger;
@@ -44,8 +44,8 @@ class MetamodelReaderTest {
                 logger.info("    {}", prop.getDisplayInfo()));
 
             // 如果是字段模型，打印组件信息
-            if (model instanceof FieldModel fieldModel) {
-                var components = fieldModel.getComponents();
+            if (model instanceof MetaFieldModel metaFieldModel) {
+                var components = metaFieldModel.getComponents();
                 logger.info("  组件数量: {}", components.size());
                 components.forEach(comp ->
                     logger.info("    组件: {} - {}", comp.id(), comp.name()));
@@ -59,24 +59,24 @@ class MetamodelReaderTest {
         var metaModel = MetaModel.getInstance();
 
         // 检查继承关系
-        var pageModel = metaModel.getModel("PageModel");
-        var dataModel = metaModel.getModel("DataModel");
-        var fieldModel = metaModel.getModel("FieldModel");
+        var pageModel = metaModel.getModel("MetaPageModel");
+        var dataModel = metaModel.getModel("MetaEntityModel");
+        var fieldModel = metaModel.getModel("MetaFieldModel");
         var abstractModel = metaModel.getModel("AbstractModel");
 
         if (pageModel != null && abstractModel != null) {
             assertEquals("AbstractModel", pageModel.getExtendsModel(),
-                "PageModel应该继承自AbstractModel");
+                "MetaPageModel应该继承自AbstractModel");
         }
 
         if (dataModel != null && abstractModel != null) {
             assertEquals("AbstractModel", dataModel.getExtendsModel(),
-                "DataModel应该继承自AbstractModel");
+                "MetaEntityModel应该继承自AbstractModel");
         }
 
         if (fieldModel != null && abstractModel != null) {
             assertEquals("AbstractModel", fieldModel.getExtendsModel(),
-                "FieldModel应该继承自AbstractModel");
+                "MetaFieldModel应该继承自AbstractModel");
         }
     }
 

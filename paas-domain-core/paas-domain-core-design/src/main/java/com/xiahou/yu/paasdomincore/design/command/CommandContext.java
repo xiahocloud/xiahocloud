@@ -1,6 +1,7 @@
 package com.xiahou.yu.paasdomincore.design.command;
 
 import com.xiahou.yu.paasdomincore.design.filter.Filter;
+import com.xiahou.yu.paasinfracommon.context.RequestContext;
 import lombok.Data;
 import lombok.Builder;
 import java.util.Map;
@@ -16,6 +17,8 @@ import java.util.HashMap;
 @Data
 @Builder
 public class CommandContext {
+
+    private RequestContext requestContext;
 
     /**
      * 实体标识

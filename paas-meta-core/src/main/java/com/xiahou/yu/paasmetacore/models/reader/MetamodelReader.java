@@ -116,9 +116,9 @@ public class MetamodelReader {
     private AbstractModel createModelByType(String id, String name, String description,
                                           String importPath, String extendsModel) {
         return switch (id.toLowerCase()) {
-            case "pagemodel" -> new PageModel(id, name, description, importPath, extendsModel);
-            case "datamodel" -> new DataModel(id, name, description, importPath, extendsModel);
-            case "fieldmodel" -> new FieldModel(id, name, description, importPath, extendsModel);
+            case "pagemodel" -> new MetaPageModel(id, name, description, importPath, extendsModel);
+            case "datamodel" -> new MetaEntityModel(id, name, description, importPath, extendsModel);
+            case "fieldmodel" -> new MetaFieldModel(id, name, description, importPath, extendsModel);
             default -> AbstractModel.create(id, name, description, importPath, extendsModel);
         };
     }
@@ -164,8 +164,8 @@ public class MetamodelReader {
         parseRefs(model, root);
 
         // 如果是字段模型，解析组件
-        if (model instanceof FieldModel fieldModel) {
-            parseComponents(fieldModel, root);
+        if (model instanceof MetaFieldModel metaFieldModel) {
+            parseComponents(metaFieldModel, root);
         }
     }
 
@@ -228,7 +228,7 @@ public class MetamodelReader {
     /**
      * 解析组件（仅适用于FieldModel）
      */
-    private void parseComponents(FieldModel fieldModel, Element root) {
+    private void parseComponents(MetaFieldModel metaFieldModel, Element root) {
         Element componentsElement = getElement(root, "Components");
         if (componentsElement == null) {
             return;
@@ -237,9 +237,9 @@ public class MetamodelReader {
         NodeList componentNodes = componentsElement.getElementsByTagName("Component");
         for (int i = 0; i < componentNodes.getLength(); i++) {
             Element componentElement = (Element) componentNodes.item(i);
-            FieldModel.Component component = parseComponent(componentElement);
+            MetaFieldModel.Component component = parseComponent(componentElement);
             if (component != null) {
-                fieldModel.addComponent(component);
+                metaFieldModel.addComponent(component);
             }
         }
     }
@@ -247,7 +247,7 @@ public class MetamodelReader {
     /**
      * 解析单个组件
      */
-    private FieldModel.Component parseComponent(Element componentElement) {
+    private MetaFieldModel.Component parseComponent(Element componentElement) {
         String id = getElementText(componentElement, "Id");
         String name = getElementText(componentElement, "n");
         String description = getElementText(componentElement, "Desc");
@@ -271,7 +271,7 @@ public class MetamodelReader {
             }
         }
 
-        return new FieldModel.Component(id, name, description, extendsComponent, importPath, refs);
+        return new MetaFieldModel.Component(id, name, description, extendsComponent, importPath, refs);
     }
 
     /**

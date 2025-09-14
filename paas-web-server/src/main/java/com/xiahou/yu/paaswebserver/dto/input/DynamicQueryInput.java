@@ -1,7 +1,11 @@
 package com.xiahou.yu.paaswebserver.dto.input;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xiahou.yu.paasdomincore.design.filter.Filter;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.List;
 
 /**
@@ -9,6 +13,7 @@ import java.util.List;
  * 系统级参数(system, module, context, app, aggr)已移至HTTP头传递
  */
 @Data
+@Slf4j
 public class DynamicQueryInput {
     // 移除了系统级参数，这些现在通过HTTP头传递：
     // - X-System (system)
@@ -55,5 +60,17 @@ public class DynamicQueryInput {
      */
     public Filter getEffectiveFilter() {
         return filter != null ? filter : Filter.empty();
+    }
+
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
+    @Override
+    public String toString() {
+        try {
+            return OBJECT_MAPPER.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            log.warn("Failed to serialize DynamicQueryInput to JSON", e);
+            return super.toString();
+        }
     }
 }

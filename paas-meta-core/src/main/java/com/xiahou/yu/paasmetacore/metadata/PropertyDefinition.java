@@ -42,7 +42,7 @@ public class PropertyDefinition {
 
     /**
      * 作用域，表示该属性主要适用于哪种类型的模型或组件
-     * 如：PageModel, DataModel, FieldModel等
+     * 如：PageModel, EntityModel, FieldModel等
      */
     private String scope;
 

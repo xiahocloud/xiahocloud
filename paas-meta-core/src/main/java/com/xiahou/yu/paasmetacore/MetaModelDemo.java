@@ -123,9 +123,9 @@ public class MetaModelDemo {
             log.info("  - {} ({}): {}", prop.getId(), prop.getName(), prop.getDescription());
         }
 
-        // 展示DataModel作用域的属性
-        List<PropertyDefinition> dataProperties = manager.getPropertiesByScope("DataModel");
-        log.info("\nDataModel作用域属性 ({} 个):", dataProperties.size());
+        // 展示EntityModel作用域的属性
+        List<PropertyDefinition> dataProperties = manager.getPropertiesByScope("EntityModel");
+        log.info("\nEntityModel作用域属性 ({} 个):", dataProperties.size());
         for (PropertyDefinition prop : dataProperties) {
             log.info("  - {} ({}): {}", prop.getId(), prop.getName(), prop.getDescription());
         }

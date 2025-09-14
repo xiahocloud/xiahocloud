@@ -1,6 +1,5 @@
 package com.xiahou.yu.paasdomincore.design.metamodel;
 
-import com.xiahou.yu.paasdomincore.design.constant.EntityTypeEnum;
 import com.xiahou.yu.paasdomincore.design.registry.EntityRegister;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,7 +16,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table("t_data_model")
-public class DataModel extends AbstractModel implements EntityRegister {
+@Table("t_entity_model")
+public class EntityModel extends AbstractModel implements EntityRegister {
 
 }

@@ -1,8 +1,8 @@
 package com.xiahou.yu.paasdomincore.design.service.impl;
 
-import com.xiahou.yu.paasdomincore.design.metamodel.DataModel;
-import com.xiahou.yu.paasdomincore.design.repository.DataModelRepository;
-import com.xiahou.yu.paasdomincore.design.service.DataModelService;
+import com.xiahou.yu.paasdomincore.design.metamodel.EntityModel;
+import com.xiahou.yu.paasdomincore.design.repository.EntityModelRepository;
+import com.xiahou.yu.paasdomincore.design.service.EntityModelService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,17 +23,17 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class DataModelServiceImpl implements DataModelService {
+public class EntityModelServiceImpl implements EntityModelService {
 
-    private final DataModelRepository dataModelRepository;
+    private final EntityModelRepository dataModelRepository;
 
     @Override
     @Transactional
-    public DataModel save(DataModel dataModel) {
+    public EntityModel save(EntityModel dataModel) {
         log.debug("保存数据模型: {}", dataModel);
 
         // 验证数据模型
-        if (!validateDataModel(dataModel)) {
+        if (!validateEntityModel(dataModel)) {
             throw new IllegalArgumentException("数据模型验证失败");
         }
 
@@ -41,21 +41,21 @@ public class DataModelServiceImpl implements DataModelService {
     }
 
     @Override
-    public Optional<DataModel> findById(Long id) {
+    public Optional<EntityModel> findById(Long id) {
         log.debug("根据ID查找数据模型: {}", id);
         return dataModelRepository.findById(id);
     }
 
     @Override
-    public Optional<DataModel> findByTenantAndKey(String tenant, String key) {
+    public Optional<EntityModel> findByTenantAndKey(String tenant, String key) {
         log.debug("根据租户和key查找数据模型: tenant={}, key={}", tenant, key);
         return Optional.ofNullable(dataModelRepository.findByTenantAndKey(tenant, key));
     }
 
     @Override
-    public List<DataModel> findByTenant(String tenant) {
+    public List<EntityModel> findByTenant(String tenant) {
         log.debug("根据租户查找所有数据模型: {}", tenant);
-        return (List<DataModel>) dataModelRepository.findByTenant(tenant);
+        return (List<EntityModel>) dataModelRepository.findByTenant(tenant);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class DataModelServiceImpl implements DataModelService {
     }
 
     @Override
-    public boolean validateDataModel(DataModel dataModel) {
+    public boolean validateEntityModel(EntityModel dataModel) {
         if (dataModel == null) {
             log.warn("数据模型不能为空");
             return false;

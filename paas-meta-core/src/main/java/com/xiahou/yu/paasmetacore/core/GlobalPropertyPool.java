@@ -28,7 +28,7 @@ public class GlobalPropertyPool {
 
     /**
      * 按作用域分组的属性池
-     * Key: 作用域(如PageModel, DataModel), Value: 该作用域下的属性列表
+     * Key: 作用域(如PageModel, EntityModel), Value: 该作用域下的属性列表
      */
     private final Map<String, List<PropertyDefinition>> propertiesByScope = new ConcurrentHashMap<>();
 

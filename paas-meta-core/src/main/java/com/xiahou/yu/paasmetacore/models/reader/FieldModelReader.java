@@ -2,7 +2,7 @@ package com.xiahou.yu.paasmetacore.models.reader;
 
 import com.xiahou.yu.paasmetacore.constant.ResultStatusEnum;
 import com.xiahou.yu.paasmetacore.constant.exception.PaaSException;
-import com.xiahou.yu.paasmetacore.models.FieldModel;
+import com.xiahou.yu.paasmetacore.models.MetaFieldModel;
 import com.xiahou.yu.paasmetacore.utils.XmlParseUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -18,9 +18,9 @@ import java.util.List;
  * @version 1.0
  */
 public class FieldModelReader {
-    public static FieldModel readModel(String path) {
+    public static MetaFieldModel readModel(String path) {
         // 使用正确的构造函数创建FieldModel实例
-        FieldModel fieldModel = new FieldModel(
+        MetaFieldModel metaFieldModel = new MetaFieldModel(
             "FieldModel",
             "字段模型",
             "从XML文件读取的字段模型",
@@ -37,14 +37,14 @@ public class FieldModelReader {
             Document document = XmlParseUtils.getDocument(url);
 
             // 解析字段信息
-            List<FieldModel.Component> components = XmlParseUtils.getNodes(document, "/Model/Components/Component", FieldModel.Component.class);
+            List<MetaFieldModel.Component> components = XmlParseUtils.getNodes(document, "/Model/Components/Component", MetaFieldModel.Component.class);
 
             // 将解析的组件添加到字段模型中
-            components.forEach(fieldModel::addComponent);
+            components.forEach(metaFieldModel::addComponent);
 
         } catch (DocumentException e) {
             throw new PaaSException(ResultStatusEnum.SYSTEM_ERROR, e.getMessage(), "字段元数据解析异常");
         }
-        return fieldModel;
+        return metaFieldModel;
     }
 }

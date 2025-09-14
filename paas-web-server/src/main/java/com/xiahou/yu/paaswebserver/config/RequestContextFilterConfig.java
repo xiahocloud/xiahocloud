@@ -49,15 +49,17 @@ public class RequestContextFilterConfig {
     public static class PaasRequestContextFilter implements Filter {
 
         // HTTP请求头常量
-        private static final String HEADER_TENANT_ID = "X-Tenant-Id";
-        private static final String HEADER_USER_ID = "X-User-Id";
-        private static final String HEADER_USERNAME = "X-Username";
-        private static final String HEADER_REQUEST_ID = "X-Request-Id";
-        private static final String HEADER_APP_ID = "X-App-Id";
-        private static final String HEADER_ORG_ID = "X-Org-Id";
-        private static final String HEADER_ROLES = "X-Roles";
-        private static final String HEADER_PERMISSIONS = "X-Permissions";
-        private static final String HEADER_USER_AGENT = "User-Agent";
+        private static final String X_TENANT_ID = "X-Tenant-Id";
+        private static final String X_SYSTEM_ID = "X-System-Id";
+        private static final String X_MODULE_ID = "X-Module-Id";
+        private static final String X_USER_ID = "X-User-Id";
+        private static final String X_USERNAME = "X-Username";
+        private static final String X_REQUEST_ID = "X-Request-Id";
+        private static final String X_APP_ID = "X-App-Id";
+        private static final String X_ORG_ID = "X-Org-Id";
+        private static final String X_ROLES = "X-Roles";
+        private static final String X_PERMISSIONS = "X-Permissions";
+        private static final String X_USER_AGENT = "X-User-Agent";
 
         @Override
         public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -102,17 +104,19 @@ public class RequestContextFilterConfig {
                 RequestContext context = new RequestContext();
 
                 // 从请求头中提取上下文信息
-                context.setTenantId(getHeaderValue(request, HEADER_TENANT_ID));
-                context.setUserId(getHeaderValue(request, HEADER_USER_ID));
-                context.setUsername(getHeaderValue(request, HEADER_USERNAME));
-                context.setAppId(getHeaderValue(request, HEADER_APP_ID));
-                context.setOrgId(getHeaderValue(request, HEADER_ORG_ID));
-                context.setRoles(getHeaderValue(request, HEADER_ROLES));
-                context.setPermissions(getHeaderValue(request, HEADER_PERMISSIONS));
-                context.setUserAgent(getHeaderValue(request, HEADER_USER_AGENT));
+                context.setTenantId(getHeaderValue(request, X_TENANT_ID));
+                context.setUserId(getHeaderValue(request, X_USER_ID));
+                context.setUsername(getHeaderValue(request, X_USERNAME));
+                context.setAppId(getHeaderValue(request, X_APP_ID));
+                context.setOrgId(getHeaderValue(request, X_ORG_ID));
+                context.setRoles(getHeaderValue(request, X_ROLES));
+                context.setPermissions(getHeaderValue(request, X_PERMISSIONS));
+                context.setUserAgent(getHeaderValue(request, X_USER_AGENT));
+                context.setSystem(getHeaderValue(request, X_SYSTEM_ID));
+                context.setModule(getHeaderValue(request, X_MODULE_ID));
 
                 // 请求ID：如果请求头中没有，则生成一个
-                String requestId = getHeaderValue(request, HEADER_REQUEST_ID);
+                String requestId = getHeaderValue(request, X_REQUEST_ID);
                 if (!StringUtils.hasText(requestId)) {
                     requestId = UUID.randomUUID().toString().replace("-", "");
                 }
@@ -128,7 +132,7 @@ public class RequestContextFilterConfig {
                 RequestContextHolder.setContext(context);
 
                 // 将requestId添加到响应头中
-                response.setHeader(HEADER_REQUEST_ID, requestId);
+                response.setHeader(X_REQUEST_ID, requestId);
 
                 log.debug("Request context initialized by Filter: {} {} - tenantId={}, userId={}, requestId={}",
                         request.getMethod(), request.getRequestURI(),

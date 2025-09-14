@@ -1,6 +1,6 @@
 package com.xiahou.yu.paasdomincore.design.service;
 
-import com.xiahou.yu.paasdomincore.design.metamodel.DataModel;
+import com.xiahou.yu.paasdomincore.design.metamodel.EntityModel;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +12,7 @@ import java.util.Optional;
  * @author paas-data-core-design
  * @version 0.0.1
  */
-public interface DataModelService {
+public interface EntityModelService {
 
     /**
      * 保存数据模型
@@ -20,7 +20,7 @@ public interface DataModelService {
      * @param dataModel 数据模型
      * @return 保存后的数据模型
      */
-    DataModel save(DataModel dataModel);
+    EntityModel save(EntityModel dataModel);
 
     /**
      * 根据ID查找数据模型
@@ -28,7 +28,7 @@ public interface DataModelService {
      * @param id 主键ID
      * @return 数据模型
      */
-    Optional<DataModel> findById(Long id);
+    Optional<EntityModel> findById(Long id);
 
     /**
      * 根据租户和key查找数据模型
@@ -37,7 +37,7 @@ public interface DataModelService {
      * @param key 业务标识
      * @return 数据模型
      */
-    Optional<DataModel> findByTenantAndKey(String tenant, String key);
+    Optional<EntityModel> findByTenantAndKey(String tenant, String key);
 
     /**
      * 根据租户查找所有数据模型
@@ -45,7 +45,7 @@ public interface DataModelService {
      * @param tenant 租户编码
      * @return 数据模型列表
      */
-    List<DataModel> findByTenant(String tenant);
+    List<EntityModel> findByTenant(String tenant);
 
     /**
      * 删除数据模型
@@ -69,5 +69,5 @@ public interface DataModelService {
      * @param dataModel 数据模型
      * @return 验证结果
      */
-    boolean validateDataModel(DataModel dataModel);
+    boolean validateEntityModel(EntityModel dataModel);
 }

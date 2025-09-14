@@ -3,9 +3,9 @@ package com.xiahou.yu.paasmetacore.models;
 /**
  * 数据模型，继承自AbstractModel
  */
-public final class DataModel extends AbstractModel {
+public final class MetaEntityModel extends AbstractModel {
 
-    public DataModel(String id, String name, String description, String importPath, String extendsModel) {
+    public MetaEntityModel(String id, String name, String description, String importPath, String extendsModel) {
         super(id, name, description, importPath, extendsModel);
     }
 

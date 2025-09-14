@@ -4,12 +4,7 @@ scalar Long
 
 # 动态查询输入类型
 input DynamicQueryInput {
-    system: String!
-    module: String!
-    context: String
-    app: String
-    aggr: String
-    entity: String!
+    entityName: String!
     filter: String
     fields: [String!]
     filterParams: JSON
@@ -20,12 +15,7 @@ input DynamicQueryInput {
 
 # 动态命令输入类型
 input DynamicCommandInput {
-    system: String!
-    module: String!
-    context: String
-    app: String
-    aggr: String
-    entity: String!
+    entityName: String!
     operation: String!
     data: JSON
     conditions: JSON
