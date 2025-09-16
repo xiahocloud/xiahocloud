@@ -25,6 +25,8 @@ public class CommandContext {
      */
     private String entityName;
 
+    private String operation;
+
     /**
      * 数据载荷
      */

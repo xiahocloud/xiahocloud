@@ -1,7 +1,12 @@
 package com.xiahou.yu.paaswebserver.dto.input;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xiahou.yu.paasdomincore.design.filter.Filter;
+import com.xiahou.yu.paasinfracommon.context.RequestContext;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Map;
 
 /**
@@ -9,6 +14,7 @@ import java.util.Map;
  * 系统级参数(system, module, context, app, aggr)已移至HTTP头传递
  */
 @Data
+@Slf4j
 public class DynamicCommandInput {
 
     private RequestContext requestContext;
@@ -41,5 +47,17 @@ public class DynamicCommandInput {
      */
     public Filter getEffectiveFilter() {
         return filter != null ? filter : Filter.empty();
+    }
+
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
+    @Override
+    public String toString() {
+        try {
+            return OBJECT_MAPPER.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            log.warn("Failed to serialize DynamicCommandInput to JSON", e);
+            return super.toString();
+        }
     }
 }

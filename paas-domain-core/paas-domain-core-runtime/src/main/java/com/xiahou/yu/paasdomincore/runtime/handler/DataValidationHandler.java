@@ -56,8 +56,8 @@ public class DataValidationHandler implements Handler {
     }
 
     private boolean validateContext(CommandContext context) {
-        String system = context.getAttribute("system");
-        String module = context.getAttribute("module");
+        String system = context.getRequestContext().getSystem();
+        String module = context.getRequestContext().getModule();
         return system != null && 
                module != null && 
                context.getEntityName() != null;

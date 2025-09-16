@@ -1,5 +1,7 @@
 package com.xiahou.yu.paaswebserver.controller;
 
+import com.xiahou.yu.paasinfracommon.context.RequestContext;
+import com.xiahou.yu.paasinfracommon.context.RequestContextHolder;
 import com.xiahou.yu.paaswebserver.cqrs.command.DynamicCommandHandler;
 import com.xiahou.yu.paaswebserver.cqrs.query.DynamicQueryHandler;
 import com.xiahou.yu.paaswebserver.dto.DynamicCommandResponse;
@@ -55,9 +57,9 @@ public class DynamicGraphQLController {
     public DynamicCommandResponse dynamicCommand(@Argument("input") DynamicCommandInput input) {
         StopWatch stopWatch = new StopWatch("DynamicCommand");
         stopWatch.start("command-execution");
-
+        RequestContext context = RequestContextHolder.getContext();
+        input.setRequestContext(context);
         log.info("Received dynamic command request: {}", input);
-
         try {
             DynamicCommandResponse response = commandHandler.handle(input);
             log.info("Dynamic command response: {}", response.toString());

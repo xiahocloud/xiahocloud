@@ -5,6 +5,7 @@ import com.xiahou.yu.paasdomincore.design.command.CommandType;
 import com.xiahou.yu.paasdomincore.design.service.DataOperationService;
 import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
 import com.xiahou.yu.paasdomincore.design.filter.Filter;
+import com.xiahou.yu.paasinfracommon.context.RequestContext;
 import com.xiahou.yu.paasinfracommon.context.RequestContextHolder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -26,10 +27,15 @@ public class DynamicDataOperationAdapter {
 
     private final DataOperationService dataOperationService;
 
+    public DataOperationResult handleCommand(CommandContext commandContext) {
+        return handleCommand(commandContext.getEntityName(), commandContext.getOperation(), DynamicDataObject.fromObject(commandContext.getData()), commandContext.getFilter(), commandContext.getRequestContext());
+    }
+
+
     /**
      * 处理动态数据操作命令 - 使用Filter替代conditions参数
      */
-    public DataOperationResult handleCommand(String entity, String operation, DynamicDataObject data, Filter filter) {
+    public DataOperationResult handleCommand(String entity, String operation, DynamicDataObject data, Filter filter, RequestContext requestContext) {
 
         // 从线程上下文获取系统级参数
         String system = RequestContextHolder.getSystem();
@@ -50,6 +56,7 @@ public class DynamicDataOperationAdapter {
                     .entityName(entity)
                     .data(data != null ? data.toMap() : null)
                     .filter(filter)
+                    .requestContext(requestContext)
                     .build();
 
             // 解析操作类型

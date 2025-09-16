@@ -28,7 +28,7 @@ public class PluggableDynamicCommandHandler implements DynamicCommandHandler {
                 input.getEntityName(), input.getOperation());
         // 调用数据操作适配器
         DynamicDataOperationAdapter.DataOperationResult result = dataOperationAdapter.handleCommand(
-                input.getEntityName(), input.getOperation(), DynamicDataObject.fromMap(input.getData()), input.getFilter()
+                input.getEntityName(), input.getOperation(), DynamicDataObject.fromMap(input.getData()), input.getFilter(), input.getRequestContext()
         );
 
         // 转换响应格式
