@@ -10,6 +10,8 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Column;
 
+import java.time.LocalDateTime;
+
 /**
  * 抽象模型
  * 用于定义模型的通用部分，基于元模型配置生成
@@ -30,6 +32,13 @@ public abstract class AbstractModel implements Persistable<Long> {
     @Id
     @Column("id")
     private Long id;
+
+    /**
+     * 数据代码
+     * 租户内的唯一属性
+     */
+    @Column("code")
+    private String code;
 
     /**
      * 标识
@@ -116,7 +125,7 @@ public abstract class AbstractModel implements Persistable<Long> {
      * 记录创建的时间戳
      */
     @Column("created_time")
-    private Long createdTime;
+    private LocalDateTime createdTime;
 
     /**
      * 创建人
@@ -130,7 +139,7 @@ public abstract class AbstractModel implements Persistable<Long> {
      * 记录最后更新的时间戳
      */
     @Column("updated_time")
-    private Long updatedTime;
+    private LocalDateTime updatedTime;
 
     /**
      * 更新人

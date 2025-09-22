@@ -57,16 +57,9 @@ public class EntityAutoRegister implements InitializingBean {
     private void autoRegisterEntities() {
         log.info("Starting auto registration of entities...");
 
-        // 1. 获取所有实现了 EntityRegister 接口的 Bean
-        Map<String, EntityRegister> entityRegisterBeans =
-                applicationContext.getBeansOfType(EntityRegister.class);
-        List<EntityRegister> allEntityRegisters = new ArrayList<>(entityRegisterBeans.values());
-        log.debug("Found {} EntityRegister beans", entityRegisterBeans.size());
-
         // 2. 扫描类路径查找所有实现了 EntityRegister 接口的类
-        List<EntityRegister> scannedEntityRegisters = scanEntityRegisterClasses();
-        allEntityRegisters.addAll(scannedEntityRegisters);
-        log.debug("Found {} EntityRegister classes from classpath scanning", scannedEntityRegisters.size());
+        List<EntityRegister> allEntityRegisters = scanEntityRegisterClasses();
+        log.debug("Found {} EntityRegister classes from classpath scanning", allEntityRegisters.size());
 
         if (allEntityRegisters.isEmpty()) {
             log.info("No EntityRegister implementations found");

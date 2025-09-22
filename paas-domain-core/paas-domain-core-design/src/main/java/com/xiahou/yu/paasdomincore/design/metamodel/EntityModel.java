@@ -16,7 +16,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table("t_entity_model")
+@Table("p_entity_model")
 public class EntityModel extends AbstractModel implements EntityRegister {
 
 }

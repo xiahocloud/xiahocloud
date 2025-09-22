@@ -19,7 +19,7 @@ repositories {
 dependencies {
     // Alibaba TransmittableThreadLocal 支持
     api 'com.alibaba:transmittable-thread-local:2.14.4'
-
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.2'
     // SLF4J 日志支持
     implementation 'org.slf4j:slf4j-api:2.0.9'
 
@@ -28,6 +28,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
     testCompileOnly 'org.projectlombok:lombok:1.18.30'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+    implementation 'org.springframework.boot:spring-boot-starter:3.3.4'
 
     // 测试依赖
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'

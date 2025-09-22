@@ -1,9 +1,12 @@
 package com.xiahou.yu.paasdomincore.runtime.handler;
 
+import com.xiahou.yu.paasdomincore.common.snowflake.SnowflakeIdGenerator;
 import com.xiahou.yu.paasdomincore.design.chain.Handler;
 import com.xiahou.yu.paasdomincore.design.chain.HandlerChain;
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -16,9 +19,12 @@ import java.util.Map;
  *
  * @author xiahou
  */
-@Component
 @Slf4j
+@Component
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DataAutoFillHandler implements Handler {
+
+    private final SnowflakeIdGenerator snowflakeIdGenerator;
 
     @Override
     public boolean handle(CommandContext context, HandlerChain chain) {
@@ -60,14 +66,16 @@ public class DataAutoFillHandler implements Handler {
         }
 
         LocalDateTime now = LocalDateTime.now();
-        String currentUser = context.getAttribute("userId");
+        String currentUser = context.getRequestContext().getUserId();
 
-        data.put("createTime", now);
-        data.put("updateTime", now);
-        data.put("createBy", currentUser);
-        data.put("updateBy", currentUser);
-        data.put("version", 1);
-        data.put("deleted", false);
+        long nextId = snowflakeIdGenerator.nextId();
+        data.put("id", nextId);
+        data.put("code", nextId);
+        data.put("createdTime", now);
+        data.put("createdBy", currentUser);
+        data.put("version", "1.0");
+        data.put("updatedTime", now);
+        data.put("updatedBy", currentUser);
 
         log.debug("Auto-filled create fields: createTime={}, createBy={}", now, currentUser);
     }

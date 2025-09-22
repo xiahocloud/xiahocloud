@@ -31,7 +31,7 @@ public interface EntityRegister {
      * 获取实体描述
      * @return 实体描述
      */
-    default String getDescription() {
+    default String getDesc() {
         return getEntityName() + " - 系统实体";
     }
 

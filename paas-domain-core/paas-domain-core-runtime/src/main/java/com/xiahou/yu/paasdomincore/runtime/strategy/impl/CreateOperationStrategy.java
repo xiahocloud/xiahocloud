@@ -1,12 +1,11 @@
 package com.xiahou.yu.paasdomincore.runtime.strategy.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
-import com.xiahou.yu.paasdomincore.design.registry.EntityRegister;
 import com.xiahou.yu.paasdomincore.design.registry.EntityRegistryManager;
 import com.xiahou.yu.paasdomincore.design.repository.RepositoryManager;
 import com.xiahou.yu.paasdomincore.runtime.strategy.DataOperationStrategy;
 import com.xiahou.yu.paasdomincore.runtime.strategy.EntityExecutor;
+import com.xiahou.yu.paasinfracommon.tools.ObjectMapperService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
     private final RepositoryManager repositoryManager;
     private final EntityRegistryManager entityRegistryManager;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapperService objectMapperService;
 
     @Override
     public EntityRegistryManager getEntityRegistryManager() {
@@ -42,9 +41,9 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
 
     private <T> T convertToEntity(String entityName, Map<String, Object> data, Class<T> clazz) {
         try {
-            return objectMapper.convertValue(data, clazz);
+            return objectMapperService.convertToEntity(data, clazz);
         } catch (Exception e) {
-            log.error("Error converting data to entity {}: {}", entityName, e.getMessage());
+            log.error("Error converting data to entity {}: {}", entityName, e.getMessage(), e);
             return null;
         }
     }

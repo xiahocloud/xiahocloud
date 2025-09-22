@@ -30,7 +30,7 @@ public class EntityTypeRegister {
         String entityName = entityRegister.getEntityName();
         ENTITY_TYPE_ENUM_MAP.put(entityName, entityRegister.getEntityType());
         ENTITY_CLASS_MAP.put(entityName, entityRegister.getEntityClass());
-        ENTITY_DESCRIPTION_MAP.put(entityName, entityRegister.getDescription());
+        ENTITY_DESCRIPTION_MAP.put(entityName, entityRegister.getDesc());
         log.debug("Entity registered: {} -> {}", entityName, entityRegister.getEntityType());
     }
 

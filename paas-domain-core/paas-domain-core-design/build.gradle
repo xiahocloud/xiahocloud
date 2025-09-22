@@ -25,6 +25,7 @@ dependencies {
     // 当前项目的依赖
     implementation 'com.xiahou.yu:paas-meta-core'
     api 'com.xiahou.yu:paas-infra-common'
+    api 'com.xiahou.yu:paas-infra-id-service'
 
     // Spring Boot 核心依赖
     implementation 'org.springframework.boot:spring-boot-starter'
