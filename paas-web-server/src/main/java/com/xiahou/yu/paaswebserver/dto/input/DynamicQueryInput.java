@@ -3,6 +3,7 @@ package com.xiahou.yu.paaswebserver.dto.input;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xiahou.yu.paasdomincore.design.filter.Filter;
+import com.xiahou.yu.paasinfracommon.utils.ObjectMapperUtils;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -62,7 +63,7 @@ public class DynamicQueryInput {
         return filter != null ? filter : Filter.empty();
     }
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER = ObjectMapperUtils.newObjectMapper();
 
     @Override
     public String toString() {

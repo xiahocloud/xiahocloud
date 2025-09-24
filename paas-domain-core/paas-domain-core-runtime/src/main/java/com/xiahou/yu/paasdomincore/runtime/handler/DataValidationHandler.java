@@ -6,6 +6,7 @@ import com.xiahou.yu.paasdomincore.design.command.CommandContext;
 import com.xiahou.yu.paasdomincore.design.command.CommandType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 /**
  * 数据验证处理器
@@ -51,7 +52,7 @@ public class DataValidationHandler implements Handler {
     @Override
     public boolean supports(CommandContext context) {
         // 支持所有非查询操作
-        return context.getData() != null && 
+        return !CollectionUtils.isEmpty(context.getRecords()) &&
                !CommandType.QUERY.name().equals(context.getAttribute("commandType"));
     }
 
@@ -66,6 +67,6 @@ public class DataValidationHandler implements Handler {
     private boolean validateBusinessData(CommandContext context) {
         // 这里可以根据实体类型进行具体的业务验证
         // 例如：必填字段检查、数据格式验证等
-        return context.getData() != null && !context.getData().isEmpty();
+        return !CollectionUtils.isEmpty(context.getRecords());
     }
 }

@@ -1,8 +1,11 @@
 package com.xiahou.yu.paasdomincore.design.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.xiahou.yu.paasdomincore.design.config.DynamicDataObjectDeserializer;
 import com.xiahou.yu.paasdomincore.design.metaobject.MetaObject;
 import lombok.extern.slf4j.Slf4j;
 
+import java.beans.ConstructorProperties;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,10 +16,12 @@ import java.util.Map;
  * @author xiahou
  */
 @Slf4j
+@JsonDeserialize(using = DynamicDataObjectDeserializer.class)
 public class DynamicDataObject {
 
     private final MetaObject metaObject;
 
+    @ConstructorProperties(value = "record")
     private DynamicDataObject(Object data) {
         this.metaObject = MetaObject.forObject(data);
     }
@@ -29,7 +34,7 @@ public class DynamicDataObject {
     }
 
     /**
-     * 从任意对象创建动态数据对象
+     * 从任意对象创建动态数���对象
      */
     public static DynamicDataObject fromObject(Object object) {
         return new DynamicDataObject(object);
@@ -54,6 +59,14 @@ public class DynamicDataObject {
         }
     }
 
+    public void put(String property, Object value) {
+        setValue(property, value);
+    }
+
+    public boolean containsKey(String property) {
+        return hasProperty(property);
+    }
+
     /**
      * 获取字符串类型属性值
      */
@@ -67,9 +80,15 @@ public class DynamicDataObject {
      */
     public Integer getInteger(String property) {
         Object value = getValue(property);
-        if (value == null) return null;
-        if (value instanceof Integer) return (Integer) value;
-        if (value instanceof Number) return ((Number) value).intValue();
+        if (value == null) {
+            return null;
+        }
+        if (value instanceof Integer) {
+            return (Integer) value;
+        }
+        if (value instanceof Number) {
+            return ((Number) value).intValue();
+        }
         try {
             return Integer.valueOf(value.toString());
         } catch (NumberFormatException e) {
@@ -163,14 +182,27 @@ public class DynamicDataObject {
      */
     public boolean isEmpty() {
         String[] properties = getPropertyNames();
-        if (properties.length == 0) return true;
-
+        if (properties == null || properties.length == 0) {
+            return true;
+        }
         for (String property : properties) {
-            if (isNotNull(property)) {
-                return false;
+            Object v = getValue(property);
+            if (v != null) {
+                if (v instanceof Map) {
+                    if (!((Map<?, ?>) v).isEmpty()) {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
             }
         }
         return true;
+    }
+
+    /** 新增: 返回属性个数 */
+    public int size() {
+        return toMap().size();
     }
 
     /**

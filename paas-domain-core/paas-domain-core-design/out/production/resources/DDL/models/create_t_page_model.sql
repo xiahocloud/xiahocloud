@@ -5,22 +5,22 @@
 CREATE TABLE t_page_model (
     id BIGINT PRIMARY KEY,
     ukey VARCHAR(255) NOT NULL,
-    tenant VARCHAR(100) NOT NULL,
+    tenant VARCHAR(128) NOT NULL,
     name VARCHAR(255) NOT NULL,
     description TEXT,
     version VARCHAR(50),
-    type VARCHAR(100),
+    type VARCHAR(128),
     status INTEGER DEFAULT 1,
     enable INTEGER DEFAULT 1,
     visible INTEGER DEFAULT 1,
-    app VARCHAR(100) DEFAULT 'std',
+    app VARCHAR(128) DEFAULT 'std',
     sys INTEGER DEFAULT 0,
     namespace VARCHAR(255),
     created_time BIGINT,
-    created_by VARCHAR(100),
+    creator VARCHAR(128),
     updated_time BIGINT,
-    updated_by VARCHAR(100),
-    page_type VARCHAR(100),
+    updater VARCHAR(128),
+    page_type VARCHAR(128),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -52,7 +52,7 @@ COMMENT ON COLUMN t_page_model.app IS '所属应用的标识';
 COMMENT ON COLUMN t_page_model.sys IS '系统标识，null/1：系统，0：自定义';
 COMMENT ON COLUMN t_page_model.namespace IS '模型或组件的命名空间';
 COMMENT ON COLUMN t_page_model.created_time IS '创建时间戳';
-COMMENT ON COLUMN t_page_model.created_by IS '创建者标识';
+COMMENT ON COLUMN t_page_model.creator IS '创建者标识';
 COMMENT ON COLUMN t_page_model.updated_time IS '最后更新时间戳';
-COMMENT ON COLUMN t_page_model.updated_by IS '最后更新者标识';
+COMMENT ON COLUMN t_page_model.updater IS '最后更新者标识';
 COMMENT ON COLUMN t_page_model.page_type IS '页面类型，如：list, form, detail等';

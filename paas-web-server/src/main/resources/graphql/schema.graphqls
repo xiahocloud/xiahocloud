@@ -17,7 +17,8 @@ input DynamicQueryInput {
 input DynamicCommandInput {
     entityName: String!
     operation: String!
-    data: JSON
+    record: JSON
+    records: [JSON!]
     conditions: JSON
 }
 

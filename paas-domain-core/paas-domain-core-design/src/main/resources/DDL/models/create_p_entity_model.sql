@@ -7,21 +7,21 @@ CREATE TABLE p_entity_model (
     id BIGINT PRIMARY KEY,
     ukey VARCHAR(255) NOT NULL,
     code VARCHAR(32) NOT NULL,
-    tenant VARCHAR(100) NOT NULL,
+    tenant VARCHAR(128) NOT NULL,
     name VARCHAR(255) NOT NULL,
     description TEXT,
     version VARCHAR(50),
-    type VARCHAR(100),
+    type VARCHAR(128),
     status INTEGER DEFAULT 1,
     enable INTEGER DEFAULT 1,
     visible INTEGER DEFAULT 1,
-    app VARCHAR(100) DEFAULT 'std',
+    app VARCHAR(128) DEFAULT 'std',
     sys INTEGER DEFAULT 0,
     namespace VARCHAR(255),
     created_time TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
-    created_by VARCHAR(100),
+    creator VARCHAR(128),
     updated_time TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
-    updated_by VARCHAR(100)
+    updater VARCHAR(128)
 );
 
 -- 创建索引
@@ -45,6 +45,6 @@ COMMENT ON COLUMN p_entity_model.app IS '所属应用的标识';
 COMMENT ON COLUMN p_entity_model.sys IS '系统标识，null/1：系统，0：自定义';
 COMMENT ON COLUMN p_entity_model.namespace IS '模型或组件的命名空间';
 COMMENT ON COLUMN p_entity_model.created_time IS '创建时间戳';
-COMMENT ON COLUMN p_entity_model.created_by IS '创建者标识';
+COMMENT ON COLUMN p_entity_model.creator IS '创建者标识';
 COMMENT ON COLUMN p_entity_model.updated_time IS '最后更新时间戳';
-COMMENT ON COLUMN p_entity_model.updated_by IS '最后更新者标识';
+COMMENT ON COLUMN p_entity_model.updater IS '最后更新者标识';

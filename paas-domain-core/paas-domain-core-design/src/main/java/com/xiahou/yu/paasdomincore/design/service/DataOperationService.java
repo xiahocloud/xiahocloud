@@ -2,7 +2,9 @@ package com.xiahou.yu.paasdomincore.design.service;
 
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
 import com.xiahou.yu.paasdomincore.design.command.CommandType;
+import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -54,9 +56,9 @@ public interface DataOperationService {
      * 构建命令上下文的便捷方法
      * 系统级参数从线程上下文自动获取
      * @param entity 实体标识
-     * @param data 数据
+     * @param records 数据
      * @param conditions 条件
      * @return 命令上下文
      */
-    CommandContext buildContext(String entity, Map<String, Object> data, Map<String, Object> conditions);
+    CommandContext buildContext(String entity, List<DynamicDataObject> records, Map<String, Object> conditions);
 }

@@ -103,7 +103,7 @@
         </Property>
 
         <Property>
-            <Id>createdBy</Id>
+            <Id>creator</Id>
             <Name>创建人</Name>
             <DataType>String</DataType>
             <Desc>记录创建者的标识</Desc>
@@ -117,7 +117,7 @@
         </Property>
 
         <Property>
-            <Id>updatedBy</Id>
+            <Id>updater</Id>
             <Name>更新人</Name>
             <DataType>String</DataType>
             <Desc>记录最后更新者的标识</Desc>

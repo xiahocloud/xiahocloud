@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * 仓储管理服务 - Spring Data JDBC 版本
@@ -61,8 +63,25 @@ public class RepositoryManager {
         return repository.save(entity);
     }
 
+    public <T> List<T> saveAll(String entityName, List<T> entities) {
+        return saveByPage(entityName, entities);
+    }
+
+    private <T> List<T> saveByPage(String entityName, List<T> entities) {
+        BaseRepository<T, Serializable> repository = getRepository(entityName);
+        int batchSize = 1000;
+        List<T> result = new ArrayList<>();
+        for (int i = 0; i < entities.size(); i += batchSize) {
+            int end = Math.min(i + batchSize, entities.size());
+            List<T> batch = entities.subList(i, end);
+            Iterable<T> saved = repository.saveAll(batch);
+            return StreamSupport.stream(saved.spliterator(), false).collect(Collectors.toList());
+        }
+        return result;
+    }
+
     /**
-     * 根据实体名称删除实体
+     * 根据实体名称删除���体
      *
      * @param entityName 实体名称
      * @param id 实体ID
@@ -82,7 +101,7 @@ public class RepositoryManager {
         BaseRepository<T, Serializable> repository = getRepository(entityName);
         Iterable<T> iterable = repository.findAll();
 
-        // 将Iterable转换为List
+        // ��Iterable转换为List
         List<T> result = new ArrayList<>();
         iterable.forEach(result::add);
         return result;

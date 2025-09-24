@@ -1,5 +1,6 @@
 package com.xiahou.yu.paasdomincore.design.metaobject;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -13,9 +14,24 @@ import java.util.*;
 @Slf4j
 public class MetaObject {
 
+    /**
+     * -- GETTER --
+     *  获取原始对象
+     */
+    @Getter
     private final Object originalObject;
     private final ObjectWrapper objectWrapper;
+    /**
+     * -- GETTER --
+     *  获取对象工厂
+     */
+    @Getter
     private final ObjectFactory objectFactory;
+    /**
+     * -- GETTER --
+     *  获取对象包装器工厂
+     */
+    @Getter
     private final ObjectWrapperFactory objectWrapperFactory;
 
     private MetaObject(Object object, ObjectFactory objectFactory, ObjectWrapperFactory objectWrapperFactory) {
@@ -155,13 +171,6 @@ public class MetaObject {
     }
 
     /**
-     * 获取原始对象
-     */
-    public Object getOriginalObject() {
-        return originalObject;
-    }
-
-    /**
      * 检查原始对象是否为null
      */
     public boolean isNull() {
@@ -205,20 +214,6 @@ public class MetaObject {
     private MetaObject metaObjectForProperty(String name) {
         Object value = getValue(name);
         return MetaObject.forObject(value, objectFactory, objectWrapperFactory);
-    }
-
-    /**
-     * 获取对象工厂
-     */
-    public ObjectFactory getObjectFactory() {
-        return objectFactory;
-    }
-
-    /**
-     * 获取对象包装器工厂
-     */
-    public ObjectWrapperFactory getObjectWrapperFactory() {
-        return objectWrapperFactory;
     }
 
     /**

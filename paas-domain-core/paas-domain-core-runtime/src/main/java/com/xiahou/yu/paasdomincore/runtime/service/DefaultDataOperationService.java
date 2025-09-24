@@ -2,12 +2,14 @@ package com.xiahou.yu.paasdomincore.runtime.service;
 
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
 import com.xiahou.yu.paasdomincore.design.command.CommandType;
+import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
 import com.xiahou.yu.paasdomincore.design.executor.DataOperationExecutor;
 import com.xiahou.yu.paasdomincore.design.service.DataOperationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,10 +60,10 @@ public class DefaultDataOperationService implements DataOperationService {
     }
 
     @Override
-    public CommandContext buildContext(String entity, Map<String, Object> data, Map<String, Object> conditions) {
+    public CommandContext buildContext(String entity, List<DynamicDataObject> records, Map<String, Object> conditions) {
         return CommandContext.builder()
                 .entityName(entity)
-                .data(data)
+                .records(records)
                 .build();
     }
 }

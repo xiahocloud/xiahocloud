@@ -1,4 +1,4 @@
-package com.xiahou.yu.paasinfracommon.tools;
+package com.xiahou.yu.paasinfracommon.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import java.util.Map;
 public class ObjectMapperService {
     private final ObjectMapper objectMapper;
 
-    public <T> T convertToEntity(String entityName, Map<String, Object> data, Class<T> clazz) {
+    public <T> T convertToEntity(String entityName, Object data, Class<T> clazz) {
         try {
             return objectMapper.convertValue(data, clazz);
         } catch (Exception e) {
@@ -30,7 +30,7 @@ public class ObjectMapperService {
         }
     }
 
-    public <T> T convertToEntity(Map<String, Object> data, Class<T> clazz) {
+    public <T> T convertToEntity(Object data, Class<T> clazz) {
         String entityName = clazz.getName();
         try {
             return convertToEntity(entityName, data, clazz);

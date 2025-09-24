@@ -10,6 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * date     2025/9/22 15:12
  * @version 1.0
  */
+
 public class LocalIdGenerator {
     // long 类型的16进制表示通常需要16个字符 (8字节 * 2字符/字节)
     private static final String LONG_HEX_FORMAT = "%016x";

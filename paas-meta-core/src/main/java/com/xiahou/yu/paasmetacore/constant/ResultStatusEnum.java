@@ -28,7 +28,11 @@ public enum ResultStatusEnum {
      */
     ENUM_NOT_MATCHES("A00002", "枚举未匹配。"),
 
-    PARAMS_NOT_MATCHES("B00001", "业务异常。");
+    PARAMS_NOT_MATCHES("B00001", "业务异常。"),
+
+    PARAMS_EMPTY("B00002", "参数不能为空。"),
+
+    ENTITY_NOT_FOUND("B00003", "实体不存在。");
 
 
 

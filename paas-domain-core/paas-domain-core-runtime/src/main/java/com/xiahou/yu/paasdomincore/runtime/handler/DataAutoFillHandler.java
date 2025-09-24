@@ -4,14 +4,17 @@ import com.xiahou.yu.paasdomincore.common.snowflake.SnowflakeIdGenerator;
 import com.xiahou.yu.paasdomincore.design.chain.Handler;
 import com.xiahou.yu.paasdomincore.design.chain.HandlerChain;
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
+import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
+import com.xiahou.yu.paasmetacore.constant.ResultStatusEnum;
+import com.xiahou.yu.paasmetacore.constant.exception.PaaSException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 数据自动填充处理器
@@ -59,40 +62,70 @@ public class DataAutoFillHandler implements Handler {
     }
 
     private void fillCreateFields(CommandContext context) {
-        Map<String, Object> data = context.getData();
-        if (data == null) {
-            data = new HashMap<>();
-            context.setData(data);
+        if (CollectionUtils.isEmpty(context.getRecords())) {
+            log.error("No records found");
+            throw new PaaSException(ResultStatusEnum.PARAMS_EMPTY);
         }
 
-        LocalDateTime now = LocalDateTime.now();
-        String currentUser = context.getRequestContext().getUserId();
+        for (DynamicDataObject record : context.getRecords()) {
+            if (record == null) {
+                log.warn("Record is null, skip auto-fill");
+                continue;
+            }
 
-        long nextId = snowflakeIdGenerator.nextId();
-        data.put("id", nextId);
-        data.put("code", nextId);
-        data.put("createdTime", now);
-        data.put("createdBy", currentUser);
-        data.put("version", "1.0");
-        data.put("updatedTime", now);
-        data.put("updatedBy", currentUser);
+            LocalDateTime now = LocalDateTime.now();
+            String currentUser = context.getRequestContext().getUserId();
+            String tenantId = context.getRequestContext().getTenantId();
 
-        log.debug("Auto-filled create fields: createTime={}, createBy={}", now, currentUser);
+            long nextId = snowflakeIdGenerator.nextId();
+            record.put("id", nextId);
+            record.put("code", nextId);
+            record.put("createdTime", now);
+            record.put("creator", currentUser);
+            record.put("version", "1");
+            record.put("updatedTime", now);
+            record.put("updater", currentUser);
+            record.put("key", snowflakeIdGenerator.nextHexId(nextId));
+            record.put("tenant", tenantId);
+            record.put("isNew", true);
+            // 自动补充 AbstractModel 其他字段
+            if (!record.containsKey("status")) {
+                record.put("status", 1);
+            }
+            if (!record.containsKey("enable")) {
+                record.put("enable", 1);
+            }
+            if (!record.containsKey("visible")) {
+                record.put("visible", 1);
+            }
+            if (!record.containsKey("sys")) {
+                record.put("sys", 0);
+            }
+            log.debug("Auto-filled create fields: id={}, code={}, createdTime={}, creator={}, tenantId={}",
+                    nextId, nextId, now, currentUser, tenantId);
+        }
     }
 
     private void fillUpdateFields(CommandContext context) {
-        Map<String, Object> data = context.getData();
-        if (data == null) {
-            data = new HashMap<>();
-            context.setData(data);
+        if (CollectionUtils.isEmpty(context.getRecords())) {
+            log.error("No records found");
+            throw new PaaSException(ResultStatusEnum.PARAMS_EMPTY);
         }
 
-        LocalDateTime now = LocalDateTime.now();
-        String currentUser = context.getAttribute("userId");
+        for (DynamicDataObject record : context.getRecords()) {
+            if (record == null) {
+                log.warn("Record is null, skip auto-fill");
+                continue;
+            }
+            LocalDateTime now = LocalDateTime.now();
+            String currentUser = context.getAttribute("userId");
 
-        data.put("updateTime", now);
-        data.put("updateBy", currentUser);
+            record.put("updateTime", now);
+            record.put("updater", currentUser);
+            record.put("isNew", false);
 
-        log.debug("Auto-filled update fields: updateTime={}, updateBy={}", now, currentUser);
+            log.debug("Auto-filled update fields: updateTime={}, updater={}", now, currentUser);
+        }
+
     }
 }

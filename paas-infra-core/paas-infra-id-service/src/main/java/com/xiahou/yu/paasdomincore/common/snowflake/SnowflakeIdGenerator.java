@@ -1,6 +1,7 @@
 package com.xiahou.yu.paasdomincore.common.snowflake;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 /**
  * 雪花算法ID生成器
@@ -109,6 +110,15 @@ public class SnowflakeIdGenerator {
     public SnowflakeIdGenerator() {
         this(1L, 1L);
     }
+
+    public String nextHexId() {
+        return nextHexId(nextId());
+    }
+
+    public String nextHexId(Long id) {
+        return Long.toHexString(id).toUpperCase();
+    }
+
 
     /**
      * 获得下一个ID (该方法是线程安全的)

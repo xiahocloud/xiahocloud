@@ -1,9 +1,13 @@
 package com.xiahou.yu.paasdomincore.design.command;
 
+import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
 import com.xiahou.yu.paasdomincore.design.filter.Filter;
 import com.xiahou.yu.paasinfracommon.context.RequestContext;
 import lombok.Data;
 import lombok.Builder;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -30,7 +34,7 @@ public class CommandContext {
     /**
      * 数据载荷
      */
-    private Map<String, Object> data;
+    private List<DynamicDataObject> records = new ArrayList<>();
 
     /**
      * 查询/更新/删除条件 - 使用统一的Filter

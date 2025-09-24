@@ -7,6 +7,9 @@ import com.xiahou.yu.paaswebserver.dto.input.DynamicCommandInput;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.List;
 
 /**
  * 基于插件化架构的动态命令处理器
@@ -27,8 +30,13 @@ public class PluggableDynamicCommandHandler implements DynamicCommandHandler {
         log.info("Handling dynamic command with pluggable architecture: entity={}, operation={}",
                 input.getEntityName(), input.getOperation());
         // 调用数据操作适配器
+        List<DynamicDataObject> records = input.getRecords();
+        // 如果records为空且record不为空，则将record转换为单元素列表
+        if (CollectionUtils.isEmpty(records) && input.getRecord() != null) {
+            records = List.of(input.getRecord());
+        }
         DynamicDataOperationAdapter.DataOperationResult result = dataOperationAdapter.handleCommand(
-                input.getEntityName(), input.getOperation(), DynamicDataObject.fromMap(input.getData()), input.getFilter(), input.getRequestContext()
+                input.getEntityName(), input.getOperation(), records, input.getFilter(), input.getRequestContext()
         );
 
         // 转换响应格式
@@ -37,9 +45,9 @@ public class PluggableDynamicCommandHandler implements DynamicCommandHandler {
 
     private DynamicCommandResponse convertToResponse(DynamicDataOperationAdapter.DataOperationResult result) {
         DynamicCommandResponse response = new DynamicCommandResponse();
-        response.setSuccess(result.isSuccess());  // 修正方法名：getSuccess() -> isSuccess()
+        response.setSuccess(result.isSuccess());
         response.setMessage(result.getMessage());
-        response.setData(result.getDataAsMap());  // 使用getDataAsMap()获取Map格式的数据
+        response.setData(result.getDataAsMap());
         // 注意：DataOperationResult中没有operationType和affectedRows字段，需要根据实际情况处理
         return response;
     }

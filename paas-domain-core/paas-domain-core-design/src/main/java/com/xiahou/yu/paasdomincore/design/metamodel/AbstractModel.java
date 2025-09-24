@@ -131,8 +131,8 @@ public abstract class AbstractModel implements Persistable<Long> {
      * 创建人
      * 记录创建者的标识
      */
-    @Column("created_by")
-    private String createdBy;
+    @Column("creator")
+    private String creator;
 
     /**
      * 更新时间
@@ -145,19 +145,14 @@ public abstract class AbstractModel implements Persistable<Long> {
      * 更新人
      * 记录最后更新者的标识
      */
-    @Column("updated_by")
-    private String updatedBy;
+    @Column("updater")
+    private String updater;
 
     /**
      * 标记实体是否为新实体（用于Spring Data JDBC判断插入或更新）
      */
     @Transient
-    private boolean isNew = true;
-
-    @Override
-    public boolean isNew() {
-        return isNew;
-    }
+    private boolean isNew;
 
     /**
      * 设置实体为已存在（通常在保存后调用）

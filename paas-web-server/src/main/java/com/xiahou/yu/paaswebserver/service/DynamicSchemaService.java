@@ -70,7 +70,7 @@ public class DynamicSchemaService {
 
         // 设置字段约束
         Map<String, Object> constraints = new HashMap<>();
-        constraints.put("name", Map.of("required", true, "maxLength", 100));
+        constraints.put("name", Map.of("required", true, "maxLength", 128));
         constraints.put("description", Map.of("maxLength", 500));
         metadata.setFieldConstraints(constraints);
 

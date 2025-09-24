@@ -89,9 +89,9 @@ curl -X POST http://localhost:8080/graphql \
 
 系统会自动在数据中添加：
 - `tenantId`: 来自请求头
-- `createdBy`: 来自请求头的用户ID
+- `creator`: 来自请求头的用户ID
 - `createdAt`: 当前时间戳
-- `updatedBy`: 来自请求头的用户ID  
+- `updater`: 来自请求头的用户ID  
 - `updatedAt`: 当前时间戳
 
 ### 3. 测试上下文功能

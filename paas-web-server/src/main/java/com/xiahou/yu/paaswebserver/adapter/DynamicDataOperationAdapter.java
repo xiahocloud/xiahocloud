@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,14 +29,14 @@ public class DynamicDataOperationAdapter {
     private final DataOperationService dataOperationService;
 
     public DataOperationResult handleCommand(CommandContext commandContext) {
-        return handleCommand(commandContext.getEntityName(), commandContext.getOperation(), DynamicDataObject.fromObject(commandContext.getData()), commandContext.getFilter(), commandContext.getRequestContext());
+        return handleCommand(commandContext.getEntityName(), commandContext.getOperation(), commandContext.getRecords(), commandContext.getFilter(), commandContext.getRequestContext());
     }
 
 
     /**
      * 处理动态数据操作命令 - 使用Filter替代conditions参数
      */
-    public DataOperationResult handleCommand(String entity, String operation, DynamicDataObject data, Filter filter, RequestContext requestContext) {
+    public DataOperationResult handleCommand(String entity, String operation, List<DynamicDataObject> records, Filter filter, RequestContext requestContext) {
 
         // 从线程上下文获取系统级参数
         String system = RequestContextHolder.getSystem();
@@ -54,7 +55,7 @@ public class DynamicDataOperationAdapter {
             // 创建命令上下文 - 使用统一的Filter系统
             CommandContext commandContext = CommandContext.builder()
                     .entityName(entity)
-                    .data(data != null ? data.toMap() : null)
+                    .records(records)
                     .filter(filter)
                     .requestContext(requestContext)
                     .build();

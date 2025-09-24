@@ -1,16 +1,21 @@
 package com.xiahou.yu.paasdomincore.runtime.strategy.impl;
 
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
+import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
 import com.xiahou.yu.paasdomincore.design.registry.EntityRegistryManager;
 import com.xiahou.yu.paasdomincore.design.repository.RepositoryManager;
 import com.xiahou.yu.paasdomincore.runtime.strategy.DataOperationStrategy;
 import com.xiahou.yu.paasdomincore.runtime.strategy.EntityExecutor;
-import com.xiahou.yu.paasinfracommon.tools.ObjectMapperService;
+import com.xiahou.yu.paasinfracommon.utils.ObjectMapperService;
+import com.xiahou.yu.paasmetacore.constant.ResultStatusEnum;
+import com.xiahou.yu.paasmetacore.constant.exception.PaaSException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,11 +44,11 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
         return executeByEntityType(context);
     }
 
-    private <T> T convertToEntity(String entityName, Map<String, Object> data, Class<T> clazz) {
+    private <T> T convertToEntity(String entityName, DynamicDataObject record, Class<T> clazz) {
         try {
-            return objectMapperService.convertToEntity(data, clazz);
+            return objectMapperService.convertToEntity(record, clazz);
         } catch (Exception e) {
-            log.error("Error converting data to entity {}: {}", entityName, e.getMessage(), e);
+            log.error("Error converting record to entity {}: {}", entityName, e.getMessage(), e);
             return null;
         }
     }
@@ -52,24 +57,28 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
     public Object metaEntityExecute(CommandContext context) {
         log.info("Executing META entity CREATE for {}", context.getEntityName());
         String entityName = context.getEntityName();
-        Map<String, Object> data = context.getData();
 
         try {
-            if (repositoryManager != null && repositoryManager.hasRepository(entityName)) {
-                // 将 Map 数据转换为对应的实体对象
-                Class<?> entityClass = entityRegistryManager.getEntityClass(entityName);
-                Object entity = convertToEntity(entityName, data, entityClass);
-                if (entity != null) {
-                    // 使用 RepositoryManager 统一保存接口
-                    Object savedEntity = repositoryManager.save(entityName, entity);
-                    log.info("Successfully created META {} entity with data: {}", entityName, savedEntity);
-                    return Map.of("success", true, "data", savedEntity, "message", "Meta entity created successfully");
+            List<Object> results = new ArrayList<>();
+            for (DynamicDataObject record : context.getRecords()) {
+                if (repositoryManager != null && repositoryManager.hasRepository(entityName)) {
+                    // 将 Map 数据转换为对应的实体对象
+                    Class<?> entityClass = entityRegistryManager.getEntityClass(entityName);
+                    Object entity = convertToEntity(entityName, record, entityClass);
+                    if (entity != null) {
+                        // 使用 RepositoryManager 统一保存接口
+                        Object savedEntity = repositoryManager.save(entityName, entity);
+                        log.info("Successfully created META {} entity with record: {}", entityName, savedEntity);
+                        results.add(Map.of("success", true, "record", savedEntity, "message", "Meta entity created successfully"));
+                    } else {
+                        results.add(Map.of("success", false, "message", "Failed to convert record to entity: " + entityName));
+                    }
                 } else {
-                    return Map.of("success", false, "message", "Failed to convert data to entity: " + entityName);
+                    results.add(Map.of("success", false, "message", "No repository found for entity: " + entityName));
                 }
-            } else {
-                return Map.of("success", false, "message", "No repository found for entity: " + entityName);
             }
+            return results;
+
         } catch (Exception e) {
             log.error("Error creating meta entity: {}", entityName, e);
             return Map.of("success", false, "message", "Failed to create meta entity: " + e.getMessage());
@@ -80,23 +89,38 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
     public Object systemEntityExecute(CommandContext context) {
         log.info("Executing STD entity CREATE for {}", context.getEntityName());
         String entityName = context.getEntityName();
-        Map<String, Object> data = context.getData();
 
         try {
+            List<Object> entities = new ArrayList<>();
             if (repositoryManager != null && repositoryManager.hasRepository(entityName)) {
-                // 将 Map 数据转换为对应的实体对象
-                Class<?> entityClass = entityRegistryManager.getEntityClass(entityName);
-                Object entity = convertToEntity(entityName, data, entityClass);
-                if (entity != null) {
-                    // 保存实体
+                List<DynamicDataObject> records = context.getRecords();
+                if (records.size() == 1) {
+                    DynamicDataObject record = records.get(0);
+                    // 将 Map 数据转换为对应的实体对象
+                    Class<?> entityClass = entityRegistryManager.getEntityClass(entityName);
+                    Object entity = convertToEntity(entityName, record, entityClass);
                     Object savedEntity = repositoryManager.save(entityName, entity);
+                    entities.add(savedEntity);
                     log.info("Successfully created {} entity with data: {}", entityName, savedEntity);
                     return Map.of("success", true, "data", savedEntity, "message", "Standard entity created successfully");
-                } else {
-                    return Map.of("success", false, "message", "Failed to convert data to entity: " + entityName);
                 }
+
+                for (DynamicDataObject record : records) {
+                    // 将 Map 数据转换为对应的实体对象
+                    Class<?> entityClass = entityRegistryManager.getEntityClass(entityName);
+                    Object entity = convertToEntity(entityName, record, entityClass);
+                    if (entity != null) {
+                        // 保存实体
+                        entities.add(entity);
+                    } else {
+                        log.warn("Entity {} not empty, skip create", entityName);
+                        continue;
+                    }
+                }
+                List<Object> results = repositoryManager.saveAll(entityName, entities);
+                return Map.of("success", true, "data", results, "message", "Standard entities created successfully");
             } else {
-                return Map.of("success", false, "message", "No repository found for entity: " + entityName);
+                throw new PaaSException(ResultStatusEnum.ENTITY_NOT_FOUND, "No repository found for entity: " + entityName);
             }
         } catch (Exception e) {
             log.error("Error creating standard entity: {}", entityName, e);
@@ -108,7 +132,7 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
     public Object customEntityExecute(CommandContext context) {
         log.info("Executing CUSTOM entity CREATE for {}", context.getEntityName());
         String entityName = context.getEntityName();
-        Map<String, Object> data = context.getData();
+        DynamicDataObject record = null;
 
         try {
             if (repositoryManager != null && repositoryManager.hasRepository(entityName)) {

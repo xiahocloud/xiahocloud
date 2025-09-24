@@ -2,11 +2,14 @@ package com.xiahou.yu.paaswebserver.dto.input;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
 import com.xiahou.yu.paasdomincore.design.filter.Filter;
 import com.xiahou.yu.paasinfracommon.context.RequestContext;
+import com.xiahou.yu.paasinfracommon.utils.ObjectMapperUtils;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,7 +35,9 @@ public class DynamicCommandInput {
     /**
      * 数据内容
      */
-    private Map<String, Object> data;
+    private DynamicDataObject record;
+
+    private List<DynamicDataObject> records;
 
     /**
      * 查询/更新/删除条件 - 使用统一的Filter
@@ -49,7 +54,11 @@ public class DynamicCommandInput {
         return filter != null ? filter : Filter.empty();
     }
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER = ObjectMapperUtils.newObjectMapper();
+
+    public void setRecord(DynamicDataObject record) {
+        this.record = record;
+    }
 
     @Override
     public String toString() {
