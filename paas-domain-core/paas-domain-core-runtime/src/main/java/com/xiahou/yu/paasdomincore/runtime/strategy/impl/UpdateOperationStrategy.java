@@ -1,17 +1,15 @@
 package com.xiahou.yu.paasdomincore.runtime.strategy.impl;
 
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
-import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
-import com.xiahou.yu.paasdomincore.design.repository.RepositoryManager;
+import com.xiahou.yu.paasdomincore.design.dto.DataOperationResult;
 import com.xiahou.yu.paasdomincore.design.registry.EntityRegistryManager;
+import com.xiahou.yu.paasdomincore.design.repository.RepositoryManager;
 import com.xiahou.yu.paasdomincore.runtime.strategy.DataOperationStrategy;
 import com.xiahou.yu.paasdomincore.runtime.strategy.EntityExecutor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Map;
 
 /**
  * 更新操作策略
@@ -33,14 +31,14 @@ public class UpdateOperationStrategy implements DataOperationStrategy, EntityExe
     }
 
     @Override
-    public Object execute(CommandContext context) {
+    public DataOperationResult execute(CommandContext context) {
         String aggr = context.getAttribute("aggr");
         log.info("Executing UPDATE operation for {}.{}", aggr, context.getEntityName());
         return executeByEntityType(context);
     }
 
     @Override
-    public Object metaEntityExecute(CommandContext context) {
+    public DataOperationResult metaEntityExecute(CommandContext context) {
         log.info("Executing META entity UPDATE for {}", context.getEntityName());
         String entityName = context.getEntityName();
 
@@ -51,49 +49,49 @@ public class UpdateOperationStrategy implements DataOperationStrategy, EntityExe
                 // Object existingEntity = findEntityByFilter(entityName, filter);
                 // Object updatedEntity = updateEntityData(existingEntity, record);
                 // Object savedEntity = repositoryManager.save(entityName, updatedEntity);
-                return Map.of("success", true, "message", "Meta entity updated successfully");
+                return new DataOperationResult();
             } else {
-                return Map.of("success", false, "message", "No repository found for entity: " + entityName);
+                return new DataOperationResult();
             }
         } catch (Exception e) {
             log.error("Error updating meta entity: {}", entityName, e);
-            return Map.of("success", false, "message", "Failed to update meta entity: " + e.getMessage());
+            return new DataOperationResult();
         }
     }
 
     @Override
-    public Object systemEntityExecute(CommandContext context) {
+    public DataOperationResult systemEntityExecute(CommandContext context) {
         log.info("Executing STD entity UPDATE for {}", context.getEntityName());
         String entityName = context.getEntityName();
         try {
             if (repositoryManager != null && repositoryManager.hasRepository(entityName)) {
                 // TODO: 根据过滤条件更新标准实体
-                return Map.of("success", true, "message", "Standard entity updated successfully");
+                return new DataOperationResult();
             } else {
-                return Map.of("success", false, "message", "No repository found for entity: " + entityName);
+                return new DataOperationResult();
             }
         } catch (Exception e) {
             log.error("Error updating standard entity: {}", entityName, e);
-            return Map.of("success", false, "message", "Failed to update standard entity: " + e.getMessage());
+            return new DataOperationResult();
         }
     }
 
     @Override
-    public Object customEntityExecute(CommandContext context) {
+    public DataOperationResult customEntityExecute(CommandContext context) {
         log.info("Executing CUSTOM entity UPDATE for {}", context.getEntityName());
         String entityName = context.getEntityName();
 
         try {
             if (repositoryManager != null && repositoryManager.hasRepository(entityName)) {
                 // TODO: 更新自定义实体
-                return Map.of("success", true, "message", "Custom entity updated successfully");
+                return new DataOperationResult();
             } else {
                 // TODO: 使用动态更新逻辑
-                return Map.of("success", true, "message", "Custom entity updated via dynamic processing");
+                return new DataOperationResult();
             }
         } catch (Exception e) {
             log.error("Error updating custom entity: {}", entityName, e);
-            return Map.of("success", false, "message", "Failed to update custom entity: " + e.getMessage());
+            return new DataOperationResult();
         }
     }
 }

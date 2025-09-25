@@ -15,9 +15,9 @@ import java.util.Map;
 @Data
 @Slf4j
 public class DynamicCommandResponse {
-    private Boolean success;
+    private String code;
     private String message;
-    private Map<String, Object> data;
+    private Object data;
     private String operationType;
     private Long affectedRows;
 

@@ -1,6 +1,7 @@
 package com.xiahou.yu.paasdomincore.runtime.strategy.impl;
 
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
+import com.xiahou.yu.paasdomincore.design.dto.DataOperationResult;
 import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
 import com.xiahou.yu.paasdomincore.design.metamodel.AbstractModel;
 import com.xiahou.yu.paasdomincore.design.registry.EntityRegistryManager;
@@ -42,7 +43,7 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Object execute(CommandContext context) {
+    public DataOperationResult execute(CommandContext context) {
         log.info("Executing CREATE operation for {}", context.getEntityName());
         return executeByEntityType(context);
     }
@@ -57,7 +58,7 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
     }
 
     @Override
-    public Object metaEntityExecute(CommandContext context) {
+    public DataOperationResult metaEntityExecute(CommandContext context) {
         log.info("Executing META entity CREATE for {}", context.getEntityName());
         String entityName = context.getEntityName();
 
@@ -72,24 +73,24 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
                         // 使用 RepositoryManager 统一保存接口
                         Object savedEntity = repositoryManager.save(entityName, entity);
                         log.info("Successfully created META {} entity with record: {}", entityName, savedEntity);
-                        results.add(Map.of("success", true, "record", savedEntity, "message", "Meta entity created successfully"));
+                        results.add(savedEntity);
                     } else {
-                        results.add(Map.of("success", false, "message", "Failed to convert record to entity: " + entityName));
+                        log.error("Fail to create META {} entity with record: {}", entityName, record.getOriginalObject());
                     }
                 } else {
                     results.add(Map.of("success", false, "message", "No repository found for entity: " + entityName));
                 }
             }
-            return results;
+            return new DataOperationResult(results);
 
         } catch (Exception e) {
             log.error("Error creating meta entity: {}", entityName, e);
-            return Map.of("success", false, "message", "Failed to create meta entity: " + e.getMessage());
+            throw new PaaSException(ResultStatusEnum.SYSTEM_ERROR);
         }
     }
 
     @Override
-    public Object systemEntityExecute(CommandContext context) {
+    public DataOperationResult systemEntityExecute(CommandContext context) {
         log.info("Executing STD entity CREATE for {}", context.getEntityName());
         String entityName = context.getEntityName();
 
@@ -109,7 +110,7 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
                     }
                     entities.add(savedEntity);
                     log.info("Successfully created {} entity with data: {}", entityName, savedEntity);
-                    return Map.of("success", true, "data", savedEntity, "message", "Standard entity created successfully");
+                    return new DataOperationResult(entities);
                 }
 
                 for (DynamicDataObject record : records) {
@@ -125,18 +126,18 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
                     }
                 }
                 List<Object> results = repositoryManager.saveAll(entityName, entities);
-                return Map.of("success", true, "data", results, "message", "Standard entities created successfully");
+                return new DataOperationResult(results);
             } else {
                 throw new PaaSException(ResultStatusEnum.ENTITY_NOT_FOUND, "No repository found for entity: " + entityName);
             }
         } catch (Exception e) {
             log.error("Error creating standard entity: {}", entityName, e);
-            return Map.of("success", false, "message", "Failed to create standard entity: " + e.getMessage());
+            throw new PaaSException(ResultStatusEnum.SYSTEM_ERROR, "", e);
         }
     }
 
     @Override
-    public Object customEntityExecute(CommandContext context) {
+    public DataOperationResult customEntityExecute(CommandContext context) {
         log.info("Executing CUSTOM entity CREATE for {}", context.getEntityName());
         String entityName = context.getEntityName();
         DynamicDataObject record = null;
@@ -144,14 +145,14 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
         try {
             if (repositoryManager != null && repositoryManager.hasRepository(entityName)) {
                 // TODO: 动态处理自定义实体的创建
-                return Map.of("success", true, "message", "Custom entity created successfully");
+                return new DataOperationResult();
             } else {
                 // TODO: 使用动态数据处理逻辑
-                return Map.of("success", true, "message", "Custom entity created via dynamic processing");
+                return new DataOperationResult();
             }
         } catch (Exception e) {
             log.error("Error creating custom entity: {}", entityName, e);
-            return Map.of("success", false, "message", "Failed to create custom entity: " + e.getMessage());
+            return new DataOperationResult();
         }
     }
 

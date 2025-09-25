@@ -1,5 +1,6 @@
 package com.xiahou.yu.paaswebserver.cqrs.command;
 
+import com.xiahou.yu.paasdomincore.design.dto.DataOperationResult;
 import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
 import com.xiahou.yu.paasmetacore.constant.ResultStatusEnum;
 import com.xiahou.yu.paasmetacore.constant.exception.PaaSException;
@@ -45,7 +46,7 @@ public class DefaultDynamicCommandHandler implements DynamicCommandHandler {
         // 将Map转换为DynamicDataObject
         List<DynamicDataObject> dynamicDataObjects = records.stream().map(DynamicDataObject::fromMap).toList();
 
-        DynamicDataOperationAdapter.DataOperationResult result = dataOperationAdapter.handleCommand(
+        DataOperationResult result = dataOperationAdapter.handleCommand(
                 input.getEntityName(), input.getOperation(), dynamicDataObjects, input.getFilter(), input.getRequestContext()
         );
 
@@ -53,18 +54,18 @@ public class DefaultDynamicCommandHandler implements DynamicCommandHandler {
         return convertToResponse(result);
     }
 
-    private DynamicCommandResponse convertToResponse(DynamicDataOperationAdapter.DataOperationResult result) {
+    private DynamicCommandResponse convertToResponse(DataOperationResult result) {
         DynamicCommandResponse response = new DynamicCommandResponse();
-        response.setSuccess(result.isSuccess());
+        response.setCode(result.getCode());
         response.setMessage(result.getMessage());
-        response.setData(result.getDataAsMap());
+        response.setData(result.getData());
         // 注意：DataOperationResult中没有operationType和affectedRows字段，需要根据实际情况处理
         return response;
     }
 
     private DynamicCommandResponse createErrorResponse(String message) {
         DynamicCommandResponse response = new DynamicCommandResponse();
-        response.setSuccess(false);
+        response.setCode(ResultStatusEnum.SYSTEM_ERROR.getCode());
         response.setMessage(message);
         return response;
     }

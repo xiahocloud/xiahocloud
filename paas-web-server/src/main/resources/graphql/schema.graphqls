@@ -35,7 +35,7 @@ type DynamicQueryResponse {
 
 # 动态命令响应类型
 type DynamicCommandResponse {
-    success: Boolean!
+    code: String!
     message: String!
     data: JSON
     operationType: String!

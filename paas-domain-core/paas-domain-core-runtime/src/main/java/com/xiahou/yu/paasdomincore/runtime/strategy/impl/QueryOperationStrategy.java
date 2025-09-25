@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 查询操作策略
@@ -33,14 +32,14 @@ public class QueryOperationStrategy implements DataOperationStrategy, EntityExec
     }
 
     @Override
-    public Object execute(CommandContext context) {
+    public DataOperationResult execute(CommandContext context) {
         String aggr = context.getAttribute("aggr");
         log.info("Executing QUERY operation for {}.{}", aggr, context.getEntityName());
         return executeByEntityType(context);
     }
 
     @Override
-    public Object metaEntityExecute(CommandContext context) {
+    public DataOperationResult metaEntityExecute(CommandContext context) {
         log.info("Executing META entity QUERY for {}", context.getEntityName());
         String entityName = context.getEntityName();
 
@@ -48,18 +47,18 @@ public class QueryOperationStrategy implements DataOperationStrategy, EntityExec
             if (repositoryManager != null && repositoryManager.hasRepository(entityName)) {
                 // 查询元数据实体
                 List<?> entities = repositoryManager.findAll(entityName);
-                return Map.of("success", true, "data", entities, "message", "Meta data queried successfully");
+                return new DataOperationResult(entities);
             } else {
-                return Map.of("success", false, "data", List.of(), "message", "No repository found for entity: " + entityName);
+                return new DataOperationResult();
             }
         } catch (Exception e) {
             log.error("Error querying meta entity: {}", entityName, e);
-            return Map.of("success", false, "data", List.of(), "message", "Failed to query meta entity: " + e.getMessage());
+            return new DataOperationResult();
         }
     }
 
     @Override
-    public Object systemEntityExecute(CommandContext context) {
+    public DataOperationResult systemEntityExecute(CommandContext context) {
         log.info("Executing STD entity QUERY for {}", context.getEntityName());
         String entityName = context.getEntityName();
 
@@ -70,16 +69,16 @@ public class QueryOperationStrategy implements DataOperationStrategy, EntityExec
                 List<?> entities = repositoryManager.findAll(entityName);
                 return new DataOperationResult(entities);
             } else {
-                return Map.of("success", false, "data", List.of(), "message", "No repository found for entity: " + entityName);
+                return new DataOperationResult();
             }
         } catch (Exception e) {
             log.error("Error querying standard entity: {}", entityName, e);
-            return Map.of("success", false, "data", List.of(), "message", "Failed to query standard entity: " + e.getMessage());
+            return new DataOperationResult();
         }
     }
 
     @Override
-    public Object customEntityExecute(CommandContext context) {
+    public DataOperationResult customEntityExecute(CommandContext context) {
         log.info("Executing CUSTOM entity QUERY for {}", context.getEntityName());
         String entityName = context.getEntityName();
 
@@ -87,14 +86,14 @@ public class QueryOperationStrategy implements DataOperationStrategy, EntityExec
             if (repositoryManager != null && repositoryManager.hasRepository(entityName)) {
                 // 查询自定义实体
                 List<?> entities = repositoryManager.findAll(entityName);
-                return Map.of("success", true, "data", entities, "message", "Custom entity queried successfully");
+                return new DataOperationResult();
             } else {
                 // TODO: 使用动态查询逻辑处理没有固定Repository的自定义实体
-                return Map.of("success", true, "data", List.of(), "message", "Custom entity queried via dynamic processing");
+                return new DataOperationResult();
             }
         } catch (Exception e) {
             log.error("Error querying custom entity: {}", entityName, e);
-            return Map.of("success", false, "data", List.of(), "message", "Failed to query custom entity: " + e.getMessage());
+            return new DataOperationResult();
         }
     }
 }
