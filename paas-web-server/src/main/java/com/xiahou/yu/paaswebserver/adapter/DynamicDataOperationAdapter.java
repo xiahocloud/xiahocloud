@@ -2,13 +2,13 @@ package com.xiahou.yu.paaswebserver.adapter;
 
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
 import com.xiahou.yu.paasdomincore.design.command.CommandType;
-import com.xiahou.yu.paasdomincore.design.dto.QueryResult;
+import com.xiahou.yu.paasdomincore.design.dto.AbstractResult;
+import com.xiahou.yu.paasdomincore.design.dto.DataOperationResult;
 import com.xiahou.yu.paasdomincore.design.service.DataOperationService;
 import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
 import com.xiahou.yu.paasdomincore.design.filter.Filter;
 import com.xiahou.yu.paasinfracommon.context.RequestContext;
 import com.xiahou.yu.paasinfracommon.context.RequestContextHolder;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -65,15 +65,25 @@ public class DynamicDataOperationAdapter {
             queryContext.setAttribute("orderBy", orderBy);
 
             // 执行查询操作
-            QueryResult result = (QueryResult) dataOperationService.execute(queryContext, CommandType.QUERY);
+            Object raw = dataOperationService.execute(queryContext, CommandType.QUERY);
+            if (!(raw instanceof DataOperationResult qr)) {
+                throw new IllegalStateException("Unexpected execute() result type: " + (raw == null ? "null" : raw.getClass().getName()));
+            }
+            DataOperationResult result = qr;
             // 将结果包装为DynamicDataObject
-            List<>
-            DynamicDataObject resultData = convertToDataObject(result);
+            Object payloadResult;
+            if(result.getData() instanceof List<?> dataList){
+                payloadResult = dataList.stream()
+                        .map(this::convertToDataObject)
+                        .toList();
+            } else {
+                payloadResult = convertToDataObject(result);
+            }
 
             log.info("Dynamic query completed successfully: entity={}, requestId={}",
                     entity, requestId);
 
-            return new DataOperationResult(true, resultData, "Query completed successfully", null);
+            return new DataOperationResult(true, payloadResult, "Query completed successfully", null);
 
         } catch (Exception e) {
             log.error("Error processing dynamic query: entity={}, requestId={}",
@@ -152,7 +162,6 @@ public class DynamicDataOperationAdapter {
         }
 
         if (result instanceof Map) {
-            @SuppressWarnings("unchecked")
             Map<String, Object> mapResult = (Map<String, Object>) result;
             return DynamicDataObject.fromMap(mapResult);
         }
@@ -161,58 +170,4 @@ public class DynamicDataOperationAdapter {
         return DynamicDataObject.fromObject(result);
     }
 
-    /**
-     * 数据操作结果
-     */
-    @Data
-    public static class DataOperationResult {
-        private boolean success;
-        private List<DynamicDataObject> records;
-        private String message;
-        private String error;
-
-        // 构造器
-        public DataOperationResult(boolean success, List<DynamicDataObject> records, String message, String error) {
-            this.success = success;
-            this.records = records;
-            this.message = message;
-            this.error = error;
-        }
-
-
-        /**
-         * 获取数据的Map表示（用于向后兼容）
-         */
-        public Map<String, Object> getDataAsMap() {
-            return records != null ? records.toMap() : null;
-        }
-
-        /**
-         * 检查是否有数据
-         */
-        public boolean hasData() {
-            return records != null && !records.isEmpty();
-        }
-
-        /**
-         * 获取特定属性值
-         */
-        public Object getDataValue(String property) {
-            return records != null ? records.getValue(property) : null;
-        }
-
-        /**
-         * 获取字符串类型的数据值
-         */
-        public String getDataString(String property) {
-            return records != null ? records.getString(property) : null;
-        }
-
-        /**
-         * 获取整数类型的数据值
-         */
-        public Integer getDataInteger(String property) {
-            return records != null ? records.getInteger(property) : null;
-        }
-    }
 }

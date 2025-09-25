@@ -11,20 +11,20 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-public class QueryResult extends AbstractResult {
-    public QueryResult() {
+public class DataOperationResult extends AbstractResult {
+    public DataOperationResult() {
         super();
     }
 
-    public QueryResult(Object data) {
+    public DataOperationResult(Object data) {
         super(data);
     }
 
-    public QueryResult(ResultStatusEnum status) {
+    public DataOperationResult(ResultStatusEnum status) {
         super(status);
     }
 
-    public QueryResult(String requestId, ResultStatusEnum status) {
+    public DataOperationResult(String requestId, ResultStatusEnum status) {
         super(requestId, status);
     }
 }

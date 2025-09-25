@@ -1,7 +1,7 @@
 package com.xiahou.yu.paasdomincore.runtime.strategy.impl;
 
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
-import com.xiahou.yu.paasdomincore.design.dto.QueryResult;
+import com.xiahou.yu.paasdomincore.design.dto.DataOperationResult;
 import com.xiahou.yu.paasdomincore.design.registry.EntityRegistryManager;
 import com.xiahou.yu.paasdomincore.design.repository.RepositoryManager;
 import com.xiahou.yu.paasdomincore.runtime.strategy.DataOperationStrategy;
@@ -68,7 +68,7 @@ public class QueryOperationStrategy implements DataOperationStrategy, EntityExec
                 // 根据过滤条件查询标准实体
                 // TODO: 使用 context.getFilter() 来构建查询条件
                 List<?> entities = repositoryManager.findAll(entityName);
-                return new QueryResult(entities);
+                return new DataOperationResult(entities);
             } else {
                 return Map.of("success", false, "data", List.of(), "message", "No repository found for entity: " + entityName);
             }
