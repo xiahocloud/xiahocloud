@@ -1,6 +1,8 @@
 package com.xiahou.yu.paaswebserver.cqrs.command;
 
 import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
+import com.xiahou.yu.paasmetacore.constant.ResultStatusEnum;
+import com.xiahou.yu.paasmetacore.constant.exception.PaaSException;
 import com.xiahou.yu.paaswebserver.adapter.DynamicDataOperationAdapter;
 import com.xiahou.yu.paaswebserver.dto.DynamicCommandResponse;
 import com.xiahou.yu.paaswebserver.dto.input.DynamicCommandInput;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 基于插件化架构的动态命令处理器
@@ -21,7 +24,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class PluggableDynamicCommandHandler implements DynamicCommandHandler {
+public class DefaultDynamicCommandHandler implements DynamicCommandHandler {
 
     private final DynamicDataOperationAdapter dataOperationAdapter;
 
@@ -30,13 +33,20 @@ public class PluggableDynamicCommandHandler implements DynamicCommandHandler {
         log.info("Handling dynamic command with pluggable architecture: entity={}, operation={}",
                 input.getEntityName(), input.getOperation());
         // 调用数据操作适配器
-        List<DynamicDataObject> records = input.getRecords();
+        List<Map<String, Object>> records = input.getRecords();
         // 如果records为空且record不为空，则将record转换为单元素列表
-        if (CollectionUtils.isEmpty(records) && input.getRecord() != null) {
-            records = List.of(input.getRecord());
+        if (CollectionUtils.isEmpty(records)) {
+            if (input.getRecord() != null) {
+                records = List.of(input.getRecord());
+            } else {
+                throw new PaaSException(ResultStatusEnum.PARAMS_EMPTY);
+            }
         }
+        // 将Map转换为DynamicDataObject
+        List<DynamicDataObject> dynamicDataObjects = records.stream().map(DynamicDataObject::fromMap).toList();
+
         DynamicDataOperationAdapter.DataOperationResult result = dataOperationAdapter.handleCommand(
-                input.getEntityName(), input.getOperation(), records, input.getFilter(), input.getRequestContext()
+                input.getEntityName(), input.getOperation(), dynamicDataObjects, input.getFilter(), input.getRequestContext()
         );
 
         // 转换响应格式

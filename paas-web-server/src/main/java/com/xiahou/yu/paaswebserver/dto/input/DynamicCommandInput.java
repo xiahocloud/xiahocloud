@@ -35,9 +35,9 @@ public class DynamicCommandInput {
     /**
      * 数据内容
      */
-    private DynamicDataObject record;
+    private Map<String, Object> record;
 
-    private List<DynamicDataObject> records;
+    private List<Map<String, Object>> records;
 
     /**
      * 查询/更新/删除条件 - 使用统一的Filter
@@ -56,9 +56,6 @@ public class DynamicCommandInput {
 
     private static final ObjectMapper OBJECT_MAPPER = ObjectMapperUtils.newObjectMapper();
 
-    public void setRecord(DynamicDataObject record) {
-        this.record = record;
-    }
 
     @Override
     public String toString() {

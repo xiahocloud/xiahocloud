@@ -1,11 +1,8 @@
 package com.xiahou.yu.paasdomincore.design.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.xiahou.yu.paasdomincore.design.config.DynamicDataObjectDeserializer;
 import com.xiahou.yu.paasdomincore.design.metaobject.MetaObject;
 import lombok.extern.slf4j.Slf4j;
 
-import java.beans.ConstructorProperties;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,12 +13,10 @@ import java.util.Map;
  * @author xiahou
  */
 @Slf4j
-@JsonDeserialize(using = DynamicDataObjectDeserializer.class)
 public class DynamicDataObject {
 
     private final MetaObject metaObject;
 
-    @ConstructorProperties(value = "record")
     private DynamicDataObject(Object data) {
         this.metaObject = MetaObject.forObject(data);
     }

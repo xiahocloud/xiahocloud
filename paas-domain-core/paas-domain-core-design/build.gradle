@@ -28,8 +28,9 @@ dependencies {
     api 'com.xiahou.yu:paas-infra-id-service'
 
     // Spring Boot 核心依赖
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    api 'org.springframework.boot:spring-boot-starter'
+    api 'org.springframework.boot:spring-boot-starter-jdbc'
+    api 'org.springframework.boot:spring-boot-starter-data-jdbc'
     runtimeOnly 'org.postgresql:postgresql'
 
     // Lombok 支持

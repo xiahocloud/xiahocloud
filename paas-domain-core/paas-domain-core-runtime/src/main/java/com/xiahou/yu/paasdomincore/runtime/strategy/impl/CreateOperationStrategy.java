@@ -2,6 +2,7 @@ package com.xiahou.yu.paasdomincore.runtime.strategy.impl;
 
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
 import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
+import com.xiahou.yu.paasdomincore.design.metamodel.AbstractModel;
 import com.xiahou.yu.paasdomincore.design.registry.EntityRegistryManager;
 import com.xiahou.yu.paasdomincore.design.repository.RepositoryManager;
 import com.xiahou.yu.paasdomincore.runtime.strategy.DataOperationStrategy;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +41,7 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Object execute(CommandContext context) {
         log.info("Executing CREATE operation for {}", context.getEntityName());
         return executeByEntityType(context);
@@ -46,7 +49,7 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
 
     private <T> T convertToEntity(String entityName, DynamicDataObject record, Class<T> clazz) {
         try {
-            return objectMapperService.convertToEntity(record, clazz);
+            return objectMapperService.convertToEntity(record.getOriginalObject(), clazz);
         } catch (Exception e) {
             log.error("Error converting record to entity {}: {}", entityName, e.getMessage(), e);
             return null;
@@ -100,6 +103,10 @@ public class CreateOperationStrategy implements DataOperationStrategy, EntityExe
                     Class<?> entityClass = entityRegistryManager.getEntityClass(entityName);
                     Object entity = convertToEntity(entityName, record, entityClass);
                     Object savedEntity = repositoryManager.save(entityName, entity);
+                    AbstractModel abstractModel = (AbstractModel) entity;
+                    if (abstractModel != null) {
+                        abstractModel.markAsNotNew();
+                    }
                     entities.add(savedEntity);
                     log.info("Successfully created {} entity with data: {}", entityName, savedEntity);
                     return Map.of("success", true, "data", savedEntity, "message", "Standard entity created successfully");

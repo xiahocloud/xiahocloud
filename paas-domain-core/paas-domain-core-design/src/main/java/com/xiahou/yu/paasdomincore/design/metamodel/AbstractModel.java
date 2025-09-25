@@ -5,10 +5,12 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Column;
+
 
 import java.time.LocalDateTime;
 
@@ -150,8 +152,11 @@ public abstract class AbstractModel implements Persistable<Long> {
 
     /**
      * 标记实体是否为新实体（用于Spring Data JDBC判断插入或更新）
+     * @Transient 确保不持久化到数据库（使用JPA注解避免Spring Data依赖问题）
+     * @JsonProperty 确保在JSON序列化/反序列化时包含此字段
      */
     @Transient
+    @JsonProperty
     private boolean isNew;
 
     /**

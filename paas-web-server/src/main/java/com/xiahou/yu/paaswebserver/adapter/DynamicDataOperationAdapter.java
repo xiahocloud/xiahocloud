@@ -2,6 +2,7 @@ package com.xiahou.yu.paaswebserver.adapter;
 
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
 import com.xiahou.yu.paasdomincore.design.command.CommandType;
+import com.xiahou.yu.paasdomincore.design.dto.QueryResult;
 import com.xiahou.yu.paasdomincore.design.service.DataOperationService;
 import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
 import com.xiahou.yu.paasdomincore.design.filter.Filter;
@@ -30,6 +31,57 @@ public class DynamicDataOperationAdapter {
 
     public DataOperationResult handleCommand(CommandContext commandContext) {
         return handleCommand(commandContext.getEntityName(), commandContext.getOperation(), commandContext.getRecords(), commandContext.getFilter(), commandContext.getRequestContext());
+    }
+
+    /**
+     * 处理动态查询操作
+     */
+    public DataOperationResult handleQuery(String entity, Filter filter, List<String> fields, Integer page, Integer size, List<String> orderBy, RequestContext requestContext) {
+        // 从线程上下文获取系统级参数
+        String system = RequestContextHolder.getSystem();
+        String module = RequestContextHolder.getModule();
+        String context = RequestContextHolder.getContextId();
+        String app = RequestContextHolder.getApp();
+        String aggr = RequestContextHolder.getAggr();
+        String tenantId = RequestContextHolder.getTenantId();
+        String userId = RequestContextHolder.getUserId();
+        String requestId = RequestContextHolder.getRequestId();
+
+        log.info("Processing dynamic query: entity={}, tenantId={}, userId={}, requestId={}",
+                entity, tenantId, userId, requestId);
+
+        try {
+            // 创建查询上下文
+            CommandContext queryContext = CommandContext.builder()
+                    .entityName(entity)
+                    .filter(filter)
+                    .requestContext(requestContext)
+                    .build();
+
+            // 添加查询特定的属性
+            queryContext.setAttribute("fields", fields);
+            queryContext.setAttribute("page", page);
+            queryContext.setAttribute("size", size);
+            queryContext.setAttribute("orderBy", orderBy);
+
+            // 执行查询操作
+            QueryResult result = (QueryResult) dataOperationService.execute(queryContext, CommandType.QUERY);
+            // 将结果包装为DynamicDataObject
+            List<>
+            DynamicDataObject resultData = convertToDataObject(result);
+
+            log.info("Dynamic query completed successfully: entity={}, requestId={}",
+                    entity, requestId);
+
+            return new DataOperationResult(true, resultData, "Query completed successfully", null);
+
+        } catch (Exception e) {
+            log.error("Error processing dynamic query: entity={}, requestId={}",
+                     entity, requestId, e);
+
+            return new DataOperationResult(false, DynamicDataObject.empty(),
+                    "Query failed: " + e.getMessage(), e.getClass().getSimpleName());
+        }
     }
 
 
@@ -115,14 +167,14 @@ public class DynamicDataOperationAdapter {
     @Data
     public static class DataOperationResult {
         private boolean success;
-        private DynamicDataObject data;
+        private List<DynamicDataObject> records;
         private String message;
         private String error;
 
         // 构造器
-        public DataOperationResult(boolean success, DynamicDataObject data, String message, String error) {
+        public DataOperationResult(boolean success, List<DynamicDataObject> records, String message, String error) {
             this.success = success;
-            this.data = data;
+            this.records = records;
             this.message = message;
             this.error = error;
         }
@@ -132,35 +184,35 @@ public class DynamicDataOperationAdapter {
          * 获取数据的Map表示（用于向后兼容）
          */
         public Map<String, Object> getDataAsMap() {
-            return data != null ? data.toMap() : null;
+            return records != null ? records.toMap() : null;
         }
 
         /**
          * 检查是否有数据
          */
         public boolean hasData() {
-            return data != null && !data.isEmpty();
+            return records != null && !records.isEmpty();
         }
 
         /**
          * 获取特定属性值
          */
         public Object getDataValue(String property) {
-            return data != null ? data.getValue(property) : null;
+            return records != null ? records.getValue(property) : null;
         }
 
         /**
          * 获取字符串类型的数据值
          */
         public String getDataString(String property) {
-            return data != null ? data.getString(property) : null;
+            return records != null ? records.getString(property) : null;
         }
 
         /**
          * 获取整数类型的数据值
          */
         public Integer getDataInteger(String property) {
-            return data != null ? data.getInteger(property) : null;
+            return records != null ? records.getInteger(property) : null;
         }
     }
 }

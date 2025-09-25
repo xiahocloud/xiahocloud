@@ -61,13 +61,10 @@ public class DynamicGraphQLControllerTest {
             """;
 
         Map<String, Object> input = Map.of(
-            "system", "xia",
-            "module", "hr",
-            "context", "api",
-            "app", "invoice",
-            "aggr", "employee",
-            "entity", "user",
-            "fields", List.of("id", "name", "email")
+            "entityName", "user",
+            "fields", List.of("id", "name", "email"),
+            "page", 1,
+            "size", 10
         );
 
         graphQlTester.document(query)

@@ -30,6 +30,8 @@ dependencies {
 
     // Spring Boot - 使用统一版本
     implementation 'org.springframework.boot:spring-boot-starter'
+    // Spring 事务处理
+
 
     // 添加 javax.annotation 支持 (Spring Boot 3.x 需要)
     implementation 'jakarta.annotation:jakarta.annotation-api'
