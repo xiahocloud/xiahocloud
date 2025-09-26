@@ -6,6 +6,7 @@ import com.xiahou.yu.paasinfracommon.utils.ObjectMapperUtils;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -14,14 +15,14 @@ import java.util.Map;
  */
 @Data
 @Slf4j
-public class DynamicQueryResponse {
-    private List<Map<String, Object>> data;
-    private Long total;
-    private Integer page;
-    private Integer size;
-    private Boolean hasNext;
+public class DynamicQueryResponse implements Serializable {
+
+    private String code;
+    private String message;
+    private Object data;
+    private String traceId;
+    private String version;
     private String schema;
-    private Map<String, String> fieldTypes;
 
     private static final ObjectMapper OBJECT_MAPPER = ObjectMapperUtils.newObjectMapper();;
 

@@ -9,6 +9,7 @@ import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
 import com.xiahou.yu.paasdomincore.design.filter.Filter;
 import com.xiahou.yu.paasinfracommon.context.RequestContext;
 import com.xiahou.yu.paasinfracommon.context.RequestContextHolder;
+import com.xiahou.yu.paasmetacore.constant.ResultStatusEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -36,7 +37,7 @@ public class DynamicDataOperationAdapter {
     /**
      * 处理动态查询操作
      */
-    public DataOperationResult handleQuery(String entity, Filter filter, List<String> fields, Integer page, Integer size, List<String> orderBy, RequestContext requestContext) {
+    public DataOperationResult handleQuery(String entity, Filter filter, List<String> fields, Integer page, Integer size, List<String> orderBy) {
         // 从线程上下文获取系统级参数
         String system = RequestContextHolder.getSystem();
         String module = RequestContextHolder.getModule();
@@ -46,6 +47,7 @@ public class DynamicDataOperationAdapter {
         String tenantId = RequestContextHolder.getTenantId();
         String userId = RequestContextHolder.getUserId();
         String requestId = RequestContextHolder.getRequestId();
+        RequestContext requestContext = RequestContextHolder.getContext();
 
         log.info("Processing dynamic query: entity={}, tenantId={}, userId={}, requestId={}",
                 entity, tenantId, userId, requestId);
@@ -79,18 +81,16 @@ public class DynamicDataOperationAdapter {
             } else {
                 payloadResult = convertToDataObject(result);
             }
-
+            result.setData(payloadResult);
             log.info("Dynamic query completed successfully: entity={}, requestId={}",
                     entity, requestId);
 
-            return new DataOperationResult(true, payloadResult, "Query completed successfully", null);
+            return result;
 
         } catch (Exception e) {
             log.error("Error processing dynamic query: entity={}, requestId={}",
                      entity, requestId, e);
-
-            return new DataOperationResult(false, DynamicDataObject.empty(),
-                    "Query failed: " + e.getMessage(), e.getClass().getSimpleName());
+            return new DataOperationResult(ResultStatusEnum.SYSTEM_ERROR);
         }
     }
 
@@ -126,22 +126,17 @@ public class DynamicDataOperationAdapter {
             CommandType commandType = parseCommandType(operation);
 
             // 执行操作
-            Object result = dataOperationService.execute(commandContext, commandType);
-
-            // 将结果包装为DynamicDataObject
-            DynamicDataObject resultData = convertToDataObject(result);
+            DataOperationResult result = dataOperationService.execute(commandContext, commandType);
 
             log.info("Dynamic operation completed successfully: entity={}, operation={}, requestId={}",
                     entity, operation, requestId);
 
-            return new DataOperationResult(true, resultData, "Operation completed successfully", null);
+            return result;
 
         } catch (Exception e) {
             log.error("Error processing dynamic operation: entity={}, operation={}, requestId={}",
                      entity, operation, requestId, e);
-
-            return new DataOperationResult(false, DynamicDataObject.empty(),
-                    "Operation failed: " + e.getMessage(), e.getClass().getSimpleName());
+            return new DataOperationResult(ResultStatusEnum.SYSTEM_ERROR);
         }
     }
 

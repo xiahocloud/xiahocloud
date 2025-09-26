@@ -24,9 +24,7 @@ dependencyManagement {
 
 dependencies {
     // 依赖设计时模块 (新架构) - 使用 api 以暴露传递依赖
-    api project(':paas-domain-core-design')
-
-    // 注意：不再直接依赖 paas-meta-core，通过 design 模块传递依赖
+    api 'com.xiahou.yu:paas-domain-core-design'
 
     // Spring Boot - 使用统一版本
     implementation 'org.springframework.boot:spring-boot-starter'

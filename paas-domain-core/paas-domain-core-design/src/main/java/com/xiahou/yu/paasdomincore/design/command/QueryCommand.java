@@ -1,5 +1,6 @@
 package com.xiahou.yu.paasdomincore.design.command;
 
+import com.xiahou.yu.paasdomincore.design.dto.DataOperationResult;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,12 +12,12 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class QueryCommand implements Command<Object> {
+public class QueryCommand implements Command {
 
     private CommandContext context;
 
     @Override
-    public Object execute() {
+    public DataOperationResult execute() {
         // 具体的执行逻辑由执行器实现
         throw new UnsupportedOperationException("Command execution should be handled by executor");
     }

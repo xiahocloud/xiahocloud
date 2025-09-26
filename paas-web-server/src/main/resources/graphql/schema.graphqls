@@ -24,13 +24,12 @@ input DynamicCommandInput {
 
 # 动态查询响应类型
 type DynamicQueryResponse {
-    data: [JSON!]!
-    total: Long!
-    page: Int!
-    size: Int!
-    hasNext: Boolean!
+    code: String!
+    message: String!
+    data: JSON
+    traceId: String!
+    version: String!
     schema: String!
-    fieldTypes: JSON!
 }
 
 # 动态命令响应类型

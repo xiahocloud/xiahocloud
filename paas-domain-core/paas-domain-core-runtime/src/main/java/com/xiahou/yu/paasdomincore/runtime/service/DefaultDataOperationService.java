@@ -2,6 +2,7 @@ package com.xiahou.yu.paasdomincore.runtime.service;
 
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
 import com.xiahou.yu.paasdomincore.design.command.CommandType;
+import com.xiahou.yu.paasdomincore.design.dto.DataOperationResult;
 import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
 import com.xiahou.yu.paasdomincore.design.executor.DataOperationExecutor;
 import com.xiahou.yu.paasdomincore.design.service.DataOperationService;
@@ -27,27 +28,27 @@ public class DefaultDataOperationService implements DataOperationService {
     private final DataOperationExecutor dataOperationExecutor;
 
     @Override
-    public Object create(CommandContext context) {
+    public DataOperationResult create(CommandContext context) {
         return execute(context, CommandType.CREATE);
     }
 
     @Override
-    public Object update(CommandContext context) {
+    public DataOperationResult update(CommandContext context) {
         return execute(context, CommandType.UPDATE);
     }
 
     @Override
-    public Object delete(CommandContext context) {
+    public DataOperationResult delete(CommandContext context) {
         return execute(context, CommandType.DELETE);
     }
 
     @Override
-    public Object query(CommandContext context) {
+    public DataOperationResult query(CommandContext context) {
         return execute(context, CommandType.QUERY);
     }
 
     @Override
-    public Object execute(CommandContext context, CommandType commandType) {
+    public DataOperationResult execute(CommandContext context, CommandType commandType) {
         // 将命令类型添加到上下文中，供处理器使用
         context.setAttribute("commandType", commandType.name());
 

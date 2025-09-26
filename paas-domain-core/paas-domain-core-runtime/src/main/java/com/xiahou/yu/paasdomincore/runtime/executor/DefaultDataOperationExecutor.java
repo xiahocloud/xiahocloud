@@ -5,6 +5,7 @@ import com.xiahou.yu.paasdomincore.design.chain.HandlerChain;
 import com.xiahou.yu.paasdomincore.design.command.Command;
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
 import com.xiahou.yu.paasdomincore.design.command.CommandType;
+import com.xiahou.yu.paasdomincore.design.dto.DataOperationResult;
 import com.xiahou.yu.paasdomincore.design.executor.DataOperationExecutor;
 import com.xiahou.yu.paasdomincore.runtime.chain.DefaultHandlerChain;
 import com.xiahou.yu.paasdomincore.runtime.strategy.DataOperationStrategy;
@@ -55,13 +56,13 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
     }
 
     @Override
-    public <T> T execute(Command<T> command) {
+    public DataOperationResult execute(Command command) {
         return execute(command.getContext(), command.getCommandType());
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> T execute(CommandContext context, CommandType commandType) {
+    public DataOperationResult execute(CommandContext context, CommandType commandType) {
         String aggr = context.getAttribute("aggr");
         log.info("Executing {} operation for entity: {}.{}",
                 commandType, aggr, context.getEntityName());
@@ -81,7 +82,7 @@ public class DefaultDataOperationExecutor implements DataOperationExecutor {
                 throw new UnsupportedOperationException("Unsupported command type: " + commandType);
             }
 
-            T result = (T) strategy.execute(context);
+            DataOperationResult result =  strategy.execute(context);
 
             // 3. 将结果放入上下文以便后置处理器使用
             context.setAttribute("result", result);

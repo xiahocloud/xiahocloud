@@ -2,6 +2,7 @@ package com.xiahou.yu.paasdomincore.design.service;
 
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
 import com.xiahou.yu.paasdomincore.design.command.CommandType;
+import com.xiahou.yu.paasdomincore.design.dto.DataOperationResult;
 import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
 
 import java.util.List;
@@ -21,28 +22,28 @@ public interface DataOperationService {
      * @param context 命令上下文
      * @return 操作结果
      */
-    Object create(CommandContext context);
+    DataOperationResult create(CommandContext context);
 
     /**
      * 更新数据
      * @param context 命令上下文
      * @return 操作结果
      */
-    Object update(CommandContext context);
+    DataOperationResult update(CommandContext context);
 
     /**
      * 删除数据
      * @param context 命令上下文
      * @return 操作结果
      */
-    Object delete(CommandContext context);
+    DataOperationResult delete(CommandContext context);
 
     /**
      * 查询数据
      * @param context 命令上下文
      * @return 查询结果
      */
-    Object query(CommandContext context);
+    DataOperationResult query(CommandContext context);
 
     /**
      * 通用数据操作方法
@@ -50,7 +51,7 @@ public interface DataOperationService {
      * @param commandType 命令类型
      * @return 操作结果
      */
-    Object execute(CommandContext context, CommandType commandType);
+    DataOperationResult execute(CommandContext context, CommandType commandType);
 
     /**
      * 构建命令上下文的便捷方法
