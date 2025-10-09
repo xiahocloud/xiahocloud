@@ -1,6 +1,6 @@
 package com.xiahou.yu.paasdomincore.design.service.impl;
 
-import com.xiahou.yu.paasdomincore.design.metamodel.EntityModel;
+import com.xiahou.yu.paasdomincore.design.metadatamodel.EntityModel;
 import com.xiahou.yu.paasdomincore.design.repository.EntityModelRepository;
 import com.xiahou.yu.paasdomincore.design.service.EntityModelService;
 import lombok.RequiredArgsConstructor;

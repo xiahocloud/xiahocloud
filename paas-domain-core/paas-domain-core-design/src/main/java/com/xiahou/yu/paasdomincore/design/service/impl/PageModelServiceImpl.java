@@ -1,6 +1,6 @@
 package com.xiahou.yu.paasdomincore.design.service.impl;
 
-import com.xiahou.yu.paasdomincore.design.metamodel.PageModel;
+import com.xiahou.yu.paasdomincore.design.metadatamodel.PageModel;
 import com.xiahou.yu.paasdomincore.design.repository.PageModelRepository;
 import com.xiahou.yu.paasdomincore.design.service.PageModelService;
 import lombok.RequiredArgsConstructor;

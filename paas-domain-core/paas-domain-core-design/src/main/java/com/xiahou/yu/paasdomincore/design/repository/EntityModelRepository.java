@@ -1,6 +1,6 @@
 package com.xiahou.yu.paasdomincore.design.repository;
 
-import com.xiahou.yu.paasdomincore.design.metamodel.EntityModel;
+import com.xiahou.yu.paasdomincore.design.metadatamodel.EntityModel;
 import org.springframework.stereotype.Repository;
 
 /**

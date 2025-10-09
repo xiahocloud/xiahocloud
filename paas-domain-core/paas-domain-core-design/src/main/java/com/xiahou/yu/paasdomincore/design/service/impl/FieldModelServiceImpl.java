@@ -1,6 +1,6 @@
 package com.xiahou.yu.paasdomincore.design.service.impl;
 
-import com.xiahou.yu.paasdomincore.design.metamodel.FieldModel;
+import com.xiahou.yu.paasdomincore.design.metadatamodel.FieldModel;
 import com.xiahou.yu.paasdomincore.design.repository.FieldModelRepository;
 import com.xiahou.yu.paasdomincore.design.service.FieldModelService;
 import lombok.RequiredArgsConstructor;

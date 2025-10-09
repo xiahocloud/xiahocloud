@@ -1,6 +1,6 @@
 package com.xiahou.yu.paasdomincore.design.repository;
 
-import com.xiahou.yu.paasdomincore.design.metamodel.PageModel;
+import com.xiahou.yu.paasdomincore.design.metadatamodel.PageModel;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

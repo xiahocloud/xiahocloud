@@ -1,6 +1,6 @@
 package com.xiahou.yu.paasdomincore.design.repository;
 
-import com.xiahou.yu.paasdomincore.design.metamodel.FieldModel;
+import com.xiahou.yu.paasdomincore.design.metadatamodel.FieldModel;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;

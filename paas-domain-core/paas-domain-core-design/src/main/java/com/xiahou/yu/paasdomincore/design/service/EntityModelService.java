@@ -1,6 +1,6 @@
 package com.xiahou.yu.paasdomincore.design.service;
 
-import com.xiahou.yu.paasdomincore.design.metamodel.EntityModel;
+import com.xiahou.yu.paasdomincore.design.metadatamodel.EntityModel;
 
 import java.util.List;
 import java.util.Optional;

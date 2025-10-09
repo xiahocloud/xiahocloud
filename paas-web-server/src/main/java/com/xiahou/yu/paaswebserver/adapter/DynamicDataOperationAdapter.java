@@ -37,7 +37,7 @@ public class DynamicDataOperationAdapter {
     /**
      * 处理动态查询操作
      */
-    public DataOperationResult handleQuery(String entity, Filter filter, List<String> fields, Integer page, Integer size, List<String> orderBy) {
+    public DataOperationResult handleQuery(String entity, Filter filter, List<String> fields, Integer pageNum, Integer pageSize, List<String> orderBy) {
         // 从线程上下文获取系统级参数
         String system = RequestContextHolder.getSystem();
         String module = RequestContextHolder.getModule();
@@ -53,40 +53,18 @@ public class DynamicDataOperationAdapter {
                 entity, tenantId, userId, requestId);
 
         try {
+            CommandContext.Page page = new CommandContext.Page(pageNum, pageSize);
             // 创建查询上下文
             CommandContext queryContext = CommandContext.builder()
                     .entityName(entity)
                     .filter(filter)
+                    .page(page)
                     .requestContext(requestContext)
                     .build();
-
-            // 添加查询特定的属性
-            queryContext.setAttribute("fields", fields);
-            queryContext.setAttribute("page", page);
-            queryContext.setAttribute("size", size);
-            queryContext.setAttribute("orderBy", orderBy);
-
             // 执行查询操作
-            Object raw = dataOperationService.execute(queryContext, CommandType.QUERY);
-            if (!(raw instanceof DataOperationResult qr)) {
-                throw new IllegalStateException("Unexpected execute() result type: " + (raw == null ? "null" : raw.getClass().getName()));
-            }
-            DataOperationResult result = qr;
-            // 将结果包装为DynamicDataObject
-            Object payloadResult;
-            if(result.getData() instanceof List<?> dataList){
-                payloadResult = dataList.stream()
-                        .map(this::convertToDataObject)
-                        .toList();
-            } else {
-                payloadResult = convertToDataObject(result);
-            }
-            result.setData(payloadResult);
-            log.info("Dynamic query completed successfully: entity={}, requestId={}",
-                    entity, requestId);
-
+            DataOperationResult result = dataOperationService.execute(queryContext, CommandType.QUERY);
+            log.info("Dynamic query completed successfully: entity={}, requestId={}", entity, requestId);
             return result;
-
         } catch (Exception e) {
             log.error("Error processing dynamic query: entity={}, requestId={}",
                      entity, requestId, e);

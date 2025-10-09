@@ -1,6 +1,6 @@
 package com.xiahou.yu.paasdomincore.design.service;
 
-import com.xiahou.yu.paasdomincore.design.metamodel.FieldModel;
+import com.xiahou.yu.paasdomincore.design.metadatamodel.FieldModel;
 
 import java.util.List;
 import java.util.Optional;

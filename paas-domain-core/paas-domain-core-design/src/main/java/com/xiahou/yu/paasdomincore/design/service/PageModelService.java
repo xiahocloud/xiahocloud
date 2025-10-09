@@ -1,6 +1,6 @@
 package com.xiahou.yu.paasdomincore.design.service;
 
-import com.xiahou.yu.paasdomincore.design.metamodel.PageModel;
+import com.xiahou.yu.paasdomincore.design.metadatamodel.PageModel;
 
 import java.util.List;
 import java.util.Optional;

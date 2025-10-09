@@ -1,4 +1,4 @@
-package com.xiahou.yu.paasdomincore.design.metamodel;
+package com.xiahou.yu.paasdomincore.design.metadatamodel;
 
 import com.xiahou.yu.paasdomincore.design.registry.EntityRegister;
 import lombok.Data;

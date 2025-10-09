@@ -1,4 +1,4 @@
-package com.xiahou.yu.paasdomincore.design.metamodel;
+package com.xiahou.yu.paasdomincore.design.metadatamodel;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

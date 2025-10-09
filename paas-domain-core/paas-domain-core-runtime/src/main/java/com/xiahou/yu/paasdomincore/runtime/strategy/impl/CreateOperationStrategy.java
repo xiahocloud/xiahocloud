@@ -3,7 +3,7 @@ package com.xiahou.yu.paasdomincore.runtime.strategy.impl;
 import com.xiahou.yu.paasdomincore.design.command.CommandContext;
 import com.xiahou.yu.paasdomincore.design.dto.DataOperationResult;
 import com.xiahou.yu.paasdomincore.design.dto.DynamicDataObject;
-import com.xiahou.yu.paasdomincore.design.metamodel.AbstractModel;
+import com.xiahou.yu.paasdomincore.design.metadatamodel.AbstractModel;
 import com.xiahou.yu.paasdomincore.design.registry.EntityRegistryManager;
 import com.xiahou.yu.paasdomincore.design.repository.RepositoryManager;
 import com.xiahou.yu.paasdomincore.runtime.strategy.DataOperationStrategy;
