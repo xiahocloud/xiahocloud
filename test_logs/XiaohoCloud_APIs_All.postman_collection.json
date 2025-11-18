@@ -1,0 +1,167 @@
+{
+  "info": {
+    "name": "XiaohoCloud APIs (Stocks + Indexes + Industries)",
+    "description": "Unified Postman collection containing stock analysis, index daily data, and industry master/index daily endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Stocks Analysis",
+      "item": [
+        {
+          "name": "MACD Cross - Golden",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Accept", "value": "application/json" } ],
+            "url": {
+              "raw": "{{baseUrl}}/api/stocks/analysis/macd/cross?type=golden&lookbackDays=120&withinDays=7&shortPeriod=12&longPeriod=26&signalPeriod=9",
+              "query": [
+                { "key": "type", "value": "golden" },
+                { "key": "lookbackDays", "value": "120" },
+                { "key": "withinDays", "value": "7" },
+                { "key": "shortPeriod", "value": "12" },
+                { "key": "longPeriod", "value": "26" },
+                { "key": "signalPeriod", "value": "9" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Strategy - Buy Candidates",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Accept", "value": "application/json" } ],
+            "url": {
+              "raw": "{{baseUrl}}/api/stocks/analysis/strategy/expma-macd-boll/buy?lookbackDays=120&withinDays=7&expmaShort=12&expmaLong=50&sustainDays=5&allowSideway=true&sidewayEpsilonRatio=0.005&macdShort=12&macdLong=26&macdSignal=9&bollPeriod=20&bollStdDev=2.0&volumeWindow=10&volumeFactor=1.2"
+            }
+          }
+        },
+        {
+          "name": "Indicators Augment (range)",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Accept", "value": "application/json" } ],
+            "url": {
+              "raw": "{{baseUrl}}/api/stocks/analysis/indicators/augment?stockCode={{stockCode}}&start={{start}}&end={{end}}&period=20&k=2.0"
+            }
+          }
+        },
+        {
+          "name": "DeepSeek Advice (text)",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Accept", "value": "text/plain" } ],
+            "url": {
+              "raw": "{{baseUrl}}/api/stocks/analysis/deepseek/advice?stockCode={{stockCode}}&start={{start}}&end={{end}}&period=20&k=2.0&macdShort=12&macdLong=26&macdSignal=9&macdHistMultiplier=2.0&recentDays=30&format=text"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Indexes",
+      "item": [
+        {
+          "name": "Index Daily - All (paged)",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Accept", "value": "application/json" } ],
+            "url": {
+              "raw": "{{baseUrl}}/api/indexes/daily?pageNum={{pageNum}}&pageSize={{pageSize}}",
+              "query": [
+                { "key": "pageNum", "value": "{{pageNum}}" },
+                { "key": "pageSize", "value": "{{pageSize}}" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Index Daily - By Code (paged)",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Accept", "value": "application/json" } ],
+            "url": {
+              "raw": "{{baseUrl}}/api/indexes/daily/{{indexCode}}?pageNum={{pageNum}}&pageSize={{pageSize}}"
+            }
+          }
+        },
+        {
+          "name": "Index Daily - By Code in Range (paged)",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Accept", "value": "application/json" } ],
+            "url": {
+              "raw": "{{baseUrl}}/api/indexes/daily/{{indexCode}}/range?start={{start}}&end={{end}}&pageNum={{pageNum}}&pageSize={{pageSize}}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Industries",
+      "item": [
+        {
+          "name": "Industry Master - List (paged)",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Accept", "value": "application/json" } ],
+            "url": {
+              "raw": "{{baseUrl}}/api/industries/master?pageNum={{pageNum}}&pageSize={{pageSize}}"
+            }
+          }
+        },
+        {
+          "name": "Industry Master - By Code",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Accept", "value": "application/json" } ],
+            "url": { "raw": "{{baseUrl}}/api/industries/master/{{industryCode}}" }
+          }
+        },
+        {
+          "name": "Industry Index Daily - All (paged)",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Accept", "value": "application/json" } ],
+            "url": { "raw": "{{baseUrl}}/api/industries/indexes/daily?pageNum={{pageNum}}&pageSize={{pageSize}}" }
+          }
+        },
+        {
+          "name": "Industry Index Daily - By Code (paged)",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Accept", "value": "application/json" } ],
+            "url": { "raw": "{{baseUrl}}/api/industries/indexes/daily/{{industryCode}}?pageNum={{pageNum}}&pageSize={{pageSize}}" }
+          }
+        },
+        {
+          "name": "Industry Index Daily - By Code in Range (paged)",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Accept", "value": "application/json" } ],
+            "url": { "raw": "{{baseUrl}}/api/industries/indexes/daily/{{industryCode}}/range?start={{start}}&end={{end}}&pageNum={{pageNum}}&pageSize={{pageSize}}" }
+          }
+        },
+        {
+          "name": "Industry Index Daily - By Name (ascending)",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Accept", "value": "application/json" } ],
+            "url": { "raw": "{{baseUrl}}/api/industries/indexes/daily/by-name?industryName={{industryName}}" }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "stockCode", "value": "000001.SZ" },
+    { "key": "indexCode", "value": "000300.SH" },
+    { "key": "industryCode", "value": "801742" },
+    { "key": "industryName", "value": "电子" },
+    { "key": "start", "value": "2024-06-01" },
+    { "key": "end", "value": "2024-11-15" },
+    { "key": "pageNum", "value": "1" },
+    { "key": "pageSize", "value": "50" }
+  ]
+}
