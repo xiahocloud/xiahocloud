@@ -20,11 +20,14 @@ repositories {
 }
 
 dependencies {
-    // 当前项目的依赖
-    implementation 'com.xiahou.yu:paas-application-core'
-    api 'com.xiahou.yu:paas-infra-common'
+    // 当前项目的依赖 (补齐版本)
+    implementation 'com.xiahou.yu:paas-infra-common:1.0-SNAPSHOT'
+    implementation 'com.xiahou.yu:saas-stock-indicator-analyzer:1.0-SNAPSHOT'
 
-    // TransmittableThreadLocal 支持
+    // 设计时模块
+    implementation 'com.xiahou.yu:paas-domain-core-design'
+    // 运行时模块，提供 DataOperationService 实现
+    implementation 'com.xiahou.yu:paas-domain-core-runtime'
 
     // Spring Boot 核心依赖
     implementation 'org.springframework.boot:spring-boot-starter'

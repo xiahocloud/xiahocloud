@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/paas-application-core" name="paas-application-core">
+                <projects>
+                  <project path="$PROJECT_DIR$/paas-application-core" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/paas-domain-core" name="paas-domain-core">
+                <projects>
+                  <project path="$PROJECT_DIR$/paas-domain-core" />
+                  <project path="$PROJECT_DIR$/paas-domain-core/paas-domain-core-design" />
+                  <project path="$PROJECT_DIR$/paas-domain-core/paas-domain-core-runtime" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/paas-infra-core" name="paas-infra-core">
+                <projects>
+                  <project path="$PROJECT_DIR$/paas-infra-core" />
+                  <project path="$PROJECT_DIR$/paas-infra-core/paas-infra-common" />
+                  <project path="$PROJECT_DIR$/paas-infra-core/paas-infra-id-service" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/paas-meta-core" name="paas-meta-core">
+                <projects>
+                  <project path="$PROJECT_DIR$/paas-meta-core" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="#GRADLE_JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/paas-application-core" />
+            <option value="$PROJECT_DIR$/paas-domain-core" />
+            <option value="$PROJECT_DIR$/paas-domain-core/paas-domain-core-design" />
+            <option value="$PROJECT_DIR$/paas-domain-core/paas-domain-core-runtime" />
+            <option value="$PROJECT_DIR$/paas-infra-core" />
+            <option value="$PROJECT_DIR$/paas-infra-core/paas-infra-common" />
+            <option value="$PROJECT_DIR$/paas-infra-core/paas-infra-id-service" />
+            <option value="$PROJECT_DIR$/paas-meta-core" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

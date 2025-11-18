@@ -20,7 +20,7 @@ import java.util.Collections;
  * @author xiahou
  */
 @Configuration
-@EnableJdbcRepositories(basePackages = "com.xiahou.yu.paasdomincore.design.repository")
+@EnableJdbcRepositories(basePackages = "com.xiahou.yu")
 public class JdbcRepositoryConfig extends AbstractJdbcConfiguration {
 
     /**
@@ -58,6 +58,7 @@ public class JdbcRepositoryConfig extends AbstractJdbcConfiguration {
     }
 
     @Bean
+    @Override
     public JdbcCustomConversions jdbcCustomConversions() {
         return new JdbcCustomConversions(Collections.emptyList());
     }

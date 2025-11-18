@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/paas-domain-core/paas-domain-core-design/paas-domain-core.paas-domain-core-design.main.iml" filepath="$PROJECT_DIR$/.idea/modules/paas-domain-core/paas-domain-core-design/paas-domain-core.paas-domain-core-design.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/paas-domain-core/paas-domain-core-runtime/paas-domain-core.paas-domain-core-runtime.main.iml" filepath="$PROJECT_DIR$/.idea/modules/paas-domain-core/paas-domain-core-runtime/paas-domain-core.paas-domain-core-runtime.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/paas-infra-core/paas-infra-common/paas-infra-core.paas-infra-common.main.iml" filepath="$PROJECT_DIR$/.idea/modules/paas-infra-core/paas-infra-common/paas-infra-core.paas-infra-common.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/paas-meta-core/paas-meta-core.main.iml" filepath="$PROJECT_DIR$/.idea/modules/paas-meta-core/paas-meta-core.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/paas-meta-core/paas-meta-core.test.iml" filepath="$PROJECT_DIR$/.idea/modules/paas-meta-core/paas-meta-core.test.iml" />
+    </modules>
+  </component>
+</project>

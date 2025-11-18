@@ -22,7 +22,7 @@ dependencyManagement {
 }
 
 dependencies {
-    // 当前项目的依赖
+    // 当前项目的依赖 (使用 composite build 项目名称, 去掉版本, 让 includeBuild 直接替换)
     api 'com.xiahou.yu:paas-meta-core'
     api 'com.xiahou.yu:paas-infra-common'
     api 'com.xiahou.yu:paas-infra-id-service'
@@ -31,7 +31,7 @@ dependencies {
     api 'org.springframework.boot:spring-boot-starter'
     api 'org.springframework.boot:spring-boot-starter-jdbc'
     api 'org.springframework.boot:spring-boot-starter-data-jdbc'
-    runtimeOnly 'org.postgresql:postgresql'
+    api 'org.postgresql:postgresql'
 
     // Lombok 支持
     compileOnly 'org.projectlombok:lombok'

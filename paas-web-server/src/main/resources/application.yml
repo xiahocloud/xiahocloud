@@ -34,6 +34,12 @@ spring:
       allowed-origins: "*"
       allowed-methods: "*"
       allowed-headers: "*"
+deepseek:
+  api:
+    url: https://api.deepseek.com/v1/chat/completions
+    key: sk-3d6facf0a84f499bb5ad6ee584a10b4b
+    model: deepseek-reasoner
+    temperature: 1.0
 
 # 服务器配置
 server:
@@ -56,3 +62,14 @@ logging:
     root: INFO
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# 指标配置（MACD）
+indicator:
+  macd:
+    shortPeriod: 12
+    longPeriod: 26
+    signalPeriod: 9
+    hist:
+      multiplier: 2.0
+    cross:
+      epsilon: 0.0001

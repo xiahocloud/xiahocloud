@@ -12,21 +12,7 @@ repositories {
     mavenCentral()
 }
 
-dependencyManagement {
-    imports {
-        mavenBom 'org.springframework.boot:spring-boot-dependencies:3.3.4'
-    }
-}
-
 dependencies {
-    // 修正：使用正确的复合构建项目依赖语法
-    api 'com.xiahou.yu:paas-domain-core-runtime'
-
-    // Spring Boot 基础依赖
-    implementation 'org.springframework.boot:spring-boot-starter'
-    
-    // 测试依赖
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 // 配置 Maven 发布

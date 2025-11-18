@@ -1,4 +1,6 @@
 rootProject.name = 'paas-application-core'
 
+
 // 包含依赖的独立项目
 includeBuild '../paas-domain-core'
+include ':saas-stock-indicator-analyzer'

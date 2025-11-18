@@ -1,0 +1,55 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'org.springframework.boot' version '3.3.4' apply false
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.xiahou.yu'
+version = '1.0-SNAPSHOT'
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation 'org.ta4j:ta4j-core:0.18'
+    // Lombok支持 - 使用统一版本
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    api 'org.springframework.boot:spring-boot-starter-jdbc:3.3.4'
+    api 'org.springframework.boot:spring-boot-starter-data-jdbc:3.3.4'
+    implementation 'org.springframework.boot:spring-boot-starter:3.3.4'
+    implementation 'org.postgresql:postgresql:42.7.3'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.3.4'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+// 运行时模块特定配置
+jar {
+    archiveBaseName = 'saas-stock-indicator-analyzer'
+    manifest {
+        attributes(
+                'Implementation-Title': 'SaaS Core Runtime',
+                'Implementation-Description': '指标分析器'
+        )
+    }
+}
+
+// 配置 Maven 发布
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            artifactId = 'saas-stock-indicator-analyzer'
+        }
+    }
+}
